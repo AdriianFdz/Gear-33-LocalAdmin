@@ -6,10 +6,16 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "dibujos.h"
 
 int main(void) {
-	printf("%s", dibujoLogo());
+	dibujoCoche();
+
+
+	//system("cls");
+
+
 
 	return 0;
 }

@@ -1,18 +1,18 @@
 
+#include <stdio.h>
 
-
-char* dibujoLogo()
+void dibujoLogo()
 {
-	return("  ____ _____    _    ____            __________\n"
+	printf("  ____ _____    _    ____            __________\n"
 		   " / ___| ____|  / \\  |  _ \\          |___ |___ /\n"
 		   "| |  _|  _|   / _ \\ | |_) |  _____    |_ \\ |_ \\\n"
 		   "| |_| | |___ / ___ \\|  _ <  |_____|  ___) ___) |\n"
 		   " \\____|_____/_/   \\_|_| \\_\\         |____|____/ \n");
 }
 
-char* dibujoPersona()
+void dibujoPersona()
 {
-	return("         .+++++.\n"
+	printf("         .+++++.\n"
 		   "        | ~~~~~ |\n"
 		   "        ) '*_*' (\n"
 		   "        (  ._.  )\n"
@@ -21,18 +21,18 @@ char* dibujoPersona()
 		   "      /    ':'    \\\n");
 }
 
-char* dibujoTienda()
+void dibujoTienda()
 {
-	return("       |_________|\n"
+	printf("       |_________|\n"
 		   "       |  * * *  |\n"
 		   "       |  * * *  |\n"
 		   "       |  **  ** |\n"
 		   "       |__[   ]__|\n");
 }
 
-char* dibujoCoche()
+void dibujoCoche()
 {
-	return("        __-------__\n"
+	printf("        __-------__\n"
 		   "      / _---------_ \\\n"
 		   "     / /           \\ \\\n"
 		   "     | |           | |\n"

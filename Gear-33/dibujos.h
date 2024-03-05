@@ -1,12 +1,12 @@
 #ifndef DIBUJOS_H_
 #define DIBUJOS_H_
 
-char* dibujoLogo();
+void dibujoLogo();
 
-char* dibujoPersona();
+void dibujoPersona();
 
-char* dibujoTienda();
+void dibujoTienda();
 
-char* dibujoCoche();
+void dibujoCoche();
 
 #endif /* DIBUJOS_H_ */
