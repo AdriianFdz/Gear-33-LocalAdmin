@@ -2,6 +2,7 @@
 #ifndef COCHE_H_
 #define COCHE_H_
 
+//coche
 typedef struct {
 	char matricula[7];
 	char color[10];
@@ -14,7 +15,18 @@ typedef struct {
 
 }Coche;
 
+
 Coche pedirCoche();
+
+//lista coches
+typedef struct {
+	Coche *lCoches;
+	int tam;
+	int numCoches;
+
+}ListaCoches;
+
+void aniadirCoche(ListaCoches *lc, Coche c);
 
 
 #endif /* COCHE_H_ */
