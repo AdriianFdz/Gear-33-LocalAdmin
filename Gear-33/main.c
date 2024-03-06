@@ -8,9 +8,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "dibujos.h"
+#include "coche.h"
 
 int main(void) {
-	dibujoCoche();
+	pedirCoche();
 
 
 	//system("cls");
