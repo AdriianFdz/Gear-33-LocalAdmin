@@ -9,9 +9,11 @@
 #include <stdlib.h>
 #include "dibujos.h"
 #include "coche.h"
+#include "menus.h"
+#include "listaCoches.h"
 
 int main(void) {
-	pedirCoche();
+	menuPrincipal();
 
 
 	//system("cls");
