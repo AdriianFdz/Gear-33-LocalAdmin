@@ -4,13 +4,14 @@
 #include <stdlib.h>
 
 
-int menuPrincipal()
+void menuPrincipal()
 {
 	int opcion;
+
 	dibujoLogo();
 	printf("------------------------------------------------\n");
-	printf("1. Gestionar usuarios\n");
-	printf("2. Gestionar coches\n");
+	printf("1. Gestionar coches\n");
+	printf("2. Gestionar usuarios\n");
 	printf("3. Gestionar empleados\n");
 	printf("4. Gestionar tiendas\n");
 	printf("0. Salir\n\n");
@@ -21,7 +22,6 @@ int menuPrincipal()
 
 	opcionMenuPrincipal(opcion);
 
-	return opcion;
 }
 
 void opcionMenuPrincipal(int opcion){
@@ -31,10 +31,10 @@ void opcionMenuPrincipal(int opcion){
 				printf("SALIENDO...\n");
 				break;
 			case 1:
-				printf("GESTIONANDO USUARIOS...\n");
+				menuGestCoches();
 				break;
 			case 2:
-				printf("GESTIONANDO COCHES...\n");
+				printf("GESTIONANDO USUARIOS...\n");
 				break;
 			case 3:
 				printf("GESTIONANDO EMPLEADOS...\n");
@@ -47,4 +47,18 @@ void opcionMenuPrincipal(int opcion){
 				menuPrincipal();
 				break;
 		}
+}
+
+
+void menuGestCoches(){
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"   Gestion de coches\n\n"
+	"---------------------------\n"
+	"1. Anadir coche\n"
+	"2. Modificar coche\n"
+	"3. Eliminar coche\n"
+	"4. Volver\n"
+	"Introduce una opcion: \n");
 }

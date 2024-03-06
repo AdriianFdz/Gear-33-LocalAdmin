@@ -1,6 +1,6 @@
 
-#include "coche.h";
-#include <stdio.h>;
+#include "coche.h"
+#include <stdio.h>
 
 Coche pedirCoche()
 {

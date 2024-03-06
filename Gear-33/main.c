@@ -12,13 +12,10 @@
 #include "dibujos.h"
 #include "coche.h"
 #include "menus.h"
-#include "listaCoches.h"
 
 int main(void) {
 
-	int opcion = menuPrincipal();
-
-
+	menuPrincipal();
 
 
 
