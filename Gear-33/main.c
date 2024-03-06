@@ -7,16 +7,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
 #include "dibujos.h"
 #include "coche.h"
 #include "menus.h"
 #include "listaCoches.h"
 
 int main(void) {
-	menuPrincipal();
+
+	int opcion = menuPrincipal();
 
 
-	//system("cls");
 
 
 
