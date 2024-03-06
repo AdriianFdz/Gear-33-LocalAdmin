@@ -6,6 +6,8 @@ void menuPrincipal();
 void opcionMenuPrincipal(int opcion);
 
 
-void menuGestCoches();
-
+void menuGestCoches(int* opcion);
+void menuGestUsuario(int* opcion);
+void menuGestEmpleado(int* opcion);
+void menuGestTienda(int* opcion);
 #endif /* MENUS_H_ */
