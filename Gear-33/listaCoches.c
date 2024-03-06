@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-void aniadirUsuario(ListaCoches *lc, Coche c)
+void aniadirCoche(ListaCoches *lc, Coche c)
 {
 	if(lc->numCoches < lc->tam){
 			lc->lCoches[lc->numCoches] = c;

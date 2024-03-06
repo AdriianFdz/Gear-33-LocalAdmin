@@ -10,7 +10,7 @@ typedef struct {
 
 }ListaCoches;
 
-void aniadirUsuario(ListaCoches *lc, Coche c);
+void aniadirCoche(ListaCoches *lc, Coche c);
 
 
 #endif /* LISTACOCHES_H_ */
