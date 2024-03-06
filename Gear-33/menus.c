@@ -3,6 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void menuLogin()
+{
+	dibujoLogo();
+	printf("\n------------------------------------------------\n");
+	printf("                INICIO DE SESION                  \n");
+	printf("------------------------------------------------\n\n");
+	printf("Inserte usuario: \n");
+	printf("Inserte contraseña:");
+}
 
 void menuPrincipal()
 {

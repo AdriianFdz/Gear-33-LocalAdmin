@@ -15,7 +15,7 @@
 
 int main(void) {
 
-	menuPrincipal();
+	menuLogin();
 
 
 
