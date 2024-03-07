@@ -112,13 +112,52 @@ void menuAnadirCoche(int* opcion) {
 }
 
 void menuModificarCoche(int* opcion) {
-	printf("Por definir");
-	menuGestCoches(opcion);
+	char matricula[7] = "";
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar coche\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca la matricula:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(matricula);
+
+	//falta funcion que comprueba si la matricula existe
+
+	//
+	fflush(stdout);
+	fflush(stdin);
+	printf("\n1.Modificar matricula\n"
+	       "2.Modificar marca\n"
+	       "3.Modificar modelo\n"
+	       "4.Modificar color\n"
+	       "5.Modificar año\n"
+	       "6.Modificar precio\n"
+	       "7.Modificar cambio\n"
+	       "8.Modificar combustible\n"
+	       "0.Volver\n\n"
+		   "Introduce una opción: ");
+
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", opcion);
+
 }
 
 void menuEliminarCoche(int* opcion) {
-	printf("Por defirnir");
-	menuGestCoches(opcion);
+	char matricula[7] = "";
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"       Eliminar coche\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca la matricula:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(matricula);
 }
 
 
