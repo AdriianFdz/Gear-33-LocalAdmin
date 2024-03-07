@@ -1,5 +1,6 @@
 #include "menus.h"
 #include "dibujos.h"
+#include "coche.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,7 +11,7 @@ void menuLogin()
 	printf("                INICIO DE SESION                  \n");
 	printf("------------------------------------------------\n\n");
 	printf("Inserte usuario: \n");
-	printf("Inserte contraseña:");
+	printf("Inserte contrasena:");
 }
 
 void menuPrincipal()
@@ -74,8 +75,52 @@ void menuGestCoches(int* opcion){
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d",opcion);
+	opcionMenuGestCoches(opcion);
 
 }
+
+void opcionMenuGestCoches(int *opcion) {
+	system("cls");
+		switch (*opcion) {
+				case 1:
+					menuAnadirCoche(opcion);
+					break;
+				case 2:
+					menuModificarCoche(opcion);
+					break;
+				case 3:
+					menuEliminarCoche(opcion);
+					break;
+				case 0:
+					menuPrincipal();
+					break;
+				default:
+					printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+					menuGestCoches(opcion);
+					break;
+			}
+}
+
+void menuAnadirCoche(int* opcion) {
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"       Anadir coche\n\n"
+	"---------------------------\n\n");
+	pedirCoche();
+	menuGestCoches(opcion);
+}
+
+void menuModificarCoche(int* opcion) {
+	printf("Por definir");
+	menuGestCoches(opcion);
+}
+
+void menuEliminarCoche(int* opcion) {
+	printf("Por defirnir");
+	menuGestCoches(opcion);
+}
+
 
 void menuGestUsuario(int* opcion){
 	dibujoPersona();
