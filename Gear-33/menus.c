@@ -176,6 +176,116 @@ void menuGestUsuario(int* opcion){
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d",opcion);
+	opcionMenuGestUsuario(opcion);
+}
+void opcionMenuGestUsuario(int *opcion) {
+	system("cls");
+		switch (*opcion) {
+				case 1:
+					menuAnadirUsuario(opcion);
+					break;
+				case 2:
+					menuModificarUsuario(opcion);
+					break;
+				case 3:
+					menuEliminarUsuario(opcion);
+					break;
+				case 0:
+					menuPrincipal();
+					break;
+				default:
+					printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+					menuGestUsuario(opcion);
+					break;
+			}
+}
+void menuAnadirUsuario(int* opcion) {
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"       Registro de usuario\n\n"
+	"---------------------------\n\n");
+	printf("Introduce el nombre \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce el apellido \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce el dni \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce la fecha de nacimiento DD/MM/AAAA \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce el teléfono \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce la dirección \n");
+		fflush(stdout);
+		fflush(stdin);
+
+
+		printf("Introduce la contraseña \n");
+		fflush(stdout);
+		fflush(stdin);
+		menuGestUsuario(opcion);
+}
+void menuModificarUsuario(int* opcion) {
+
+
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar datos\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el dni:  ");
+	fflush(stdout);
+	fflush(stdin);
+
+
+	//falta funcion que comprueba si el dni existe
+
+	//
+	fflush(stdout);
+	fflush(stdin);
+	printf("\n1.Modificar nombre\n"
+	       "2.Modificar apellido\n"
+	       "3.Modificar modelo\n"
+	       "4.Modificar DNI\n"
+	       "5.Modificar fecha de nacimiento\n"
+	       "6.Modificar teléfono\n"
+	       "7.Modificar dirección\n"
+	       "8.Modificar contraseña\n"
+	       "0.Volver\n\n"
+		   "Introduce una opción: ");
+
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", opcion);
+
+}
+void menuEliminarUsuario(int* opcion) {
+
+
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"       Eliminar usuario\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el dni:  ");
+	fflush(stdout);
+	fflush(stdin);
+
 }
 
 void menuGestEmpleado(int* opcion){
