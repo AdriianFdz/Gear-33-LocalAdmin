@@ -143,8 +143,183 @@ void menuModificarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", opcion);
+	opcionMenuModificarCoches(opcion);
 
 }
+
+void opcionMenuModificarCoches(int *opcion) {
+	system("cls");
+		switch (*opcion) {
+				case 1:
+					menuModificarMatricula(opcion);
+					break;
+				case 2:
+					menuModificarMarca(opcion);
+					break;
+				case 3:
+					menuModificarModelo(opcion);
+					break;
+				case 4:
+					menuModificarColor(opcion);
+					break;
+				case 5:
+					menuModificarAnyo(opcion);
+					break;
+				case 6:
+					menuModificarPrecio(opcion);
+					break;
+				case 7:
+					menuModificarCambio(opcion);
+					break;
+				case 8:
+					menuModificarCombustible(opcion);
+					break;
+				case 0:
+					menuGestCoches(opcion);
+					break;
+				default:
+					printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+					menuModificarCoche(opcion);
+					break;
+			}
+}
+
+void menuModificarMatricula(int *opcion) {
+	char matricula[7];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"    Modificar matricula\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca la nueva matricula:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(matricula);
+	// crear funcion para modificar matricula
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarMarca(int *opcion) {
+	char marca[15];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar marca\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca la nueva marca:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(marca);
+	// crear funcion para modificar marca
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarModelo(int *opcion) {
+	char modelo[15];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar modelo\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo modelo:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(modelo);
+	// crear funcion para modificar modelo
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarColor(int *opcion) {
+	char color[10];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar color\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo color:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(color);
+	// crear funcion para modificar color
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarAnyo(int *opcion) {
+	int anyo;
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"       Modificar año\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo año:  ");
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", &anyo);
+	// crear funcion para modificar año
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarPrecio(int *opcion) {
+	float precio;
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar precio\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo precio:  ");
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%f", &precio);
+	// crear funcion para modificar año
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarCambio(int *opcion) {
+	char cambio[15];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar cambio\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo tipo de cambio:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(cambio);
+	// crear funcion para modificar el cambio
+	/////
+	menuGestCoches(opcion);
+}
+
+void menuModificarCombustible(int *opcion) {
+	char combustible[10];
+
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"   Modificar combustible\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el nuevo combustible:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(combustible);
+	// crear funcion para modificar combustible
+	/////
+	menuGestCoches(opcion);
+}
+
 
 void menuEliminarCoche(int* opcion) {
 	char matricula[7] = "";
