@@ -3,20 +3,43 @@
 #include "coche.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "usuario.h"
 
 void menuLogin()
 {
+	int comprobar;
+	char dni[8];
+	char contrasena[8];
+
 	dibujoLogo();
 	printf("\n------------------------------------------------\n");
 	printf("                INICIO DE SESION                  \n");
 	printf("------------------------------------------------\n\n");
-	printf("Inserte usuario: \n");
+	printf("Inserte dni: \n");
+	fflush(stdout);
+	fflush(stdin);
+	gets(dni);
 	printf("Inserte contrasena:");
+	fflush(stdout);
+	fflush(stdin);
+	gets(contrasena);
+	printf("\n");
+	comprobar = inicioSesion(dni, contrasena);
+	if (comprobar == 1) {
+		menuPrincipal();
+	}
+
+	printf("ERROR AL INICIAR SESION (PARAMETRO INVALIDO) \n");
+	menuLogin();
+
+
+
 }
 
 void menuPrincipal()
 {
 	int opcion;
+
 
 	dibujoLogo();
 	printf("------------------------------------------------\n\n");
