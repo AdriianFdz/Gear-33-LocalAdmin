@@ -333,6 +333,7 @@ void menuEliminarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
+	menuGestCoches(opcion);
 }
 
 
