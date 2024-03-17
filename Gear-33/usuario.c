@@ -28,11 +28,11 @@ int inicioSesion(char dni[], char contrasena[]) {
            return result;
        }
 
-    result = sqlite3_step(stmt);
-    if (result == SQLITE_ROW) {
-    	if (strcmp(dni, sqlite3_column_text(stmt, 0)) == 0 && strcmp(contrasena, sqlite3_column_text(stmt, 1)) == 0) {
-    	        return 1;
-    	}
+       result = sqlite3_step(stmt);
+       if (result == SQLITE_ROW) {
+       	if (strcmp(dni, sqlite3_column_text(stmt, 0)) == 0 && strcmp(contrasena, sqlite3_column_text(stmt, 1)) == 0) {
+       	        return 1;
+       	}
 
     } else if (result != SQLITE_DONE) {
         printf("Error fetching data\n");

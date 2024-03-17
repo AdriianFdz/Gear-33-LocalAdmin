@@ -1,3 +1,4 @@
+#include "sqlite3.h"
 
 #ifndef COCHE_H_
 #define COCHE_H_
@@ -28,5 +29,8 @@ typedef struct {
 
 void aniadirCoche(ListaCoches *lc, Coche c);
 
+int aniadirCocheBD(Coche c);
+
+int id_marca(Coche c);
 
 #endif /* COCHE_H_ */
