@@ -4,7 +4,7 @@
 
 Coche pedirCoche()
 {
-	Coche c;
+	Coche c; 
 
 	printf("Introduce la matricula \n");
 	fflush(stdout);
