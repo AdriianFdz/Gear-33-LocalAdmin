@@ -47,18 +47,21 @@ int inicioSesion(char dni[], char contrasena[]) {
        result = sqlite3_step(stmt);
        if (result == SQLITE_ROW) {
        	if (strcmp(dni, (char*)sqlite3_column_text(stmt, 0)) == 0 && strcmp(contrasena, (char*)sqlite3_column_text(stmt, 1)) == 0) {
+				sqlite3_finalize(stmt);
+				sqlite3_close(db);
        	        return 1;
        	}
 
     } else if (result != SQLITE_DONE) {
         printf("Error fetching data\n");
         printf("%s\n", sqlite3_errmsg(db));
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
         return 0;
     }
 
-    sqlite3_finalize(stmt);
-    sqlite3_close(db);
-
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
     return 0;
 }
 
@@ -68,7 +71,7 @@ int obtenerAnadirMarca(Coche c) {
 
     sqlite3_stmt *stmt;
 
-    char sql[] = "SELECT id, nombre from Marca WHERE nombre = ?";
+    char sql[] = "SELECT id, nombre FROM Marca WHERE nombre = ?";
 
     int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
     if (result != SQLITE_OK) {
@@ -83,6 +86,7 @@ int obtenerAnadirMarca(Coche c) {
                printf("Error binding parameters\n");
                printf("%s\n", sqlite3_errmsg(db));
                sqlite3_finalize(stmt);
+               sqlite3_close(db);
                return result;
            }
     result = sqlite3_step(stmt);
@@ -97,7 +101,7 @@ int obtenerAnadirMarca(Coche c) {
 
     	sqlite3_stmt *stmt2;
         char sql2[] = "INSERT INTO Marca VALUES (NULL, ?)";
-        result = sqlite3_prepare_v2(db, sql2, -1, &stmt2, NULL);
+        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
         if (result != SQLITE_OK) {
             printf("Error preparing statement\n");
             printf("%s\n", sqlite3_errmsg(db));
