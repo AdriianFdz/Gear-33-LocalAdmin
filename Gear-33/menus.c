@@ -467,7 +467,7 @@ void menuEliminarCoche(int* opcion) {
 					menuModificarDireccion(opcion);
 					break;
 				case 7:
-					menuModificarContraseña(opcion);
+					menuModificarContrasena(opcion);
 					break;
 				case 0:
 					menuGestUsuario(opcion);
@@ -479,7 +479,7 @@ void menuEliminarCoche(int* opcion) {
 			}
 }
 	void menuModificarNombre(int *opcion) {
-		char nombre[];
+		char nombre[51];
 
 		dibujoPersona();
 		printf(
@@ -495,7 +495,7 @@ void menuEliminarCoche(int* opcion) {
 		menuGestUsuario(opcion);
 	}
 	void menuModificarApellido(int *opcion) {
-		char apellido[];
+		char apellido[51];
 
 		dibujoPersona();
 		printf(
@@ -527,7 +527,7 @@ void menuEliminarCoche(int* opcion) {
 			menuGestUsuario(opcion);
 		}
 	void menuModificarFecha(int *opcion) {
-				char fecha[];
+				char fecha[11];
 
 				dibujoPersona();
 				printf(
@@ -558,7 +558,7 @@ void menuEliminarCoche(int* opcion) {
 				menuGestUsuario(opcion);
 				}
 	void menuModificarDireccion(int *opcion) {
-		char direccion[];
+		char direccion[51];
 
 		dibujoPersona();
 		printf(
@@ -573,8 +573,8 @@ void menuEliminarCoche(int* opcion) {
 		/////
 		menuGestUsuario(opcion);
 	}
-	void menuModificarContraseña(int *opcion) {
-			char contrasena[];
+	void menuModificarContrasena(int *opcion) {
+			char contrasena[51];
 
 			dibujoPersona();
 			printf(

@@ -34,7 +34,7 @@ void menuGestUsuario(int* opcion);
 				void menuModificarFecha(int *opcion);
 				void menuModificarTelefono(int *opcion);
 				void menuModificarDireccion(int *opcion);
-				void menuModificarContraseña(int *opcion);
+				void menuModificarContrasena(int *opcion);
 		void menuEliminarUsuario(int* opcion);
 void menuGestEmpleado(int* opcion);
 void menuGestTienda(int* opcion);

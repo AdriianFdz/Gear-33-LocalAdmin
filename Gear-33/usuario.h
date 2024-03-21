@@ -2,25 +2,20 @@
 
 #ifndef USUARIO_H_
 #define USUARIO_H_
-#include "sqlite3.h"
-
-
-int inicioSesion(char dni[], char contrasena[]);
-
-#endif /* USUARIO_H_ */
 
 #include "sqlite3.h"
+
 
 
 	//Usuario
 	typedef struct {
-		char nombre[];
-		char apellido[];
-		char dni[9];
-		char fecha[];
-		char telefono[9];
-		char direccion[];
-		char contrasena[];
+		char nombre[51];
+		char apellido[51];
+		char dni[10]; // +1 para el /0
+		char fecha[11];
+		char telefono[10]; // +1 para el /0
+		char direccion[51];
+		char contrasena[51];
 
 
 	}Usuario;
@@ -35,4 +30,7 @@ int inicioSesion(char dni[], char contrasena[]);
 
 	int inicioSesion(char dni[], char contrasena[]);
 	void aniadirUsuario(ListaUsuarios *lu, Usuario u);
+	Usuario pedirUsuario();
+
+#endif /* USUARIO_H_ */
 
