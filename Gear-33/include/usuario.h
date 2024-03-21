@@ -3,17 +3,15 @@
 #ifndef USUARIO_H_
 #define USUARIO_H_
 
-#include "sqlite3.h"
-
-
 
 	//Usuario
+	// +1 para el /0
 	typedef struct {
 		char nombre[51];
 		char apellido[51];
-		char dni[10]; // +1 para el /0
+		char dni[10];
 		char fecha[11];
-		char telefono[10]; // +1 para el /0
+		char telefono[10];
 		char direccion[51];
 		char contrasena[51];
 

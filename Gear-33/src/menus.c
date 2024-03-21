@@ -1,9 +1,10 @@
-#include "menus.h"
-#include "dibujos.h"
-#include "coche.h"
+#include "../include/menus.h"
+#include "../include/dibujos.h"
+#include "../include/coche.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "usuario.h"
+#include "../include/usuario.h"
+#include "../include/sqlManager.h"
 
 void menuLogin()
 {
@@ -15,11 +16,11 @@ void menuLogin()
 	printf("\n------------------------------------------------\n");
 	printf("                INICIO DE SESION                  \n");
 	printf("------------------------------------------------\n\n");
-	printf("Inserte dni: \n");
+	printf("Inserte dni: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(dni);
-	printf("Inserte contrasena:");
+	printf("Inserte contrasena: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(contrasena);
@@ -131,7 +132,7 @@ void menuAnadirCoche(int* opcion) {
 	"       Anadir coche\n\n"
 	"---------------------------\n\n");
 	Coche c = pedirCoche();
-	printf("%d",id_marca(c));
+	printf("%d",obtenerAnadirMarca(c));
 	menuGestCoches(opcion);
 }
 

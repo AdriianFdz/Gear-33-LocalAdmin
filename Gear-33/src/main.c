@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "dibujos.h"
-#include "coche.h"
-#include "menus.h"
+#include "../include/dibujos.h"
+#include "../include/coche.h"
+#include "../include/menus.h"
 
 int main(void) {
 
