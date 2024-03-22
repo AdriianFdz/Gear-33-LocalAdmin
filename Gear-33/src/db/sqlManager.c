@@ -146,3 +146,107 @@ int obtenerAnadirMarca(Coche c) {
 	sqlite3_close(db);
 	return id_marca;
 }
+
+int obtenerAnadirModelo(Coche c) {
+    sqlite3 *db = abrirDB();
+    int id_marca = obtenerAnadirMarca(c);
+    int id_modelo = 0;
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT id, nombre FROM Modelo WHERE nombre = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, c.modelo, strlen(c.modelo), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+		id_modelo = sqlite3_column_int(stmt, 0);
+		sqlite3_finalize(stmt);
+		// Commit de la transacción antes de cerrar la conexión
+		//sqlite3_exec(db, "COMMIT", NULL, NULL, NULL);
+    } else {
+		sqlite3_finalize(stmt);
+
+    	sqlite3_stmt *stmt2;
+        char sql2[] = "INSERT INTO Modelo VALUES (NULL, ?, ?, ?, ?)";
+        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+        if (result != SQLITE_OK) {
+            printf("Error preparing statement\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_bind_text(stmt2, 1, c.modelo, strlen(c.modelo), SQLITE_STATIC);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_text(stmt2, 2, c.cambio, strlen(c.cambio), SQLITE_STATIC);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_text(stmt2, 3, c.combustible, strlen(c.combustible), SQLITE_STATIC);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_int(stmt2, 4, id_marca);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_step(stmt2);
+
+        if (result != SQLITE_DONE) {
+             printf("Error executing statement\n");
+             printf("%s\n", sqlite3_errmsg(db));
+             sqlite3_finalize(stmt2);
+             sqlite3_close(db);
+             return 0;
+         }
+
+        id_modelo = sqlite3_last_insert_rowid(db);
+		sqlite3_finalize(stmt2);
+		// Commit de la transacción antes de cerrar la conexión
+		//sqlite3_exec(db, "COMMIT", NULL, NULL, NULL);
+		//sqlite3_close(db);
+
+	}
+
+	sqlite3_close(db);
+	return id_modelo;
+}

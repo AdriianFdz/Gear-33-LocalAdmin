@@ -14,5 +14,6 @@
 sqlite3* abrirDB();
 int inicioSesion(char dni[], char contrasena[]);
 int obtenerAnadirMarca(Coche c);
+int obtenerAnadirModelo(Coche c);
 
 #endif /* SQLMANAGER_H_ */

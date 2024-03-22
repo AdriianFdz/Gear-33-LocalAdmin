@@ -132,7 +132,7 @@ void menuAnadirCoche(int* opcion) {
 	"       Anadir coche\n\n"
 	"---------------------------\n\n");
 	Coche c = pedirCoche();
-	printf("%d",obtenerAnadirMarca(c));
+	printf("%d",obtenerAnadirModelo(c));
 	menuGestCoches(opcion);
 }
 
