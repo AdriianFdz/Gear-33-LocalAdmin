@@ -16,5 +16,6 @@ int inicioSesion(char dni[], char contrasena[]);
 int obtenerAnadirMarca(Coche c);
 int obtenerAnadirModelo(Coche c);
 int AnadirCoche(Coche c);
+int EliminarCoche(char matricula[]);
 
 #endif /* SQLMANAGER_H_ */

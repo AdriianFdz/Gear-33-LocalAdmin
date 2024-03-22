@@ -356,3 +356,63 @@ int AnadirCoche(Coche c) {
 	sqlite3_close(db);
 	return 0;
 }
+
+int EliminarCoche(char matricula[]) {
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT matricula FROM Coche WHERE matricula = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, matricula, strlen(matricula), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+    	sqlite3_finalize(stmt);
+    	sqlite3_stmt *stmt2;
+        char sql2[] = "DELETE FROM Coche WHERE matricula = ?";
+
+        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+        if (result != SQLITE_OK) {
+            printf("Error preparing statement\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_bind_text(stmt2, 1, matricula, strlen(matricula), SQLITE_STATIC);
+               if (result != SQLITE_OK) {
+                   printf("Error binding parameters\n");
+                   printf("%s\n", sqlite3_errmsg(db));
+                   sqlite3_finalize(stmt2);
+                   sqlite3_close(db);
+                   return result;
+               }
+        result = sqlite3_step(stmt2);
+
+        sqlite3_finalize(stmt2);
+        sqlite3_close(db);
+
+        return 1;
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+
+}

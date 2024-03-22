@@ -28,10 +28,11 @@ void menuLogin()
 	comprobar = inicioSesion(dni, contrasena);
 	if (comprobar == 1) {
 		menuPrincipal();
+	}else {
+		system("cls");
+		printf("ERROR AL INICIAR SESION (PARAMETRO INVALIDO) \n");
+		menuLogin();
 	}
-
-	printf("ERROR AL INICIAR SESION (PARAMETRO INVALIDO) \n");
-	menuLogin();
 
 
 
@@ -347,7 +348,7 @@ void menuModificarCombustible(int *opcion) {
 
 
 void menuEliminarCoche(int* opcion) {
-	char matricula[7] = "";
+	char matricula[8] = "";
 
 	dibujoCoche();
 	printf(
@@ -358,7 +359,16 @@ void menuEliminarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
+	int result = EliminarCoche(matricula);
+	system("cls");
+
+	if (result == 1) {
+		printf("COCHE ELIMINADO CON EXITO\n");
+		menuGestCoches(opcion);
+	}
+	printf("MATRICULA INVALIDA\n");
 	menuGestCoches(opcion);
+
 }
 
 
