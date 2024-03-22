@@ -6,18 +6,25 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../../include/sqlite3.h"
 #include "../../include/coche.h"
 #include "../../include/sqlManager.h"
+#include "../../include/config.h"
 
 
 sqlite3* abrirDB() {
+	CONFIG* datosConfig = malloc(sizeof(CONFIG));
+	leerConfig(datosConfig);
+
     sqlite3 *db;
 
-    int result = sqlite3_open("C:\\Users\\seven\\git\\Gear-33\\Gear-33\\src\\db\\Gear-33.db", &db);
+    int result = sqlite3_open(datosConfig -> database, &db);
+    free(datosConfig);
     if (result != SQLITE_OK) {
         printf("Error opening database\n");
     }
+
 
     return db;
 }

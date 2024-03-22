@@ -14,10 +14,7 @@
 #include "../include/menus.h"
 
 int main(void) {
-
 	menuLogin();
-
-
 
 	return 0;
 }
