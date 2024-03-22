@@ -3,7 +3,7 @@
 
 //coche
 typedef struct {
-	char matricula[7];
+	char matricula[8];
 	char color[10];
 	int anyo;
 	float precioBase;

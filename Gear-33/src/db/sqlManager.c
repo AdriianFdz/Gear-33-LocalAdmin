@@ -148,8 +148,9 @@ int obtenerAnadirMarca(Coche c) {
 }
 
 int obtenerAnadirModelo(Coche c) {
+	int id_marca = obtenerAnadirMarca(c);
     sqlite3 *db = abrirDB();
-    int id_marca = obtenerAnadirMarca(c);
+
     int id_modelo = 0;
 
     sqlite3_stmt *stmt;
@@ -177,8 +178,7 @@ int obtenerAnadirModelo(Coche c) {
     if (result == SQLITE_ROW) {
 		id_modelo = sqlite3_column_int(stmt, 0);
 		sqlite3_finalize(stmt);
-		// Commit de la transacción antes de cerrar la conexión
-		//sqlite3_exec(db, "COMMIT", NULL, NULL, NULL);
+
     } else {
 		sqlite3_finalize(stmt);
 
@@ -241,12 +241,118 @@ int obtenerAnadirModelo(Coche c) {
 
         id_modelo = sqlite3_last_insert_rowid(db);
 		sqlite3_finalize(stmt2);
-		// Commit de la transacción antes de cerrar la conexión
-		//sqlite3_exec(db, "COMMIT", NULL, NULL, NULL);
-		//sqlite3_close(db);
 
 	}
 
 	sqlite3_close(db);
 	return id_modelo;
+}
+
+int AnadirCoche(Coche c) {
+	int id_modelo = obtenerAnadirModelo(c);
+    sqlite3 *db = abrirDB();
+
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT matricula FROM Coche WHERE matricula = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, c.matricula, strlen(c.matricula), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+		sqlite3_finalize(stmt);
+		return 0;
+
+    } else {
+		sqlite3_finalize(stmt);
+
+    	sqlite3_stmt *stmt2;
+        char sql2[] = "INSERT INTO Coche VALUES (?, ?, ?, ?, ?)";
+        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+        if (result != SQLITE_OK) {
+            printf("Error preparing statement\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_bind_text(stmt2, 1, c.matricula, strlen(c.matricula), SQLITE_STATIC);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_text(stmt2, 2, c.color, strlen(c.color), SQLITE_STATIC);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_double(stmt2, 3, c.precioBase);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+        result = sqlite3_bind_int(stmt2, 4, c.anyo);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_bind_int(stmt2, 5, id_modelo);
+
+        if (result != SQLITE_OK) {
+            printf("Error binding parameters\n");
+            printf("%s\n", sqlite3_errmsg(db));
+            sqlite3_finalize(stmt2);
+            sqlite3_close(db);
+            return result;
+        }
+
+        result = sqlite3_step(stmt2);
+
+        if (result != SQLITE_DONE) {
+             printf("Error executing statement\n");
+             printf("%s\n", sqlite3_errmsg(db));
+             sqlite3_finalize(stmt2);
+             sqlite3_close(db);
+             return 0;
+         }
+
+		sqlite3_finalize(stmt2);
+
+	}
+
+	sqlite3_close(db);
+	return 0;
 }
