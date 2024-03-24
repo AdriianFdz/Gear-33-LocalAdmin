@@ -138,7 +138,7 @@ void menuAnadirCoche(int* opcion) {
 }
 
 void menuModificarCoche(int* opcion) {
-	char matricula[7] = "";
+	char matricula[8];
 
 	dibujoCoche();
 	printf(
@@ -150,8 +150,14 @@ void menuModificarCoche(int* opcion) {
 	fflush(stdin);
 	gets(matricula);
 
-	//falta funcion que comprueba si la matricula existe
 
+	int existe = ExisteMatricula(matricula);
+
+	if (existe == 0) {
+		system("cls");
+		printf("LA MATRICULA INTRODUCIDA NO EXISTE\n");
+		menuGestCoches(opcion);
+	}
 	//
 	fflush(stdout);
 	fflush(stdin);
@@ -169,36 +175,36 @@ void menuModificarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", opcion);
-	opcionMenuModificarCoches(opcion);
+	opcionMenuModificarCoches(opcion, matricula);
 
 }
 
-void opcionMenuModificarCoches(int *opcion) {
+void opcionMenuModificarCoches(int *opcion, char matricula[]) {
 	system("cls");
 		switch (*opcion) {
 				case 1:
-					menuModificarMatricula(opcion);
+					menuModificarMatricula(opcion, matricula);
 					break;
 				case 2:
-					menuModificarMarca(opcion);
+					menuModificarMarca(opcion, matricula);
 					break;
 				case 3:
-					menuModificarModelo(opcion);
+					menuModificarModelo(opcion, matricula);
 					break;
 				case 4:
-					menuModificarColor(opcion);
+					menuModificarColor(opcion, matricula);
 					break;
 				case 5:
-					menuModificarAnyo(opcion);
+					menuModificarAnyo(opcion, matricula);
 					break;
 				case 6:
-					menuModificarPrecio(opcion);
+					menuModificarPrecio(opcion, matricula);
 					break;
 				case 7:
-					menuModificarCambio(opcion);
+					menuModificarCambio(opcion, matricula);
 					break;
 				case 8:
-					menuModificarCombustible(opcion);
+					menuModificarCombustible(opcion, matricula);
 					break;
 				case 0:
 					menuGestCoches(opcion);
@@ -210,8 +216,8 @@ void opcionMenuModificarCoches(int *opcion) {
 			}
 }
 
-void menuModificarMatricula(int *opcion) {
-	char matricula[7];
+void menuModificarMatricula(int *opcion, char matricula[]) {
+	char matriculaNueva[8];
 
 	dibujoCoche();
 	printf(
@@ -221,13 +227,12 @@ void menuModificarMatricula(int *opcion) {
 	printf("Introduzca la nueva matricula:  ");
 	fflush(stdout);
 	fflush(stdin);
-	gets(matricula);
-	// crear funcion para modificar matricula
-	/////
+	gets(matriculaNueva);
+	ModificarMatricula(matricula, matriculaNueva);
 	menuGestCoches(opcion);
 }
 
-void menuModificarMarca(int *opcion) {
+void menuModificarMarca(int *opcion, char matricula[]) {
 	char marca[15];
 
 	dibujoCoche();
@@ -244,7 +249,7 @@ void menuModificarMarca(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarModelo(int *opcion) {
+void menuModificarModelo(int *opcion, char matricula[]) {
 	char modelo[15];
 
 	dibujoCoche();
@@ -261,7 +266,7 @@ void menuModificarModelo(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarColor(int *opcion) {
+void menuModificarColor(int *opcion, char matricula[]) {
 	char color[10];
 
 	dibujoCoche();
@@ -278,7 +283,7 @@ void menuModificarColor(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarAnyo(int *opcion) {
+void menuModificarAnyo(int *opcion, char matricula[]) {
 	int anyo;
 
 	dibujoCoche();
@@ -295,7 +300,7 @@ void menuModificarAnyo(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarPrecio(int *opcion) {
+void menuModificarPrecio(int *opcion, char matricula[]) {
 	float precio;
 
 	dibujoCoche();
@@ -312,7 +317,7 @@ void menuModificarPrecio(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarCambio(int *opcion) {
+void menuModificarCambio(int *opcion, char matricula[]) {
 	char cambio[15];
 
 	dibujoCoche();
@@ -329,7 +334,7 @@ void menuModificarCambio(int *opcion) {
 	menuGestCoches(opcion);
 }
 
-void menuModificarCombustible(int *opcion) {
+void menuModificarCombustible(int *opcion, char matricula[]) {
 	char combustible[10];
 
 	dibujoCoche();

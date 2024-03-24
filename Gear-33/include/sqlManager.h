@@ -17,5 +17,7 @@ int obtenerAnadirMarca(Coche c);
 int obtenerAnadirModelo(Coche c);
 int AnadirCoche(Coche c);
 int EliminarCoche(char matricula[]);
+int ExisteMatricula(char matricula[]);
+int ModificarMatricula(char matricula[], char matriculaNueva[]);
 
 #endif /* SQLMANAGER_H_ */
