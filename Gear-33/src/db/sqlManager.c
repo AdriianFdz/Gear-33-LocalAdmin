@@ -11,6 +11,7 @@
 #include "../../include/coche.h"
 #include "../../include/sqlManager.h"
 #include "../../include/config.h"
+#include "../../include/empleado.h"
 
 
 sqlite3* abrirDB() {
@@ -101,8 +102,6 @@ int obtenerAnadirMarca(Coche c) {
     if (result == SQLITE_ROW) {
 		id_marca = sqlite3_column_int(stmt, 0);
 		sqlite3_finalize(stmt);
-		// Commit de la transacción antes de cerrar la conexión
-		//sqlite3_exec(db, "COMMIT", NULL, NULL, NULL);
     } else {
 		sqlite3_finalize(stmt);
 
@@ -146,7 +145,6 @@ int obtenerAnadirMarca(Coche c) {
 	sqlite3_close(db);
 	return id_marca;
 }
-
 int obtenerAnadirModelo(Coche c) {
 	int id_marca = obtenerAnadirMarca(c);
     sqlite3 *db = abrirDB();
@@ -247,7 +245,6 @@ int obtenerAnadirModelo(Coche c) {
 	sqlite3_close(db);
 	return id_modelo;
 }
-
 int anadirCoche(Coche c) {
 	int id_modelo = obtenerAnadirModelo(c);
     sqlite3 *db = abrirDB();
@@ -358,9 +355,6 @@ int anadirCoche(Coche c) {
 	sqlite3_close(db);
 	return 0;
 }
-
-
-
 int eliminarCoche(char matricula[]) {
     sqlite3 *db = abrirDB();
 
@@ -420,8 +414,6 @@ int eliminarCoche(char matricula[]) {
     return 0;
 
 }
-
-
 int existeMatricula(char matricula[]) {
     sqlite3 *db = abrirDB();
 
@@ -458,8 +450,6 @@ int existeMatricula(char matricula[]) {
 	return 0;
 
 }
-
-
 int modificarMatricula(char matricula[], char matriculaNueva[]) {
     sqlite3 *db = abrirDB();
 
@@ -499,8 +489,6 @@ int modificarMatricula(char matricula[], char matriculaNueva[]) {
     sqlite3_close(db);
     return 0;
 }
-
-
 int modificarColor(char matricula[], char color[]) {
     sqlite3 *db = abrirDB();
 
@@ -540,8 +528,6 @@ int modificarColor(char matricula[], char color[]) {
     sqlite3_close(db);
     return 0;
 }
-
-
 int modificarPrecio(char matricula[], float precio) {
     sqlite3 *db = abrirDB();
 
@@ -581,8 +567,6 @@ int modificarPrecio(char matricula[], float precio) {
     sqlite3_close(db);
     return 0;
 }
-
-
 int modificarAnyo(char matricula[], int anyo) {
     sqlite3 *db = abrirDB();
 
@@ -621,4 +605,41 @@ int modificarAnyo(char matricula[], int anyo) {
     sqlite3_finalize(stmt);
     sqlite3_close(db);
     return 0;
+}
+
+int imprimirCargosTiendas(char condicion[]){
+	sqlite3 *db = abrirDB();
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+	sprintf(sql, "SELECT * FROM %s", condicion);
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return 0;
+	}
+
+//    result = sqlite3_bind_text(stmt, 1, condicion, strlen(condicion), SQLITE_STATIC);
+//
+//    if (result != SQLITE_OK) {
+//        printf("Error binding parameters\n");
+//        printf("%s\n", sqlite3_errmsg(db));
+//        sqlite3_finalize(stmt);
+//        sqlite3_close(db);
+//        return result;
+//    }
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+		}
+	} while (result == SQLITE_ROW);
+
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
 }

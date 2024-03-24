@@ -9,6 +9,8 @@
 #define SQLMANAGER_H_
 
 #include "sqlite3.h"
+#include "coche.h"
+#include "empleado.h"
 
 
 sqlite3* abrirDB();
@@ -21,5 +23,8 @@ int existeMatricula(char matricula[]);
 int modificarMatricula(char matricula[], char matriculaNueva[]);
 int modificarColor(char matricula[], char color[]);
 int modificarPrecio(char matricula[], float precio);
+
+int imprimirCargosTiendas();
+int imprimirTiendas();
 
 #endif /* SQLMANAGER_H_ */

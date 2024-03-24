@@ -116,7 +116,7 @@ void menuAnadirCoche(int* opcion) {
 	"       Anadir coche\n\n"
 	"---------------------------\n\n");
 	Coche c = pedirCoche();
-	AnadirCoche(c);
+	anadirCoche(c);
 	menuGestCoches(opcion);
 }
 void menuModificarCoche(int* opcion) {
@@ -133,7 +133,7 @@ void menuModificarCoche(int* opcion) {
 	gets(matricula);
 
 
-	int existe = ExisteMatricula(matricula);
+	int existe = existeMatricula(matricula);
 
 	if (existe == 0) {
 		system("cls");
@@ -208,7 +208,7 @@ void menuModificarMatricula(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matriculaNueva);
-	ModificarMatricula(matricula, matriculaNueva);
+	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches(opcion);
 }
 void menuModificarMarca(int *opcion, char matricula[]) {
@@ -335,7 +335,7 @@ void menuEliminarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
-	int result = EliminarCoche(matricula);
+	int result = eliminarCoche(matricula);
 	system("cls");
 
 	if (result == 1) {

@@ -85,44 +85,6 @@ void opcionMenuPrincipal(int opcion){
 }
 
 
-void menuGestEmpleado(int* opcion){
-	dibujoPersona();
-    printf(
-        "---------------------------\n\n"
-        "     Gestionar empleado\n\n"
-        "---------------------------\n\n"
-        "1. Anadir empleado\n"
-        "2. Modificar empleado\n"
-        "3. Eliminar empleado\n"
-        "0. Volver\n\n"
-		"Introduce una opcion: ");
-
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d",opcion);
-
-}
-void opcionMenuGestEmpleado(int* opcion){
-	system("cls");
-		switch (*opcion) {
-				case 1:
-					menuAnadirCoche(opcion);
-					break;
-				case 2:
-					menuModificarCoche(opcion);
-					break;
-				case 3:
-					menuEliminarCoche(opcion);
-					break;
-				case 0:
-					menuPrincipal();
-					break;
-				default:
-					printf("El digito introducido no corresponde a ninguno de los anteriores\n");
-					menuGestCoches(opcion);
-					break;
-			}
-}
 void menuGestTienda(int* opcion){
     dibujoTienda();
 	printf(

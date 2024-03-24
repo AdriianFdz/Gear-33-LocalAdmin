@@ -26,7 +26,6 @@ typedef struct {
 
 }ListaUsuarios;
 
-int inicioSesion(char dni[], char contrasena[]);
 void aniadirUsuario(ListaUsuarios *lu, Usuario u);
 Usuario pedirUsuario();
 
