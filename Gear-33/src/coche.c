@@ -116,7 +116,7 @@ void menuAnadirCoche(int* opcion) {
 	"       Anadir coche\n\n"
 	"---------------------------\n\n");
 	Coche c = pedirCoche();
-	AnadirCoche(c);
+	anadirCoche(c);
 	menuGestCoches(opcion);
 }
 void menuModificarCoche(int* opcion) {
@@ -133,7 +133,7 @@ void menuModificarCoche(int* opcion) {
 	gets(matricula);
 
 
-	int existe = ExisteMatricula(matricula);
+	int existe = existeMatricula(matricula);
 
 	if (existe == 0) {
 		system("cls");
@@ -208,7 +208,7 @@ void menuModificarMatricula(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matriculaNueva);
-	ModificarMatricula(matricula, matriculaNueva);
+	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches(opcion);
 }
 void menuModificarMarca(int *opcion, char matricula[]) {
@@ -255,8 +255,7 @@ void menuModificarColor(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(color);
-	// crear funcion para modificar color
-	/////
+	modificarColor(matricula, color);
 	menuGestCoches(opcion);
 }
 void menuModificarAnyo(int *opcion, char matricula[]) {
@@ -271,8 +270,7 @@ void menuModificarAnyo(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &anyo);
-	// crear funcion para modificar año
-	/////
+	modificarAnyo(matricula, anyo);
 	menuGestCoches(opcion);
 }
 void menuModificarPrecio(int *opcion, char matricula[]) {
@@ -287,8 +285,7 @@ void menuModificarPrecio(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%f", &precio);
-	// crear funcion para modificar año
-	/////
+	modificarPrecio(matricula, precio);
 	menuGestCoches(opcion);
 }
 void menuModificarCambio(int *opcion, char matricula[]) {
@@ -303,8 +300,7 @@ void menuModificarCambio(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(cambio);
-	// crear funcion para modificar el cambio
-	/////
+	modificarCambio(matricula, cambio);
 	menuGestCoches(opcion);
 }
 void menuModificarCombustible(int *opcion, char matricula[]) {
@@ -319,8 +315,7 @@ void menuModificarCombustible(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(combustible);
-	// crear funcion para modificar combustible
-	/////
+	modificarCombustible(matricula, combustible);
 	menuGestCoches(opcion);
 }
 void menuEliminarCoche(int* opcion) {
@@ -335,7 +330,7 @@ void menuEliminarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
-	int result = EliminarCoche(matricula);
+	int result = eliminarCoche(matricula);
 	system("cls");
 
 	if (result == 1) {

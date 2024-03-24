@@ -21,5 +21,8 @@ int existeMatricula(char matricula[]);
 int modificarMatricula(char matricula[], char matriculaNueva[]);
 int modificarColor(char matricula[], char color[]);
 int modificarPrecio(char matricula[], float precio);
+int modificarAnyo(char matricula[], int anyo);
+int modificarCambio(char matricula[], char cambio[]);
+int modificarCombustible(char matricula[], char combustible[]);
 
 #endif /* SQLMANAGER_H_ */
