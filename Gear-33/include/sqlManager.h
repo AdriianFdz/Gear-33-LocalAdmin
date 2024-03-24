@@ -15,9 +15,11 @@ sqlite3* abrirDB();
 int inicioSesion(char dni[], char contrasena[]);
 int obtenerAnadirMarca(Coche c);
 int obtenerAnadirModelo(Coche c);
-int AnadirCoche(Coche c);
-int EliminarCoche(char matricula[]);
-int ExisteMatricula(char matricula[]);
-int ModificarMatricula(char matricula[], char matriculaNueva[]);
+int anadirCoche(Coche c);
+int eliminarCoche(char matricula[]);
+int existeMatricula(char matricula[]);
+int modificarMatricula(char matricula[], char matriculaNueva[]);
+int modificarColor(char matricula[], char color[]);
+int modificarPrecio(char matricula[], float precio);
 
 #endif /* SQLMANAGER_H_ */
