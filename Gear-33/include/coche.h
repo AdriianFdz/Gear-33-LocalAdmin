@@ -14,7 +14,6 @@ typedef struct {
 
 }Coche;
 
-
 Coche pedirCoche();
 
 //lista coches
@@ -28,5 +27,24 @@ typedef struct {
 void aniadirCoche(ListaCoches *lc, Coche c);
 
 int aniadirCocheBD(Coche c);
+
+
+
+//menus de coches
+void menuGestCoches();
+	void opcionMenuGestCoches(int *opcion);
+		void menuAnadirCoche(int* opcion);
+		void menuModificarCoche(int* opcion);
+			void opcionMenuModificarCoches(int *opcion, char matricula[]);
+				void menuModificarMatricula(int *opcion, char matricula[] );
+				void menuModificarMarca(int *opcion, char matricula[]);
+				void menuModificarModelo(int *opcion, char matricula[]);
+				void menuModificarColor(int *opcion, char matricula[]);
+				void menuModificarAnyo(int *opcion, char matricula[]);
+				void menuModificarPrecio(int *opcion, char matricula[]);
+				void menuModificarCambio(int *opcion, char matricula[]);
+				void menuModificarCombustible(int *opcion, char matricula[]);
+		void menuEliminarCoche(int* opcion);
+
 
 #endif /* COCHE_H_ */
