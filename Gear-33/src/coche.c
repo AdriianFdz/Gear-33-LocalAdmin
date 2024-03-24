@@ -255,8 +255,7 @@ void menuModificarColor(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(color);
-	// crear funcion para modificar color
-	/////
+	modificarColor(matricula, color);
 	menuGestCoches(opcion);
 }
 void menuModificarAnyo(int *opcion, char matricula[]) {
@@ -271,8 +270,7 @@ void menuModificarAnyo(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &anyo);
-	// crear funcion para modificar año
-	/////
+	modificarAnyo(matricula, anyo);
 	menuGestCoches(opcion);
 }
 void menuModificarPrecio(int *opcion, char matricula[]) {
@@ -287,8 +285,7 @@ void menuModificarPrecio(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%f", &precio);
-	// crear funcion para modificar año
-	/////
+	modificarPrecio(matricula, precio);
 	menuGestCoches(opcion);
 }
 void menuModificarCambio(int *opcion, char matricula[]) {
@@ -303,8 +300,7 @@ void menuModificarCambio(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(cambio);
-	// crear funcion para modificar el cambio
-	/////
+	modificarCambio(matricula, cambio);
 	menuGestCoches(opcion);
 }
 void menuModificarCombustible(int *opcion, char matricula[]) {
@@ -319,8 +315,7 @@ void menuModificarCombustible(int *opcion, char matricula[]) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(combustible);
-	// crear funcion para modificar combustible
-	/////
+	modificarCombustible(matricula, combustible);
 	menuGestCoches(opcion);
 }
 void menuEliminarCoche(int* opcion) {
