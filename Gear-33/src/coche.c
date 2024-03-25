@@ -144,13 +144,12 @@ void menuModificarCoche(int* opcion) {
 	fflush(stdout);
 	fflush(stdin);
 	printf("\n1.Modificar matricula\n"
-	       "2.Modificar marca\n"
-	       "3.Modificar modelo\n"
-	       "4.Modificar color\n"
-	       "5.Modificar año\n"
-	       "6.Modificar precio\n"
-	       "7.Modificar cambio\n"
-	       "8.Modificar combustible\n"
+	       "2.Modificar marca/modelo\n"
+	       "3.Modificar color\n"
+	       "4.Modificar año\n"
+	       "5.Modificar precio\n"
+	       "6.Modificar cambio\n"
+	       "7.Modificar combustible\n"
 	       "0.Volver\n\n"
 		   "Introduce una opción: ");
 
@@ -167,24 +166,21 @@ void opcionMenuModificarCoches(int *opcion, char matricula[]) {
 					menuModificarMatricula(opcion, matricula);
 					break;
 				case 2:
-					menuModificarMarca(opcion, matricula);
+					menuModificarMarcaModelo(opcion, matricula);
 					break;
 				case 3:
-					menuModificarModelo(opcion, matricula);
-					break;
-				case 4:
 					menuModificarColor(opcion, matricula);
 					break;
-				case 5:
+				case 4:
 					menuModificarAnyo(opcion, matricula);
 					break;
-				case 6:
+				case 5:
 					menuModificarPrecio(opcion, matricula);
 					break;
-				case 7:
+				case 6:
 					menuModificarCambio(opcion, matricula);
 					break;
-				case 8:
+				case 7:
 					menuModificarCombustible(opcion, matricula);
 					break;
 				case 0:
@@ -211,38 +207,33 @@ void menuModificarMatricula(int *opcion, char matricula[]) {
 	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches(opcion);
 }
-void menuModificarMarca(int *opcion, char matricula[]) {
-	char marca[15];
+void menuModificarMarcaModelo(int *opcion, char matricula[]) {
+	int marca = 0;
+	int modelo = 0 ;
 
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
-	"      Modificar marca\n\n"
+	"   Modificar marca/modelo\n\n"
 	"---------------------------\n\n");
+	imprimirMarcas();
+	fflush(stdout);
+	fflush(stdin);
 	printf("Introduzca la nueva marca:  ");
 	fflush(stdout);
 	fflush(stdin);
-	gets(marca);
-	// crear funcion para modificar marca
-	/////
-	menuGestCoches(opcion);
-}
-void menuModificarModelo(int *opcion, char matricula[]) {
-	char modelo[15];
-
-	dibujoCoche();
-	printf(
-	"---------------------------\n\n"
-	"      Modificar modelo\n\n"
-	"---------------------------\n\n");
+	scanf("%d", &marca);
+	imprimirModelos(marca);
+	fflush(stdout);
+	fflush(stdin);
 	printf("Introduzca el nuevo modelo:  ");
 	fflush(stdout);
 	fflush(stdin);
-	gets(modelo);
-	// crear funcion para modificar modelo
-	/////
+	scanf("%d", &modelo);
+	modificarMarcaModelo(matricula, modelo);
 	menuGestCoches(opcion);
 }
+
 void menuModificarColor(int *opcion, char matricula[]) {
 	char color[10];
 
