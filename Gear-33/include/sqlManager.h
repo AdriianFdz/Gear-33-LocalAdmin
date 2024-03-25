@@ -28,6 +28,8 @@ int modificarCambio(char matricula[], char cambio[]);
 int modificarCombustible(char matricula[], char combustible[]);
 
 int imprimirCargosTiendas();
-int imprimirTiendas();
+int anadirEmpleado(Empleado e);
+
+
 
 #endif /* SQLMANAGER_H_ */

@@ -12,6 +12,7 @@ typedef struct {
 	char dni[10];
 	char nombre[51];
 	char apellido[51];
+	char telefono[10];
 	char fecha_nacimiento[11];
 	char fecha_ini_contrato[11];
 	char fecha_fin_contrato[11];

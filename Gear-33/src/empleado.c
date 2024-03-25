@@ -60,11 +60,22 @@ void menuAnadirEmpleado(){
 		"      Anadir empleado\n\n"
 		"---------------------------\n\n");
 	Empleado e = pedirEmpleado();
+	anadirEmpleado(e);
 
 }
 
 Empleado pedirEmpleado(){
 	Empleado e;
+
+	printf("Introduce el DNI: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(e.dni);
+
+	printf("Introduce una contrasena: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(e.contrasena);
 
 	printf("Introduce el nombre: ");
 	fflush(stdout);
@@ -76,10 +87,10 @@ Empleado pedirEmpleado(){
 	fflush(stdin);
 	gets(e.apellido);
 
-	printf("Introduce el DNI: ");
+	printf("Introduce el telefono: ");
 	fflush(stdout);
 	fflush(stdin);
-	gets(e.dni);
+	gets(e.telefono);
 
 	printf("Introduce la fecha de nacimiento: ");
 	fflush(stdout);
@@ -96,22 +107,19 @@ Empleado pedirEmpleado(){
 	fflush(stdin);
 	gets(e.fecha_fin_contrato);
 
+	printf("Tiendas:\n");
+	imprimirCargosTiendas("Tienda");
+	printf("Introduce el ID de la tienda: ");
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", &e.id_tienda);
+
 	printf("Cargos:\n");
 	imprimirCargosTiendas("Cargo");
 	printf("Introduce el ID del cargo: ");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &e.id_cargo);
-
-	printf("Tiendas:\n");
-	imprimirCargosTiendas("Tienda");
-
-	printf("Introduce el ID de la tienda: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &e.id_tienda);
-
-
 	return e;
 }
 

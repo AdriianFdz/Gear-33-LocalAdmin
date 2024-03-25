@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../include/usuario.h"
+#include "../include/dibujos.h"
+#include "../include/menus.h"
 
 
 void aniadirUsuario(ListaUsuarios *lu, Usuario u)
