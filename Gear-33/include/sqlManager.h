@@ -26,6 +26,9 @@ int modificarPrecio(char matricula[], float precio);
 int modificarAnyo(char matricula[], int anyo);
 int modificarCambio(char matricula[], char cambio[]);
 int modificarCombustible(char matricula[], char combustible[]);
+int modificarMarcaModelo(char matricula[], int id_modelo);
+int imprimirMarcas();
+int imprimirModelos(int id_marca);
 
 int imprimirCargosTiendas();
 int anadirEmpleado(Empleado e);

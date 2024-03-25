@@ -608,6 +608,45 @@ int modificarAnyo(char matricula[], int anyo) {
     sqlite3_close(db);
     return 0;
 }
+int modificarMarcaModelo(char matricula[], int id_modelo) {
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "UPDATE Coche SET id_modelo = ? WHERE matricula = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_int(stmt, 1, id_modelo);
+    if (result != SQLITE_OK) {
+    	printf("Error binding parameters\n");
+    	printf("%s\n", sqlite3_errmsg(db));
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
+    	return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 2, matricula, strlen(matricula), SQLITE_STATIC);
+    if (result != SQLITE_OK) {
+    	printf("Error binding parameters\n");
+    	printf("%s\n", sqlite3_errmsg(db));
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
+    	return result;
+    }
+
+    result = sqlite3_step(stmt);
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+}
 int modificarCambio(char matricula[], char cambio[]) {
     sqlite3 *db = abrirDB();
     int id_modelo;
@@ -746,7 +785,66 @@ int modificarCombustible(char matricula[], char combustible[]) {
     sqlite3_close(db);
     return 0;
 }
+int imprimirMarcas() {
+    sqlite3 *db = abrirDB();
+    sqlite3_stmt *stmt;
 
+    char sql[] = "SELECT id, nombre FROM Marca";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+		}
+	} while (result == SQLITE_ROW);
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+
+}
+int imprimirModelos(int id_marca) {
+    sqlite3 *db = abrirDB();
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT id, nombre FROM Modelo WHERE id_marca = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_int(stmt, 1, id_marca);
+    if (result != SQLITE_OK) {
+        printf("Error binding parameters\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_finalize(stmt);
+        sqlite3_close(db);
+        return result;
+    }
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+		}
+	} while (result == SQLITE_ROW);
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+}
 
 int imprimirCargosTiendas(char condicion[]){
 	sqlite3 *db = abrirDB();
@@ -851,3 +949,5 @@ int anadirEmpleado(Empleado e){
 		return 0;
 	}
 }
+
+
