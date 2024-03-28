@@ -44,7 +44,6 @@ void menuGestUsuario(int* opcion);
 				void menuModificarDireccion(int *opcion);
 				void menuModificarContrasena(int *opcion);
 		void menuEliminarUsuario(int* opcion);
-void menuGestEmpleado(int* opcion);
 void menuGestTienda(int* opcion);
 
 

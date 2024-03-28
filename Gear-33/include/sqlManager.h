@@ -32,7 +32,17 @@ int imprimirModelos(int id_marca);
 
 int imprimirCargosTiendas();
 int anadirEmpleado(Empleado e);
-
-
+int eliminarEmpleado(char dni[10]);
+int existeEmpleado(char dni[10], Empleado* e);
+int modificarDniEmp(char dni[10], char dniNuevo[10]);
+int modificarNombreEmp(char dni[10], char nombreNuevo[51]);
+int modificarApellidoEmp(char dni[10], char apellidoNuevo[51]);
+int modificarTelefonoEmp(char dni[10], char telefonoNuevo[10]);
+int modificarFechaNacEmp(char dni[10], char fechaNacNueva[11]);
+int modificarFechaInicContEmp(char dni[10], char fechaInicContNueva[11]);
+int modificarFechaFinContEmp(char dni[10], char fechaFinContNueva[11]);
+int modificarIdTiendaEmp(char dni[10], int nuevoIdTienda);
+int modificarIdCargoEmp(char dni[10], int nuevoIdCargo);
+int modificarContrasenaEmp(char dni[10], char contrasenaNueva[51]);
 
 #endif /* SQLMANAGER_H_ */

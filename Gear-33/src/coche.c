@@ -200,7 +200,7 @@ void menuModificarMatricula(int *opcion, char matricula[]) {
 	"---------------------------\n\n"
 	"    Modificar matricula\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca la nueva matricula:  ");
+	printf("Introduzca la nueva matricula: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(matriculaNueva);
@@ -327,8 +327,9 @@ void menuEliminarCoche(int* opcion) {
 	if (result == 1) {
 		printf("COCHE ELIMINADO CON EXITO\n");
 		menuGestCoches(opcion);
+	} else {
+		printf("MATRICULA INVALIDA\n");
+		menuGestCoches(opcion);
 	}
-	printf("MATRICULA INVALIDA\n");
-	menuGestCoches(opcion);
 
 }

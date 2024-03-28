@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../include/usuario.h"
 #include "../include/sqlManager.h"
+#include "../include/empleado.h"
 
 void menuLogin()
 {
@@ -69,7 +70,7 @@ void opcionMenuPrincipal(int opcion){
 				menuGestUsuario(&opcion);
 				break;
 			case 3:
-				menuGestEmpleado(&opcion);
+				menuGestEmpleado();
 				break;
 			case 4:
 				menuGestTienda(&opcion);

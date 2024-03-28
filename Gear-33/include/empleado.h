@@ -28,9 +28,30 @@ typedef struct {
 } Cargo;
 
 
-void menuGestEmpleado(int* opcion);
+void menuGestEmpleado();
 void opcionMenuGestEmpleado(int* opcion);
 void menuAnadirEmpleado();
+void menuModificarEmpleado();
+void menuEliminarEmpleado();
+
+void opcionMenuModificarEmpleado(int* opcion, Empleado* emp);
+void menuModificarDniEmp(char dni[10]);
+void menuModificarNombreEmp(Empleado* emp);
+void menuModificarApellidoEmp(Empleado* emp);
+void menuModificarTelefonoEmp(Empleado* emp);
+void menuModificarFechaNacEmp(Empleado* emp);
+void menuModificarFechaInicContEmp(Empleado* emp);
+void menuModificarFechaFinContEmp(Empleado* emp);
+void menuModificarTiendaEmp(Empleado* emp);
+void menuModificarCargoEmp(Empleado* emp);
+
+
+
+
+
+
+
+
 Empleado pedirEmpleado();
 
 
