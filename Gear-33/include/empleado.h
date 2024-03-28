@@ -44,7 +44,7 @@ void menuModificarFechaInicContEmp(Empleado* emp);
 void menuModificarFechaFinContEmp(Empleado* emp);
 void menuModificarTiendaEmp(Empleado* emp);
 void menuModificarCargoEmp(Empleado* emp);
-
+void menuModificarContrasenaEmp(Empleado* emp);
 
 
 
