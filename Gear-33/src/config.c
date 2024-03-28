@@ -19,7 +19,7 @@ void leerConfig (CONFIG* configuracion){
 	FILE* f = fopen("../conf/propperties.cfg", "r");
 
 	if (f == NULL) {
-		printf("ERROR AL ABRIR ARCHIVO CONFIGURACION");
+		printf("ERROR AL ABRIR ARCHIVO CONFIGURACION\n");
 		return;
 	}
 
