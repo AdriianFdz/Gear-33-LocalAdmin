@@ -33,17 +33,17 @@ int aniadirCocheBD(Coche c);
 //menus de coches
 void menuGestCoches();
 	void opcionMenuGestCoches(int *opcion);
-		void menuAnadirCoche(int* opcion);
-		void menuModificarCoche(int* opcion);
+		void menuAnadirCoche();
+		void menuModificarCoche();
 			void opcionMenuModificarCoches(int *opcion, char matricula[]);
-				void menuModificarMatricula(int *opcion, char matricula[] );
-				void menuModificarMarcaModelo(int *opcion, char matricula[]);
-				void menuModificarColor(int *opcion, char matricula[]);
-				void menuModificarAnyo(int *opcion, char matricula[]);
-				void menuModificarPrecio(int *opcion, char matricula[]);
-				void menuModificarCambio(int *opcion, char matricula[]);
-				void menuModificarCombustible(int *opcion, char matricula[]);
-		void menuEliminarCoche(int* opcion);
+				void menuModificarMatricula(char matricula[] );
+				void menuModificarMarcaModelo(char matricula[]);
+				void menuModificarColor(char matricula[]);
+				void menuModificarAnyo(char matricula[]);
+				void menuModificarPrecio(char matricula[]);
+				void menuModificarCambio(char matricula[]);
+				void menuModificarCombustible(char matricula[]);
+		void menuEliminarCoche();
 
 
 #endif /* COCHE_H_ */
