@@ -12,25 +12,25 @@
 #include "coche.h"
 #include "empleado.h"
 
-
+// funciones generales
 sqlite3* abrirDB();
 int inicioSesion(char dni[], char contrasena[]);
-int obtenerAnadirMarca(Coche c);
-int obtenerAnadirModelo(Coche c);
+
+// coches
 int anadirCoche(Coche c);
 int eliminarCoche(char matricula[]);
-int existeMatricula(char matricula[]);
+int existeMatricula(char matricula[], Coche* c);
 int modificarMatricula(char matricula[], char matriculaNueva[]);
 int modificarColor(char matricula[], char color[]);
 int modificarPrecio(char matricula[], float precio);
 int modificarAnyo(char matricula[], int anyo);
-int modificarCambio(char matricula[], char cambio[]);
-int modificarCombustible(char matricula[], char combustible[]);
 int modificarMarcaModelo(char matricula[], int id_modelo);
-int imprimirMarcas();
-int imprimirModelos(int id_marca);
+int guardarMarcas(Marca marcas[]);
+int guardarModelos(Modelo modelos[], int id_marca);
+int obtenerNumeroMarcas(int* numero);
+int obtenerNumeroModelos(int* numero, int id_marca);
 
-int imprimirCargosTiendas();
+// empleado
 int anadirEmpleado(Empleado e);
 int eliminarEmpleado(char dni[10]);
 int existeEmpleado(char dni[10], Empleado* e);
@@ -44,5 +44,9 @@ int modificarFechaFinContEmp(char dni[10], char fechaFinContNueva[11]);
 int modificarIdTiendaEmp(char dni[10], int nuevoIdTienda);
 int modificarIdCargoEmp(char dni[10], int nuevoIdCargo);
 int modificarContrasenaEmp(char dni[10], char contrasenaNueva[51]);
-
+int guardarTiendas(Tienda tiendas[]);
+int guardarCargos(Cargo cargos[]);
+int imprimirCargosTiendas();
+int obtenerNumeroCargos(int* numero);
+int obtenerNumeroTiendas(int* numero);
 #endif /* SQLMANAGER_H_ */

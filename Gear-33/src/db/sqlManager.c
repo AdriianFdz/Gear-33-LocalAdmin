@@ -13,7 +13,7 @@
 #include "../../include/config.h"
 #include "../../include/empleado.h"
 
-
+// funciones generales
 sqlite3* abrirDB() {
 	CONFIG* datosConfig = malloc(sizeof(CONFIG));
 	leerConfig(datosConfig);
@@ -29,7 +29,6 @@ sqlite3* abrirDB() {
 
     return db;
 }
-
 int inicioSesion(char dni[], char contrasena[]) {
     sqlite3 *db = abrirDB();
     int result = 0;
@@ -73,277 +72,88 @@ int inicioSesion(char dni[], char contrasena[]) {
     return 0;
 }
 
-int obtenerAnadirMarca(Coche c) {
-    sqlite3 *db = abrirDB();
-    int id_marca = 0;
-
-    sqlite3_stmt *stmt;
-
-    char sql[] = "SELECT id, nombre FROM Marca WHERE nombre = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, c.marca, strlen(c.marca), SQLITE_STATIC);
-           if (result != SQLITE_OK) {
-               printf("Error binding parameters\n");
-               printf("%s\n", sqlite3_errmsg(db));
-               sqlite3_finalize(stmt);
-               sqlite3_close(db);
-               return result;
-           }
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-		id_marca = sqlite3_column_int(stmt, 0);
-		sqlite3_finalize(stmt);
-    } else {
-		sqlite3_finalize(stmt);
-
-    	sqlite3_stmt *stmt2;
-        char sql2[] = "INSERT INTO Marca VALUES (NULL, ?)";
-        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
-        if (result != SQLITE_OK) {
-            printf("Error preparing statement\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_text(stmt2, 1, c.marca, strlen(c.marca), SQLITE_STATIC);
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_step(stmt2);
-
-        if (result != SQLITE_DONE) {
-             printf("Error executing statement\n");
-             printf("%s\n", sqlite3_errmsg(db));
-             sqlite3_finalize(stmt2);
-             sqlite3_close(db);
-             return 0;
-         }
-
-        id_marca = sqlite3_last_insert_rowid(db);
-		sqlite3_finalize(stmt2);
-
-	}
-
-	sqlite3_close(db);
-	return id_marca;
-}
-int obtenerAnadirModelo(Coche c) {
-	int id_marca = obtenerAnadirMarca(c);
-    sqlite3 *db = abrirDB();
-
-    int id_modelo = 0;
-
-    sqlite3_stmt *stmt;
-
-    char sql[] = "SELECT id, nombre FROM Modelo WHERE nombre = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, c.modelo, strlen(c.modelo), SQLITE_STATIC);
-           if (result != SQLITE_OK) {
-               printf("Error binding parameters\n");
-               printf("%s\n", sqlite3_errmsg(db));
-               sqlite3_finalize(stmt);
-               sqlite3_close(db);
-               return result;
-           }
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-		id_modelo = sqlite3_column_int(stmt, 0);
-		sqlite3_finalize(stmt);
-
-    } else {
-		sqlite3_finalize(stmt);
-
-    	sqlite3_stmt *stmt2;
-        char sql2[] = "INSERT INTO Modelo VALUES (NULL, ?, ?, ?, ?)";
-        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
-        if (result != SQLITE_OK) {
-            printf("Error preparing statement\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_text(stmt2, 1, c.modelo, strlen(c.modelo), SQLITE_STATIC);
-
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_text(stmt2, 2, c.cambio, strlen(c.cambio), SQLITE_STATIC);
-
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_text(stmt2, 3, c.combustible, strlen(c.combustible), SQLITE_STATIC);
-
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_int(stmt2, 4, id_marca);
-
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_step(stmt2);
-
-        if (result != SQLITE_DONE) {
-             printf("Error executing statement\n");
-             printf("%s\n", sqlite3_errmsg(db));
-             sqlite3_finalize(stmt2);
-             sqlite3_close(db);
-             return 0;
-         }
-
-        id_modelo = sqlite3_last_insert_rowid(db);
-		sqlite3_finalize(stmt2);
-
-	}
-
-	sqlite3_close(db);
-	return id_modelo;
-}
+// coches
 int anadirCoche(Coche c) {
-	int id_modelo = obtenerAnadirModelo(c);
-    sqlite3 *db = abrirDB();
+    Coche cNull;
+    strcpy(cNull.matricula, "NULL");
+	int resultado = existeMatricula(c.matricula, &cNull);
+
+	sqlite3 *db = abrirDB();
 
 
-    sqlite3_stmt *stmt;
+	if(resultado != 0){
 
-    char sql[] = "SELECT matricula FROM Coche WHERE matricula = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, c.matricula, strlen(c.matricula), SQLITE_STATIC);
-    if (result != SQLITE_OK) {
-        printf("Error binding parameters\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
+		printf("La matricula introducida ya existe\n");
 		return 0;
-
     } else {
-		sqlite3_finalize(stmt);
+    	int result;
 
-    	sqlite3_stmt *stmt2;
-        char sql2[] = "INSERT INTO Coche VALUES (?, ?, ?, ?, ?)";
-        result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
-        if (result != SQLITE_OK) {
-            printf("Error preparing statement\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return result;
-        }
+		sqlite3_stmt *stmt2;
+		char sql2[] = "INSERT INTO Coche VALUES (?, ?, ?, ?, ?)";
+		result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
 
-        result = sqlite3_bind_text(stmt2, 1, c.matricula, strlen(c.matricula), SQLITE_STATIC);
+		result = sqlite3_bind_text(stmt2, 1, c.matricula, strlen(c.matricula), SQLITE_STATIC);
 
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_text(stmt2, 2, c.color, strlen(c.color), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_bind_text(stmt2, 2, c.color, strlen(c.color), SQLITE_STATIC);
 
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_double(stmt2, 3, c.precioBase);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_bind_double(stmt2, 3, c.precioBase);
 
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
-        result = sqlite3_bind_int(stmt2, 4, c.anyo);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_bind_int(stmt2, 4, c.anyo);
 
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
 
-        result = sqlite3_bind_int(stmt2, 5, id_modelo);
+		result = sqlite3_bind_int(stmt2, 5, c.modelo.id);
 
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt2);
-            sqlite3_close(db);
-            return result;
-        }
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
 
-        result = sqlite3_step(stmt2);
+		result = sqlite3_step(stmt2);
 
-        if (result != SQLITE_DONE) {
-             printf("Error executing statement\n");
-             printf("%s\n", sqlite3_errmsg(db));
-             sqlite3_finalize(stmt2);
-             sqlite3_close(db);
-             return 0;
-         }
+		if (result != SQLITE_DONE) {
+			 printf("Error executing statement\n");
+			 printf("%s\n", sqlite3_errmsg(db));
+			 sqlite3_finalize(stmt2);
+			 sqlite3_close(db);
+			 return 0;
+		 }
 
 		sqlite3_finalize(stmt2);
 
@@ -411,12 +221,12 @@ int eliminarCoche(char matricula[]) {
     return 0;
 
 }
-int existeMatricula(char matricula[]) {
+int existeMatricula(char matricula[], Coche* c) {
     sqlite3 *db = abrirDB();
 
     sqlite3_stmt *stmt;
 
-    char sql[] = "SELECT matricula FROM Coche WHERE matricula = ?";
+    char sql[] = "SELECT c.*, mo.nombre, mo.cambio, mo.combustible, ma.* FROM Coche c, Modelo mo, Marca ma WHERE c.id_modelo = mo.id AND mo.id_marca = ma.id AND c.matricula = ?";
 
     int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
     if (result != SQLITE_OK) {
@@ -427,20 +237,32 @@ int existeMatricula(char matricula[]) {
     }
 
     result = sqlite3_bind_text(stmt, 1, matricula, strlen(matricula), SQLITE_STATIC);
-           if (result != SQLITE_OK) {
-               printf("Error binding parameters\n");
-               printf("%s\n", sqlite3_errmsg(db));
-               sqlite3_finalize(stmt);
-               sqlite3_close(db);
-               return result;
-           }
+    if (result != SQLITE_OK) {
+	   printf("Error binding parameters\n");
+	   printf("%s\n", sqlite3_errmsg(db));
+	   sqlite3_finalize(stmt);
+	   sqlite3_close(db);
+	   return result;
+    }
     result = sqlite3_step(stmt);
 
     if (result == SQLITE_ROW) {
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return 1;
-    }
+        	if (strcmp(c->matricula, "NULL") != 0){
+				strcpy(c->matricula, matricula);
+				strcpy(c->color, (char*)sqlite3_column_text(stmt, 1));
+				c->precioBase = sqlite3_column_double(stmt, 2);
+				c->anyo = sqlite3_column_int(stmt, 3);
+				c->modelo.id = sqlite3_column_int(stmt, 4);
+				strcpy(c->modelo.nombre, (char*)sqlite3_column_text(stmt, 5));
+				strcpy(c->modelo.cambio, (char*)sqlite3_column_text(stmt, 6));
+				strcpy(c->modelo.combustible, (char*)sqlite3_column_text(stmt, 7));
+				c->marca.id = sqlite3_column_int(stmt, 8);
+				strcpy(c->marca.nombre, (char*)sqlite3_column_text(stmt, 9));
+        	}
+    		sqlite3_finalize(stmt);
+    		sqlite3_close(db);
+    		return 1;
+        }
 
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
@@ -480,9 +302,53 @@ int modificarMatricula(char matricula[], char matriculaNueva[]) {
     	return result;
     }
 
-    result = sqlite3_step(stmt);
+    sqlite3_step(stmt);
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
 
-    sqlite3_finalize(stmt);
+    sqlite3_stmt *stmt2;
+
+    char sql2[] = "UPDATE Adquisicion SET matricula = ? WHERE matricula = ?";
+
+    result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt2, 1, matriculaNueva, strlen(matriculaNueva), SQLITE_STATIC);
+    if (result != SQLITE_OK) {
+    	printf("Error binding parameters\n");
+    	printf("%s\n", sqlite3_errmsg(db));
+    	sqlite3_finalize(stmt2);
+    	sqlite3_close(db);
+    	return result;
+    }
+
+    result = sqlite3_bind_text(stmt2, 2, matricula, strlen(matricula), SQLITE_STATIC);
+    if (result != SQLITE_OK) {
+    	printf("Error binding parameters\n");
+    	printf("%s\n", sqlite3_errmsg(db));
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
+    	return result;
+    }
+
+    sqlite3_step(stmt2);
+
+    result = sqlite3_finalize(stmt2);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE2)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+	    sqlite3_close(db);
+		return result;
+	}
     sqlite3_close(db);
     return 0;
 }
@@ -519,9 +385,14 @@ int modificarColor(char matricula[], char color[]) {
     	return result;
     }
 
-    result = sqlite3_step(stmt);
+    sqlite3_step(stmt);
 
-    sqlite3_finalize(stmt);
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
     sqlite3_close(db);
     return 0;
 }
@@ -558,9 +429,13 @@ int modificarPrecio(char matricula[], float precio) {
     	return result;
     }
 
-    result = sqlite3_step(stmt);
-
-    sqlite3_finalize(stmt);
+    sqlite3_step(stmt);
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
     sqlite3_close(db);
     return 0;
 }
@@ -599,9 +474,14 @@ int modificarAnyo(char matricula[], int anyo) {
     	return result;
     }
 
-    result = sqlite3_step(stmt);
+    sqlite3_step(stmt);
 
-    sqlite3_finalize(stmt);
+    result = sqlite3_finalize(stmt);
+    if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
     sqlite3_close(db);
     return 0;
 }
@@ -644,145 +524,7 @@ int modificarMarcaModelo(char matricula[], int id_modelo) {
     sqlite3_close(db);
     return 0;
 }
-int modificarCambio(char matricula[], char cambio[]) {
-    sqlite3 *db = abrirDB();
-    int id_modelo;
-
-    sqlite3_stmt *stmt;
-
-    char sql[] = "SELECT id_modelo FROM Coche WHERE matricula = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, matricula, strlen(matricula), SQLITE_STATIC);
-    if (result != SQLITE_OK) {
-        printf("Error binding parameters\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-    	id_modelo = sqlite3_column_int(stmt, 0);
-
-        sqlite3_stmt *stmt2;
-
-        char sql2[] = "UPDATE Modelo SET cambio = ? WHERE id = ?";
-
-        int result = sqlite3_prepare_v2(db, sql2, strlen(sql) + 1, &stmt2, NULL);
-        if (result != SQLITE_OK) {
-            printf("Error preparing statement\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_text(stmt2, 1, cambio, strlen(cambio), SQLITE_STATIC);
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_int(stmt2, 2, id_modelo);
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_step(stmt2);
-        sqlite3_finalize(stmt2);
-
-    }
-
-    sqlite3_finalize(stmt);
-    sqlite3_close(db);
-    return 0;
-}
-int modificarCombustible(char matricula[], char combustible[]) {
-    sqlite3 *db = abrirDB();
-    int id_modelo;
-
-    sqlite3_stmt *stmt;
-
-    char sql[] = "SELECT id_modelo FROM Coche WHERE matricula = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, matricula, strlen(matricula), SQLITE_STATIC);
-    if (result != SQLITE_OK) {
-        printf("Error binding parameters\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_finalize(stmt);
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-    	id_modelo = sqlite3_column_int(stmt, 0);
-
-        sqlite3_stmt *stmt2;
-
-        char sql2[] = "UPDATE Modelo SET combustible = ? WHERE id = ?";
-
-        int result = sqlite3_prepare_v2(db, sql2, strlen(sql) + 1, &stmt2, NULL);
-        if (result != SQLITE_OK) {
-            printf("Error preparing statement\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_text(stmt2, 1, combustible, strlen(combustible), SQLITE_STATIC);
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_bind_int(stmt2, 2, id_modelo);
-        if (result != SQLITE_OK) {
-            printf("Error binding parameters\n");
-            printf("%s\n", sqlite3_errmsg(db));
-            sqlite3_finalize(stmt);
-            sqlite3_close(db);
-            return result;
-        }
-
-        result = sqlite3_step(stmt2);
-        sqlite3_finalize(stmt2);
-
-    }
-
-    sqlite3_finalize(stmt);
-    sqlite3_close(db);
-    return 0;
-}
-int imprimirMarcas() {
+int guardarMarcas(Marca marcas[]) {
     sqlite3 *db = abrirDB();
     sqlite3_stmt *stmt;
 
@@ -796,10 +538,13 @@ int imprimirMarcas() {
         return result;
     }
 
+    int contador = 0;
 	do {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
-			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+			marcas[contador].id = sqlite3_column_int(stmt, 0);
+			strcpy(marcas[contador].nombre, (char*)sqlite3_column_text(stmt, 1));
+			contador++;
 		}
 	} while (result == SQLITE_ROW);
 
@@ -808,7 +553,7 @@ int imprimirMarcas() {
     return 0;
 
 }
-int imprimirModelos(int id_marca) {
+int guardarModelos(Modelo modelos[], int id_marca){
     sqlite3 *db = abrirDB();
     sqlite3_stmt *stmt;
 
@@ -821,7 +566,6 @@ int imprimirModelos(int id_marca) {
         sqlite3_close(db);
         return result;
     }
-
     result = sqlite3_bind_int(stmt, 1, id_marca);
     if (result != SQLITE_OK) {
         printf("Error binding parameters\n");
@@ -831,82 +575,86 @@ int imprimirModelos(int id_marca) {
         return result;
     }
 
+    int contador = 0;
 	do {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
-			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+			modelos[contador].id = sqlite3_column_int(stmt, 0);
+			strcpy(modelos[contador].nombre, (char*)sqlite3_column_text(stmt, 1));
+			contador++;
 		}
 	} while (result == SQLITE_ROW);
 
     sqlite3_finalize(stmt);
     sqlite3_close(db);
     return 0;
+
 }
-
-int imprimirCargosTiendas(char condicion[]){
+int obtenerNumeroMarcas(int* numero){
 	sqlite3 *db = abrirDB();
-	sqlite3_stmt *stmt;
+		sqlite3_stmt *stmt;
 
-	char sql[100];
-	sprintf(sql, "SELECT * FROM %s", condicion);
+		char sql[] = "SELECT count(*) FROM Marca";
 
-	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		return 0;
-	}
+		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return 0;
+		}
 
-//    result = sqlite3_bind_text(stmt, 1, condicion, strlen(condicion), SQLITE_STATIC);
-//
-//    if (result != SQLITE_OK) {
-//        printf("Error binding parameters\n");
-//        printf("%s\n", sqlite3_errmsg(db));
-//        sqlite3_finalize(stmt);
-//        sqlite3_close(db);
-//        return result;
-//    }
-
-	do {
 		result = sqlite3_step(stmt);
 		if (result == SQLITE_ROW) {
-			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+			*numero = sqlite3_column_int(stmt, 0);
 		}
-	} while (result == SQLITE_ROW);
 
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-	return 0;
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 0;
 }
+int obtenerNumeroModelos(int* numero, int id_marca){
+	sqlite3 *db = abrirDB();
+		sqlite3_stmt *stmt;
+
+		char sql[] = "SELECT count(*) FROM Modelo WHERE id_marca = ?";
+
+		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return 0;
+		}
+
+		result = sqlite3_bind_int(stmt, 1, id_marca);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			*numero = sqlite3_column_int(stmt, 0);
+		}
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 0;
+}
+
+// empleados
 int anadirEmpleado(Empleado e){
 	sqlite3 *db = abrirDB();
 	sqlite3_stmt *stmt;
-	char sql[] = "SELECT * FROM Empleado WHERE dni = ?";
 
-	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-	if (result != SQLITE_OK) {
-		printf("Error preparing statement\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		sqlite3_close(db);
-		return result;
-	}
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+	int resultado = existeEmpleado(e.dni, &eNull);
 
-	result = sqlite3_bind_text(stmt, 1, e.dni, strlen(e.dni), SQLITE_STATIC);
-	if (result != SQLITE_OK) {
-		printf("Error binding parameters\n");
-		printf("%s\n", sqlite3_errmsg(db));
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return result;
-	}
-
-	result = sqlite3_step(stmt);
-
-	if (result == SQLITE_ROW) {
-		printf("El empleado ya existe");
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
+	if (resultado != 0) {
+		printf("El empleado ya existe\n");
 		return 0;
 	} else {
 		char sql2[] = "INSERT INTO Empleado VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -925,8 +673,8 @@ int anadirEmpleado(Empleado e){
 		result += sqlite3_bind_text(stmt, 5, e.fecha_nacimiento, strlen(e.fecha_nacimiento), SQLITE_STATIC);
 		result += sqlite3_bind_text(stmt, 6, e.fecha_ini_contrato, strlen(e.fecha_ini_contrato), SQLITE_STATIC);
 		result += sqlite3_bind_text(stmt, 7, e.fecha_fin_contrato, strlen(e.fecha_fin_contrato), SQLITE_STATIC);
-		result += sqlite3_bind_int(stmt, 8, e.id_tienda);
-		result += sqlite3_bind_int(stmt, 9, e.id_cargo);
+		result += sqlite3_bind_int(stmt, 8, e.tienda.id_tienda);
+		result += sqlite3_bind_int(stmt, 9, e.cargo.id_cargo);
 		result += sqlite3_bind_text(stmt, 10, e.contrasena, strlen(e.contrasena), SQLITE_STATIC);
 
 		if (result != SQLITE_OK) {
@@ -940,58 +688,13 @@ int anadirEmpleado(Empleado e){
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
 			printf("Error inserting new data into Empleado\n");
+        	sqlite3_finalize(stmt);
+        	sqlite3_close(db);
 			return result;
 		}
-		printf("Empleado anadido correctamente");
+		printf("Empleado anadido correctamente\n");
 		return 0;
 	}
-}
-int existeEmpleado(char dni[10], Empleado* e){
-    sqlite3 *db = abrirDB();
-
-    sqlite3_stmt *stmt;
-
-    char sql[] = "SELECT * FROM Empleado WHERE dni = ?";
-
-    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
-    if (result != SQLITE_OK) {
-        printf("Error preparing statement\n");
-        printf("%s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        return result;
-    }
-
-    result = sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
-           if (result != SQLITE_OK) {
-               printf("Error binding parameters\n");
-               printf("%s\n", sqlite3_errmsg(db));
-               sqlite3_finalize(stmt);
-               sqlite3_close(db);
-               return result;
-           }
-    result = sqlite3_step(stmt);
-
-    if (result == SQLITE_ROW) {
-    	strcpy(e->dni, dni);
-    	strcpy(e->nombre, (char*)sqlite3_column_text(stmt, 1));
-    	strcpy(e->apellido, (char*)sqlite3_column_text(stmt, 2));
-    	strcpy(e->telefono, (char*)sqlite3_column_text(stmt, 3));
-    	strcpy(e->fecha_nacimiento, (char*)sqlite3_column_text(stmt, 4));
-    	strcpy(e->fecha_ini_contrato, (char*)sqlite3_column_text(stmt, 5));
-    	strcpy(e->fecha_fin_contrato, (char*)sqlite3_column_text(stmt, 6));
-    	e->id_tienda = sqlite3_column_int(stmt, 7);
-    	e->id_cargo = sqlite3_column_int(stmt, 8);
-    	strcpy(e->contrasena, (char*)sqlite3_column_text(stmt, 9));
-
-
-		sqlite3_finalize(stmt);
-		sqlite3_close(db);
-		return 1;
-    }
-
-	sqlite3_finalize(stmt);
-	sqlite3_close(db);
-	return 0;
 }
 int eliminarEmpleado(char dni[10]){
     sqlite3 *db = abrirDB();
@@ -1020,6 +723,7 @@ int eliminarEmpleado(char dni[10]){
                    }
             result = sqlite3_step(stmt);
 
+
             sqlite3_finalize(stmt);
             sqlite3_close(db);
 
@@ -1028,6 +732,56 @@ int eliminarEmpleado(char dni[10]){
 
         sqlite3_close(db);
         return 0;
+}
+int existeEmpleado(char dni[10], Empleado* e){
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT e.*, t.direccion, c.nombre FROM Empleado e, Tienda t, Cargo c WHERE e.id_cargo = c.id AND e.id_tienda = t.id AND dni = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+
+    	if (strcmp(e->dni, "NULL") != 0){
+			strcpy(e->dni, dni);
+			strcpy(e->nombre, (char*)sqlite3_column_text(stmt, 1));
+			strcpy(e->apellido, (char*)sqlite3_column_text(stmt, 2));
+			strcpy(e->telefono, (char*)sqlite3_column_text(stmt, 3));
+			strcpy(e->fecha_nacimiento, (char*)sqlite3_column_text(stmt, 4));
+			strcpy(e->fecha_ini_contrato, (char*)sqlite3_column_text(stmt, 5));
+			strcpy(e->fecha_fin_contrato, (char*)sqlite3_column_text(stmt, 6));
+			e->tienda.id_tienda = sqlite3_column_int(stmt, 7);
+			e->cargo.id_cargo = sqlite3_column_int(stmt, 8);
+			strcpy(e->contrasena, (char*)sqlite3_column_text(stmt, 9));
+			strcpy(e->tienda.direccion, (char*)sqlite3_column_text(stmt, 10));
+			strcpy(e->cargo.nombre_cargo, (char*)sqlite3_column_text(stmt, 11));
+    	}
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 1;
+    }
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
 }
 int modificarDniEmp(char dni[10], char dniNuevo[10]){
     sqlite3 *db = abrirDB();
@@ -1065,12 +819,15 @@ int modificarDniEmp(char dni[10], char dniNuevo[10]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating DNI empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
+	    sqlite3_close(db);
 		return result;
 	}
     sqlite3_stmt *stmt2;
@@ -1106,6 +863,8 @@ int modificarDniEmp(char dni[10], char dniNuevo[10]){
     	result = sqlite3_step(stmt2);
     	if (result != SQLITE_DONE) {
     		printf("Error updating DNI\n");
+        	sqlite3_finalize(stmt2);
+        	sqlite3_close(db);
     		return result;
     	}
 
@@ -1113,6 +872,7 @@ int modificarDniEmp(char dni[10], char dniNuevo[10]){
 	if (result != SQLITE_OK) {
 		printf("Error finalizing statement (UPDATE)\n");
 		printf("%s\n", sqlite3_errmsg(db));
+	    sqlite3_close(db);
 		return result;
 	}
     sqlite3_close(db);
@@ -1154,6 +914,8 @@ int modificarNombreEmp(char dni[10], char nombreNuevo[51]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating nombre empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1201,6 +963,8 @@ int modificarApellidoEmp(char dni[10], char apellidoNuevo[51]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating apellido empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1248,6 +1012,8 @@ int modificarTelefonoEmp(char dni[10], char telefonoNuevo[10]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating telefono empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1295,6 +1061,8 @@ int modificarFechaNacEmp(char dni[10], char fechaNacNueva[11]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating fecha_nacimiento empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1342,6 +1110,8 @@ int modificarFechaInicContEmp(char dni[10], char fechaInicContNueva[11]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating fecha_ini_cont empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1389,6 +1159,8 @@ int modificarFechaFinContEmp(char dni[10], char fechaFinContNueva[11]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating fecha_fin_cont empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1436,6 +1208,8 @@ int modificarIdTiendaEmp(char dni[10], int nuevoIdTienda){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating id_tienda empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1483,6 +1257,8 @@ int modificarIdCargoEmp(char dni[10], int nuevoIdCargo){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating id_cargo empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1530,6 +1306,8 @@ int modificarContrasenaEmp(char dni[10], char contrasenaNueva[51]){
 	result = sqlite3_step(stmt);
 	if (result != SQLITE_DONE) {
 		printf("Error updating contrasena empleado\n");
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
 		return result;
 	}
 	result = sqlite3_finalize(stmt);
@@ -1541,3 +1319,135 @@ int modificarContrasenaEmp(char dni[10], char contrasenaNueva[51]){
     sqlite3_close(db);
     return 0;
 }
+int guardarTiendas(Tienda tiendas[]) {
+    sqlite3 *db = abrirDB();
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT t.*, c.nombre FROM Tienda t, Ciudad c WHERE t.id_ciudad = c.id";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    int contador = 0;
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			tiendas[contador].id_tienda = sqlite3_column_int(stmt, 0);
+			strcpy(tiendas[contador].direccion, (char*)sqlite3_column_text(stmt, 1));
+			strcpy(tiendas[contador].telefono, (char*)sqlite3_column_text(stmt, 2));
+			tiendas[contador].id_ciudad= sqlite3_column_int(stmt, 3);
+			strcpy(tiendas[contador].nombre_ciudad, (char*)sqlite3_column_text(stmt, 4));
+			contador++;
+		}
+	} while (result == SQLITE_ROW);
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+
+}
+int guardarCargos(Cargo cargos[]) {
+    sqlite3 *db = abrirDB();
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT * from Cargo";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    int contador = 0;
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			cargos[contador].id_cargo = sqlite3_column_int(stmt, 0);
+			strcpy(cargos[contador].nombre_cargo, (char*)sqlite3_column_text(stmt, 1));
+			contador++;
+		}
+	} while (result == SQLITE_ROW);
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return 0;
+
+}
+int imprimirCargosTiendas(char condicion[]){
+	sqlite3 *db = abrirDB();
+	sqlite3_stmt *stmt;
+
+	char sql[100];
+	sprintf(sql, "SELECT * FROM %s", condicion);
+
+	int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	if (result != SQLITE_OK) {
+		printf("Error preparing statement\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return 0;
+	}
+
+	do {
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			printf("%d. %s\n", sqlite3_column_int(stmt, 0), sqlite3_column_text(stmt, 1));
+		}
+	} while (result == SQLITE_ROW);
+
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
+}
+int obtenerNumeroCargos(int* numero){
+	sqlite3 *db = abrirDB();
+		sqlite3_stmt *stmt;
+
+		char sql[] = "SELECT count(*) FROM Cargo";
+
+		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return 0;
+		}
+
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			*numero = sqlite3_column_int(stmt, 0);
+		}
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 0;
+}
+int obtenerNumeroTiendas(int* numero){
+	sqlite3 *db = abrirDB();
+		sqlite3_stmt *stmt;
+
+		char sql[] = "SELECT count(*) FROM Tienda";
+
+		int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return 0;
+		}
+
+		result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW) {
+			*numero = sqlite3_column_int(stmt, 0);
+		}
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 0;
+}
+

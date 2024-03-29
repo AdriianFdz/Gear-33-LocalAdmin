@@ -8,68 +8,7 @@
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
 
-Coche pedirCoche()
-{
-	Coche c; 
-
-	printf("Introduce la matricula \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.matricula);
-
-	printf("Introduce el color \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.color);
-
-	printf("Introduce el año \n");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &c.anyo);
-
-	printf("Introduce el precio \n");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%f", &c.precioBase);
-
-	printf("Introduce la marca \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.marca);
-
-	printf("Introduce el modelo \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.modelo);
-
-	printf("Introduce el tipo de cambio \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.cambio);
-
-	printf("Introduce el tipo de combustible \n");
-	fflush(stdout);
-	fflush(stdin);
-	gets(c.combustible);
-
-	return c;
-}
-
-//void aniadirCoche(ListaCoches *lc, Coche c)
-//{
-//	if(lc->numCoches < lc->tam){
-//			lc->lCoches[lc->numCoches] = c;
-//			lc->numCoches++;
-//			printf("Coche añadido correctamente\n");
-//		}else{
-//			printf("Lo sentimos! La lista esta completa\n");
-//		}
-//		fflush(stdout);
-//
-//}
-
-
-//menus de coches
+// menu gestion coche
 void menuGestCoches(){
 	int opcion = 0;
 	dibujoCoche();
@@ -110,6 +49,8 @@ void opcionMenuGestCoches(int *opcion) {
 					break;
 			}
 }
+
+	// menu anadir
 void menuAnadirCoche() {
 	dibujoCoche();
 	printf(
@@ -120,70 +61,62 @@ void menuAnadirCoche() {
 	anadirCoche(c);
 	menuGestCoches();
 }
+
+	// menu modificar
 void menuModificarCoche() {
 	int opcion = 0;
 	char matricula[8];
+	Coche c;
 
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
 	"      Modificar coche\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca la matricula:  ");
+	printf("Introduzca la matricula: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
 
-
-	int existe = existeMatricula(matricula);
+	strcpy(c.matricula, matricula);
+	int existe = existeMatricula(matricula, &c);
 
 	if (existe == 0) {
 		system("cls");
 		printf("LA MATRICULA INTRODUCIDA NO EXISTE\n");
 		menuGestCoches();
 	}
-	//
-	fflush(stdout);
-	fflush(stdin);
 	printf("\n1.Modificar matricula\n"
 	       "2.Modificar marca/modelo\n"
 	       "3.Modificar color\n"
 	       "4.Modificar año\n"
 	       "5.Modificar precio\n"
-	       "6.Modificar cambio\n"
-	       "7.Modificar combustible\n"
 	       "0.Volver\n\n"
-		   "Introduce una opción: ");
+		   "Introduce una opcion: ");
 
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &opcion);
-	opcionMenuModificarCoches(&opcion, matricula);
+	opcionMenuModificarCoches(&opcion, &c);
 
 }
-void opcionMenuModificarCoches(int *opcion, char matricula[]) {
+void opcionMenuModificarCoches(int *opcion, Coche* c) {
 	system("cls");
 		switch (*opcion) {
 				case 1:
-					menuModificarMatricula(matricula);
+					menuModificarMatricula(c->matricula);
 					break;
 				case 2:
-					menuModificarMarcaModelo(matricula);
+					menuModificarMarcaModelo(c);
 					break;
 				case 3:
-					menuModificarColor(matricula);
+					menuModificarColor(c);
 					break;
 				case 4:
-					menuModificarAnyo(matricula);
+					menuModificarAnyo(c);
 					break;
 				case 5:
-					menuModificarPrecio(matricula);
-					break;
-				case 6:
-					menuModificarCambio(matricula);
-					break;
-				case 7:
-					menuModificarCombustible(matricula);
+					menuModificarPrecio(c);
 					break;
 				case 0:
 					menuGestCoches();
@@ -194,49 +127,61 @@ void opcionMenuModificarCoches(int *opcion, char matricula[]) {
 					break;
 			}
 }
+
+		// sub opciones
 void menuModificarMatricula(char matricula[]) {
 	char matriculaNueva[8];
-
+	Coche c;
+	strcpy(c.matricula, "NULL");
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
 	"    Modificar matricula\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca la nueva matricula: ");
-	fflush(stdout);
-	fflush(stdin);
-	gets(matriculaNueva);
+
+	printf("Antigua matricula: %s\n", matricula);
+	do {
+		printf("Introduzca la nueva matricula: ");
+		fflush(stdout);
+		fflush(stdin);
+		gets(matriculaNueva);
+		if (existeMatricula(matriculaNueva, &c) == 1) {
+			printf("La nueva matricula introducida ya existe\n");
+		}
+	} while (existeMatricula(matriculaNueva, &c) == 1);
 	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches();
 }
-void menuModificarMarcaModelo(char matricula[]) {
-	int marca = 0;
-	int modelo = 0 ;
+void menuModificarMarcaModelo(Coche* c) {
+	int marcaSelec = 0;
+	int modeloSelec = 0;
+
+	int numeroModelos = 0;
+	int numeroMarcas = 0;
+	obtenerNumeroMarcas(&numeroMarcas);
+	Marca listaMarcas[numeroMarcas];
+	guardarMarcas(listaMarcas);
+
+
 
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
 	"   Modificar marca/modelo\n\n"
 	"---------------------------\n\n");
-	imprimirMarcas();
-	fflush(stdout);
-	fflush(stdin);
-	printf("Introduzca la nueva marca:  ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &marca);
-	imprimirModelos(marca);
-	fflush(stdout);
-	fflush(stdin);
-	printf("Introduzca el nuevo modelo:  ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &modelo);
-	modificarMarcaModelo(matricula, modelo);
+
+
+	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, c);
+
+	obtenerNumeroModelos(&numeroModelos, listaMarcas[marcaSelec-1].id);
+	Modelo listaModelos[numeroModelos];
+	guardarModelos(listaModelos, listaMarcas[marcaSelec-1].id);
+	pedirModelos(listaModelos, numeroModelos, &modeloSelec, c);
+
+	modificarMarcaModelo(c->matricula, listaModelos[modeloSelec-1].id);
 	menuGestCoches();
 }
-
-void menuModificarColor(char matricula[]) {
+void menuModificarColor(Coche* c) {
 	char color[10];
 
 	dibujoCoche();
@@ -244,14 +189,15 @@ void menuModificarColor(char matricula[]) {
 	"---------------------------\n\n"
 	"      Modificar color\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca el nuevo color:  ");
+	printf("Antiguo color: %s\n", c->color);
+	printf("Introduzca el nuevo color: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(color);
-	modificarColor(matricula, color);
+	modificarColor(c->matricula, color);
 	menuGestCoches();
 }
-void menuModificarAnyo(char matricula[]) {
+void menuModificarAnyo(Coche* c) {
 	int anyo;
 
 	dibujoCoche();
@@ -259,14 +205,15 @@ void menuModificarAnyo(char matricula[]) {
 	"---------------------------\n\n"
 	"       Modificar año\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca el nuevo año:  ");
+	printf("Antiguo año: %d\n", c->anyo);
+	printf("Introduzca el nuevo año: ");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &anyo);
-	modificarAnyo(matricula, anyo);
+	modificarAnyo(c->matricula, anyo);
 	menuGestCoches();
 }
-void menuModificarPrecio(char matricula[]) {
+void menuModificarPrecio(Coche* c) {
 	float precio;
 
 	dibujoCoche();
@@ -274,43 +221,16 @@ void menuModificarPrecio(char matricula[]) {
 	"---------------------------\n\n"
 	"      Modificar precio\n\n"
 	"---------------------------\n\n");
-	printf("Introduzca el nuevo precio:  ");
+	printf("Antiguo precio: %.2f\n", c->precioBase);
+	printf("Introduzca el nuevo precio: ");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%f", &precio);
-	modificarPrecio(matricula, precio);
+	modificarPrecio(c->matricula, precio);
 	menuGestCoches();
 }
-void menuModificarCambio(char matricula[]) {
-	char cambio[15];
 
-	dibujoCoche();
-	printf(
-	"---------------------------\n\n"
-	"      Modificar cambio\n\n"
-	"---------------------------\n\n");
-	printf("Introduzca el nuevo tipo de cambio:  ");
-	fflush(stdout);
-	fflush(stdin);
-	gets(cambio);
-	modificarCambio(matricula, cambio);
-	menuGestCoches();
-}
-void menuModificarCombustible(char matricula[]) {
-	char combustible[10];
-
-	dibujoCoche();
-	printf(
-	"---------------------------\n\n"
-	"   Modificar combustible\n\n"
-	"---------------------------\n\n");
-	printf("Introduzca el nuevo combustible:  ");
-	fflush(stdout);
-	fflush(stdin);
-	gets(combustible);
-	modificarCombustible(matricula, combustible);
-	menuGestCoches();
-}
+	// menu eliminar
 void menuEliminarCoche() {
 	char matricula[8] = "";
 
@@ -335,3 +255,100 @@ void menuEliminarCoche() {
 	}
 
 }
+
+// funciones comunes
+void pedirMarcas(Marca listaMarcas[], int numeroMarcas, int* marcaSelec, Coche* c){
+	printf("Marcas:\n");
+	imprimirMarcasLista(listaMarcas, numeroMarcas);
+	if(strcmp(c->matricula, "NULL") != 0){
+		printf("Antigua marca: %s\n", c->marca.nombre);
+	}
+
+	do {
+		printf("Introduce la marca: ");
+		fflush(stdout);
+		fflush(stdin);
+		scanf("%d", marcaSelec);
+		if ((*marcaSelec > numeroMarcas) || (*marcaSelec < 1)) {
+			printf("La marca seleccionada no existe\n");
+		}
+	} while(*marcaSelec > numeroMarcas || *marcaSelec < 1);
+}
+void pedirModelos(Modelo listaModelos[], int numeroModelos, int* modeloSelec, Coche* c){
+	printf("\nModelos:\n");
+	imprimirModelosLista(listaModelos, numeroModelos);
+	if(strcmp(c->matricula, "NULL") != 0){
+		printf("Antiguo modelo: %s\n", c->modelo.nombre);
+	}
+
+	do {
+		printf("Introduce el modelo: ");
+		fflush(stdout);
+		fflush(stdin);
+		scanf("%d", modeloSelec);
+		if ((*modeloSelec > numeroModelos) || (*modeloSelec< 1)) {
+			printf("El modelo seleccionado no existe\n");
+		}
+	} while(*modeloSelec > numeroModelos || *modeloSelec < 1);
+}
+Coche pedirCoche()
+{
+	Coche c;
+	Coche cNull;
+	strcpy(cNull.matricula, "NULL");
+	int marcaSelec = 0;
+	int modeloSelec = 0;
+
+	int numeroMarcas = 0;
+	int numeroModelos = 0;
+	obtenerNumeroMarcas(&numeroMarcas);
+	Marca listaMarcas[numeroMarcas];
+
+
+
+	printf("Introduce la matricula: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(c.matricula);
+
+	printf("Introduce el color: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(c.color);
+
+	printf("Introduce el año: ");
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", &c.anyo);
+
+	printf("Introduce el precio: ");
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%f", &c.precioBase);
+
+	guardarMarcas(listaMarcas);
+	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
+	c.marca.id = listaMarcas[marcaSelec-1].id;
+
+
+	obtenerNumeroModelos(&numeroModelos, c.marca.id);
+	Modelo listaModelos[numeroModelos];
+	guardarModelos(listaModelos, c.marca.id);
+	pedirModelos(listaModelos, numeroModelos, &modeloSelec, &cNull);
+
+	c.modelo.id = listaModelos[modeloSelec-1].id;
+
+	return c;
+}
+
+void imprimirMarcasLista(Marca listaMarcas[], int numeroMarcas){
+	for (int i = 0; i < numeroMarcas; i++) {
+		printf("%d. %s\n", i+1, listaMarcas[i].nombre);
+	}
+}
+void imprimirModelosLista(Modelo listaModelos[], int numeroModelos){
+	for (int i = 0; i < numeroModelos; i++) {
+		printf("%d. %s\n", i+1, listaModelos[i].nombre);
+	}
+}
+

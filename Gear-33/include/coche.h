@@ -2,48 +2,56 @@
 #define COCHE_H_
 
 //coche
+typedef struct{
+	int id;
+	char nombre[15];
+} Marca;
+
+typedef struct{
+	int id;
+	char nombre[15];
+	char cambio[15];
+	char combustible[15];
+	int id_marca;
+} Modelo;
+
 typedef struct {
 	char matricula[8];
 	char color[10];
 	int anyo;
 	float precioBase;
-	char marca [15];
-	char modelo [15];
-	char cambio [15];
-	char combustible[10];
-
-}Coche;
-
-Coche pedirCoche();
-
-//lista coches
-typedef struct {
-	Coche *lCoches;
-	int tam;
-	int numCoches;
-
-}ListaCoches;
-
-void aniadirCoche(ListaCoches *lc, Coche c);
-
-int aniadirCocheBD(Coche c);
+	Marca marca;
+	Modelo modelo;
+} Coche;
 
 
-
-//menus de coches
+// menu gestion coche
 void menuGestCoches();
-	void opcionMenuGestCoches(int *opcion);
-		void menuAnadirCoche();
-		void menuModificarCoche();
-			void opcionMenuModificarCoches(int *opcion, char matricula[]);
-				void menuModificarMatricula(char matricula[] );
-				void menuModificarMarcaModelo(char matricula[]);
-				void menuModificarColor(char matricula[]);
-				void menuModificarAnyo(char matricula[]);
-				void menuModificarPrecio(char matricula[]);
-				void menuModificarCambio(char matricula[]);
-				void menuModificarCombustible(char matricula[]);
-		void menuEliminarCoche();
+void opcionMenuGestCoches(int *opcion);
 
+	// menu anadir
+	void menuAnadirCoche();
 
+	// menu modificar
+	void menuModificarCoche();
+
+		// sub opciones
+
+		void opcionMenuModificarCoches(int *opcion, Coche* c);
+		void menuModificarMatricula(char matricula[] );
+		void menuModificarMarcaModelo(Coche* c);
+		void menuModificarColor(Coche* c);
+		void menuModificarAnyo(Coche* c);
+		void menuModificarPrecio(Coche* c);
+
+	// menu eliminar
+	void menuEliminarCoche();
+
+	// funciones generales
+	void pedirMarcas(Marca listaMarcas[], int numeroMarcas, int* marcaSelec, Coche* c);
+	void pedirModelos(Modelo listaModelos[], int numeroModelos, int* modeloSelec, Coche* c);
+	Coche pedirCoche();
+
+	void imprimirMarcasLista(Marca listaMarcas[], int numeroMarcas);
+	void imprimirModelosLista(Modelo listaModelos[], int numeroModelos);
 #endif /* COCHE_H_ */

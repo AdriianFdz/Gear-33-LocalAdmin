@@ -13,7 +13,7 @@
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
 
-
+// menu gestion empleado
 void menuGestEmpleado(){
 	int opcion = 0;
 	dibujoPersona();
@@ -31,7 +31,6 @@ void menuGestEmpleado(){
 	opcionMenuGestEmpleado(&opcion);
 
 }
-
 void opcionMenuGestEmpleado(int* opcion){
 	system("cls");
 		switch (*opcion) {
@@ -54,6 +53,7 @@ void opcionMenuGestEmpleado(int* opcion){
 			}
 }
 
+	// menu anadir
 void menuAnadirEmpleado(){
 	dibujoPersona();
 	printf(
@@ -65,6 +65,7 @@ void menuAnadirEmpleado(){
 	menuGestEmpleado();
 }
 
+	// menu modificar
 void menuModificarEmpleado(){
 	char dni[10];
 	int opcion = 0;
@@ -80,6 +81,7 @@ void menuModificarEmpleado(){
 	fflush(stdin);
 	gets(dni);
 
+	strcpy(emp.dni, dni);
 	int existe = existeEmpleado(dni, &emp);
 
 	if (existe == 0) {
@@ -87,8 +89,7 @@ void menuModificarEmpleado(){
 		printf("EL DNI INTRODUCIDO NO EXISTE\n");
 		menuGestEmpleado();
 	}
-	fflush(stdout);
-	fflush(stdin);
+
 	printf("\n1.Modificar dni\n"
 	       "2.Modificar nombre\n"
 	       "3.Modificar apellido\n"
@@ -107,31 +108,6 @@ void menuModificarEmpleado(){
 	scanf("%d", &opcion);
 	opcionMenuModificarEmpleado(&opcion, &emp);
 }
-
-void menuEliminarEmpleado(){
-	char dni[10] = "";
-	dibujoPersona();
-	printf(
-	"---------------------------\n\n"
-	"     Eliminar empleado\n\n"
-	"---------------------------\n\n");
-	printf("Introduce el DNI: ");
-	fflush(stdout);
-	fflush(stdin);
-	gets(dni);
-
-	int result = eliminarEmpleado(dni);
-
-	if (result == 1) {
-		printf("EMPLEADO ELIMINADO CON EXITO\n");
-		menuGestEmpleado();
-	} else {
-		printf("DNI DEL EMPLEADO INVALIDO\n");
-		menuGestEmpleado();
-	}
-
-}
-
 void opcionMenuModificarEmpleado(int* opcion, Empleado* emp){
 	system("cls");
 			switch (*opcion) {
@@ -175,8 +151,11 @@ void opcionMenuModificarEmpleado(int* opcion, Empleado* emp){
 				}
 }
 
+		// sub opciones
 void menuModificarDniEmp(char dni[10]){
 	char dniNuevo[10];
+	Empleado e;
+	strcpy(e.dni, "NULL");
 
 	dibujoPersona();
 	printf(
@@ -184,10 +163,15 @@ void menuModificarDniEmp(char dni[10]){
 	"       Modificar DNI\n\n"
 	"---------------------------\n\n");
 	printf("Antiguo DNI: %s\n", dni);
-	printf("Introduzca el nuevo DNI: ");
-	fflush(stdout);
-	fflush(stdin);
-	gets(dniNuevo);
+	do {
+		printf("Introduzca el nuevo DNI: ");
+		fflush(stdout);
+		fflush(stdin);
+		gets(dniNuevo);
+		if (existeEmpleado(dniNuevo, &e) == 1) {
+			printf("El DNI introducido ya existe\n");
+		}
+	} while (existeEmpleado(dniNuevo, &e) == 1);
 	modificarDniEmp(dni, dniNuevo);
 	menuGestEmpleado();
 }
@@ -288,41 +272,42 @@ void menuModificarFechaFinContEmp(Empleado* emp){
 	menuGestEmpleado();
 }
 void menuModificarTiendaEmp(Empleado* emp){
-	int idTiendaNueva;
+
+	int tiendaSelec = 0;
+
+	int numeroTiendas = 0;
+
+	obtenerNumeroTiendas(&numeroTiendas);
+	Tienda listaTiendas[numeroTiendas];
+	guardarTiendas(listaTiendas);
 
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
 	"Modificar tienda de empleado\n\n"
 	"---------------------------\n\n");
-	printf("Tiendas:\n");
-	imprimirCargosTiendas("Tienda");
+	pedirTiendas(listaTiendas, numeroTiendas, &tiendaSelec, emp);
 
-	printf("\nAntiguo id de tienda: %d\n", emp->id_tienda);
-	printf("Introduzca el nuevo id de tienda: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &idTiendaNueva);
-	modificarIdTiendaEmp(emp->dni, idTiendaNueva);
+	modificarIdTiendaEmp(emp->dni, listaTiendas[tiendaSelec-1].id_tienda);
 	menuGestEmpleado();
 }
 void menuModificarCargoEmp(Empleado* emp){
-	int idCargoNuevo;
+	int cargoSelec = 0;
+
+	int numeroCargos = 0;
+
+	obtenerNumeroCargos(&numeroCargos);
+	Cargo listaCargos[numeroCargos];
+	guardarCargos(listaCargos);
 
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
 	"Modificar cargo de empleado\n\n"
 	"---------------------------\n\n");
-	printf("Cargos:\n");
-	imprimirCargosTiendas("Cargo");
+	pedirCargos(listaCargos, numeroCargos, &cargoSelec, emp);
 
-	printf("\nAntiguo id de cargo: %d\n", emp->id_cargo);
-	printf("Introduzca el nuevo id de cargo: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &idCargoNuevo);
-	modificarIdCargoEmp(emp->dni, idCargoNuevo);
+	modificarIdCargoEmp(emp->dni, listaCargos[cargoSelec-1].id_cargo);
 	menuGestEmpleado();
 }
 void menuModificarContrasenaEmp(Empleado* emp){
@@ -342,13 +327,96 @@ void menuModificarContrasenaEmp(Empleado* emp){
 	menuGestEmpleado();
 }
 
+	// menu eliminar
+void menuEliminarEmpleado(){
+	char dni[10] = "";
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"     Eliminar empleado\n\n"
+	"---------------------------\n\n");
+	printf("Introduce el DNI: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(dni);
+
+	int result = eliminarEmpleado(dni);
+
+	if (result == 1) {
+		printf("EMPLEADO ELIMINADO CON EXITO\n");
+		menuGestEmpleado();
+	} else {
+		printf("DNI DEL EMPLEADO INVALIDO\n");
+		menuGestEmpleado();
+	}
+
+}
 
 
+// funciones comunes
+void pedirTiendas(Tienda listaTiendas[], int numeroTiendas, int* tiendaSelec, Empleado* e){
+	printf("Tiendas:\n");
+	imprimirTiendasLista(listaTiendas, numeroTiendas);
+	if(strcmp(e->dni, "NULL") != 0){
+		printf("Antigua tienda: %s\n", e->tienda.direccion);
+	}
 
+	do {
+		printf("Introduce la tienda: ");
+		fflush(stdout);
+		fflush(stdin);
+		scanf("%d", tiendaSelec);
+		if ((*tiendaSelec > numeroTiendas) || (*tiendaSelec < 1)) {
+			printf("La marca seleccionada no existe\n");
+		}
+	} while(*tiendaSelec> numeroTiendas|| *tiendaSelec < 1);
+}
+void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Empleado* e){
+	printf("Cargos:\n");
+	imprimirCargosLista(listaCargos, numeroCargos);
+	if(strcmp(e->dni, "NULL") != 0){
+		printf("Antiguo cargo: %s\n", e->cargo.nombre_cargo);
+	}
 
+	do {
+		printf("Introduce el cargo: ");
+		fflush(stdout);
+		fflush(stdin);
+		scanf("%d", cargoSelec);
+		if ((*cargoSelec > numeroCargos) || (*cargoSelec < 1)) {
+			printf("La marca seleccionada no existe\n");
+		}
+	} while(*cargoSelec> numeroCargos|| *cargoSelec < 1);
+}
+
+void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas){
+	for (int i = 0; i < numeroTiendas; i++) {
+		printf("%d. %s, %s\n", i+1, listaTiendas[i].direccion, listaTiendas[i].nombre_ciudad);
+	}
+}
+void imprimirCargosLista(Cargo listaCargos[], int numeroCargos){
+	for (int i = 0; i < numeroCargos; i++) {
+		printf("%d. %s\n", i+1, listaCargos[i].nombre_cargo);
+	}
+}
 
 Empleado pedirEmpleado(){
+
+
 	Empleado e;
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+	int tiendaSelec = 0;
+	int cargoSelec = 0;
+
+	int numeroTiendas = 0;
+	obtenerNumeroTiendas(&numeroTiendas);
+	Tienda listaTiendas[numeroTiendas];
+
+	int numeroCargos = 0;
+	obtenerNumeroCargos(&numeroCargos);
+	Cargo listaCargos[numeroCargos];
+
 
 	printf("Introduce el DNI: ");
 	fflush(stdout);
@@ -390,19 +458,14 @@ Empleado pedirEmpleado(){
 	fflush(stdin);
 	gets(e.fecha_fin_contrato);
 
-	printf("Tiendas:\n");
-	imprimirCargosTiendas("Tienda");
-	printf("Introduce el ID de la tienda: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &e.id_tienda);
+	guardarTiendas(listaTiendas);
+	pedirTiendas(listaTiendas, numeroTiendas, &tiendaSelec, &eNull);
+	e.tienda.id_tienda = listaTiendas[tiendaSelec-1].id_tienda;
 
-	printf("Cargos:\n");
-	imprimirCargosTiendas("Cargo");
-	printf("Introduce el ID del cargo: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &e.id_cargo);
+	guardarCargos(listaCargos);
+	pedirCargos(listaCargos, numeroCargos, &cargoSelec, &eNull);
+	e.cargo.id_cargo = listaCargos[cargoSelec-1].id_cargo;
+
 	return e;
 }
 
