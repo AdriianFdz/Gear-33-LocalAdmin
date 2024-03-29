@@ -60,7 +60,8 @@ Usuario pedirUsuario(){
 
 
 //menus de usuario
-void menuGestUsuario(int* opcion){
+void menuGestUsuario(){
+	int opcion = 0;
 	dibujoPersona();
 	printf(
 			"---------------------------\n\n"

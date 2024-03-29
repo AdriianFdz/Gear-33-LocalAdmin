@@ -54,4 +54,6 @@ void opcionMenuGestTiendas(int* opcion);
 	void pedirCiudades(Ciudad listaCiudades[], int numeroCiudades, int* ciudadSelec, Tienda* t);
 
 	void imprimirCiudadesLista(Ciudad listaCiudades[], int numeroCiudades);
+	void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas);
+
 #endif /* INCLUDE_TIENDA_H_ */

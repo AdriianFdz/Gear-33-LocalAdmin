@@ -63,4 +63,9 @@ int modificarCiudadTienda(int id, int id_ciudad);
 int eliminarTienda(char direccion[], int id_ciudad);
 int obtenerNumeroCiudades(int* numero, int id_provincia);
 int guardarCiudades(Ciudad ciudades[], int id_provincia);
+
+// cargo
+int anadirCargo(Cargo c);
+int eliminarCargo(char nombre[20]);
+int modificarNombreCargo(int id_cargo, char nuevoNombre[20]);
 #endif /* SQLMANAGER_H_ */

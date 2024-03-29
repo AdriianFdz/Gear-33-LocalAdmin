@@ -31,7 +31,7 @@ Usuario pedirUsuario();
 
 
 //menus de usuario
-void menuGestUsuario(int* opcion);
+void menuGestUsuario();
 	void opcionMenuGestUsuario(int *opcion);
 		void menuAnadirUsuario(int* opcion);
 		void menuModificarUsuario(int* opcion);
@@ -44,7 +44,6 @@ void menuGestUsuario(int* opcion);
 				void menuModificarDireccion(int *opcion);
 				void menuModificarContrasena(int *opcion);
 		void menuEliminarUsuario(int* opcion);
-void menuGestTienda(int* opcion);
 
 
 #endif /* USUARIO_H_ */

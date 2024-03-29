@@ -6,6 +6,7 @@
 #include "../include/usuario.h"
 #include "../include/sqlManager.h"
 #include "../include/empleado.h"
+#include "../include/cargo.h"
 
 void menuLogin()
 {
@@ -67,16 +68,19 @@ void opcionMenuPrincipal(int opcion){
 	system("cls");
 	switch (opcion) {
 			case 1:
-				menuGestCoches(&opcion);
+				menuGestCoches();
 				break;
 			case 2:
-				menuGestUsuario(&opcion);
+				menuGestUsuario();
 				break;
 			case 3:
 				menuGestEmpleado();
 				break;
 			case 4:
-				menuGestTienda(&opcion);
+				menuGestTienda();
+				break;
+			case 5:
+				menuGestCargo();
 				break;
 			case 0:
 				printf("SALIENDO...\n");

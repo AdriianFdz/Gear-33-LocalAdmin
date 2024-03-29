@@ -390,17 +390,6 @@ void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Emplead
 	} while(*cargoSelec> numeroCargos|| *cargoSelec < 1);
 }
 
-void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas){
-	for (int i = 0; i < numeroTiendas; i++) {
-		printf("%d. %s, %s, %s\n", i+1, listaTiendas[i].direccion, listaTiendas[i].ciudad.nombre, listaTiendas[i].provincia.nombre);
-	}
-}
-void imprimirCargosLista(Cargo listaCargos[], int numeroCargos){
-	for (int i = 0; i < numeroCargos; i++) {
-		printf("%d. %s\n", i+1, listaCargos[i].nombre_cargo);
-	}
-}
-
 Empleado pedirEmpleado(){
 
 

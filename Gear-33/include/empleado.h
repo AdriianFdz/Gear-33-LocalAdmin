@@ -11,7 +11,7 @@
 
 typedef struct {
 	int id_cargo;
-	char nombre_cargo[10];
+	char nombre_cargo[20];
 } Cargo;
 
 typedef struct {
@@ -59,7 +59,6 @@ void opcionMenuGestEmpleado(int* opcion);
 void pedirTiendas(Tienda listaTiendas[], int numeroTiendas, int* tiendaSelec, Empleado* e);
 void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Empleado* e);
 
-void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas);
 void imprimirCargosLista(Cargo listaCargos[], int numeroCargos);
 
 Empleado pedirEmpleado();

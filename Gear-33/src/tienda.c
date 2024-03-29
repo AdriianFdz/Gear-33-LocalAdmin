@@ -130,7 +130,7 @@ void opcionMenuModificarTienda(int* opcion, Tienda* t){
 			break;
 		}
 }
-
+		//sub opciones
 void menuModificarDireccionTienda(Tienda* t){
 	char direccion[51] = "";
 	Tienda tNull;
@@ -293,6 +293,11 @@ void imprimirProvinciasLista(Provincia listaProvincias[], int numeroProvincias){
 void imprimirCiudadesLista(Ciudad listaCiudades[], int numeroCiudades){
 	for (int i = 0; i < numeroCiudades; i++) {
 		printf("%d. %s\n", i+1, listaCiudades[i].nombre);
+	}
+}
+void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas){
+	for (int i = 0; i < numeroTiendas; i++) {
+		printf("%d. %s, %s, %s\n", i+1, listaTiendas[i].direccion, listaTiendas[i].ciudad.nombre, listaTiendas[i].provincia.nombre);
 	}
 }
 
