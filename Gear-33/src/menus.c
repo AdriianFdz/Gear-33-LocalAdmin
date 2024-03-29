@@ -50,6 +50,9 @@ void menuPrincipal()
 	printf("2. Gestionar usuarios\n");
 	printf("3. Gestionar empleados\n");
 	printf("4. Gestionar tiendas\n");
+	printf("5. Gestionar cargos\n");
+	printf("6. Gestionar marcas\n");
+	printf("7. Gestionar modelos\n");
 	printf("0. Salir\n\n");
 	printf("Introduce una opcion: ");
 	fflush(stdout);
@@ -86,19 +89,4 @@ void opcionMenuPrincipal(int opcion){
 }
 
 
-void menuGestTienda(int* opcion){
-    dibujoTienda();
-	printf(
-        "---------------------------\n\n"
-        "    Gestion de tiendas\n\n"
-        "---------------------------\n\n"
-        "1. Anadir tienda\n"
-        "2. Modificar tienda\n"
-        "3. Eliminar tienda\n"
-        "0. Volver\n\n"
-		"Introduce una opcion: ");
 
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d",opcion);
-}

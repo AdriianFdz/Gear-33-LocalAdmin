@@ -12,6 +12,7 @@
 #include "../include/dibujos.h"
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
+#include "../include/tienda.h"
 
 // menu gestion empleado
 void menuGestEmpleado(){
@@ -110,45 +111,45 @@ void menuModificarEmpleado(){
 }
 void opcionMenuModificarEmpleado(int* opcion, Empleado* emp){
 	system("cls");
-			switch (*opcion) {
-					case 1:
-						menuModificarDniEmp(emp->dni);
-						break;
-					case 2:
-						menuModificarNombreEmp(emp);
-						break;
-					case 3:
-						menuModificarApellidoEmp(emp);
-						break;
-					case 4:
-						menuModificarTelefonoEmp(emp);
-						break;
-					case 5:
-						menuModificarFechaNacEmp(emp);
-						break;
-					case 6:
-						menuModificarFechaInicContEmp(emp);
-						break;
-					case 7:
-						menuModificarFechaFinContEmp(emp);
-						break;
-					case 8:
-						menuModificarTiendaEmp(emp);
-						break;
-					case 9:
-						menuModificarCargoEmp(emp);
-						break;
-					case 10:
-						menuModificarContrasenaEmp(emp);
-						break;
-					case 0:
-						menuGestEmpleado();
-						break;
-					default:
-						printf("El digito introducido no corresponde a ninguno de los anteriores\n");
-						menuModificarEmpleado();
-						break;
-				}
+	switch (*opcion) {
+		case 1:
+			menuModificarDniEmp(emp->dni);
+			break;
+		case 2:
+			menuModificarNombreEmp(emp);
+			break;
+		case 3:
+			menuModificarApellidoEmp(emp);
+			break;
+		case 4:
+			menuModificarTelefonoEmp(emp);
+			break;
+		case 5:
+			menuModificarFechaNacEmp(emp);
+			break;
+		case 6:
+			menuModificarFechaInicContEmp(emp);
+			break;
+		case 7:
+			menuModificarFechaFinContEmp(emp);
+			break;
+		case 8:
+			menuModificarTiendaEmp(emp);
+			break;
+		case 9:
+			menuModificarCargoEmp(emp);
+			break;
+		case 10:
+			menuModificarContrasenaEmp(emp);
+			break;
+		case 0:
+			menuGestEmpleado();
+			break;
+		default:
+			printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+			menuModificarEmpleado();
+			break;
+		}
 }
 
 		// sub opciones
@@ -391,7 +392,7 @@ void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Emplead
 
 void imprimirTiendasLista(Tienda listaTiendas[], int numeroTiendas){
 	for (int i = 0; i < numeroTiendas; i++) {
-		printf("%d. %s, %s\n", i+1, listaTiendas[i].direccion, listaTiendas[i].nombre_ciudad);
+		printf("%d. %s, %s, %s\n", i+1, listaTiendas[i].direccion, listaTiendas[i].ciudad.nombre, listaTiendas[i].provincia.nombre);
 	}
 }
 void imprimirCargosLista(Cargo listaCargos[], int numeroCargos){

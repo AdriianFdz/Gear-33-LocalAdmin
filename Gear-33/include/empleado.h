@@ -7,19 +7,12 @@
 
 #ifndef INCLUDE_EMPLEADO_H_
 #define INCLUDE_EMPLEADO_H_
+#include "tienda.h"
 
 typedef struct {
 	int id_cargo;
 	char nombre_cargo[10];
 } Cargo;
-
-typedef struct{
-	int id_tienda;
-	char direccion[51];
-	char telefono[10];
-	int id_ciudad;
-	char nombre_ciudad[31];
-} Tienda;
 
 typedef struct {
 	char dni[10];

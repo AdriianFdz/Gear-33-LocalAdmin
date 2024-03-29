@@ -31,23 +31,23 @@ void menuGestCoches(){
 void opcionMenuGestCoches(int *opcion) {
 	system("cls");
 		switch (*opcion) {
-				case 1:
-					menuAnadirCoche();
-					break;
-				case 2:
-					menuModificarCoche();
-					break;
-				case 3:
-					menuEliminarCoche();
-					break;
-				case 0:
-					menuPrincipal();
-					break;
-				default:
-					printf("El digito introducido no corresponde a ninguno de los anteriores\n");
-					menuGestCoches();
-					break;
-			}
+			case 1:
+				menuAnadirCoche();
+				break;
+			case 2:
+				menuModificarCoche();
+				break;
+			case 3:
+				menuEliminarCoche();
+				break;
+			case 0:
+				menuPrincipal();
+				break;
+			default:
+				printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+				menuGestCoches();
+				break;
+		}
 }
 
 	// menu anadir

@@ -11,6 +11,7 @@
 #include "sqlite3.h"
 #include "coche.h"
 #include "empleado.h"
+#include "tienda.h"
 
 // funciones generales
 sqlite3* abrirDB();
@@ -49,4 +50,17 @@ int guardarCargos(Cargo cargos[]);
 int imprimirCargosTiendas();
 int obtenerNumeroCargos(int* numero);
 int obtenerNumeroTiendas(int* numero);
+
+// tienda
+int guardarProvincias(Provincia provincias[]);
+int obtenerNumeroProvincias(int* numero);
+int existeTienda(char direccion[51], int id_ciudad, Tienda* t);
+int anadirTienda(Tienda t);
+int modificarDirecTienda(int id, char direccionNueva[51]);
+int modificarTelefTienda(int id, char telefono[10]);
+int modificarCiudadTienda(int id, int id_ciudad);
+
+int eliminarTienda(char direccion[], int id_ciudad);
+int obtenerNumeroCiudades(int* numero, int id_provincia);
+int guardarCiudades(Ciudad ciudades[], int id_provincia);
 #endif /* SQLMANAGER_H_ */
