@@ -203,6 +203,9 @@ void opcionMenuModificarModelo(int* opcion, Modelo* m){
 		case 4:
 			menuModificarMarcaModelo(m);
 			break;
+		case 0:
+			menuGestModelo();
+			break;
 		default:
 			break;
 	}
