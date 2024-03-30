@@ -12,6 +12,7 @@
 #include "coche.h"
 #include "empleado.h"
 #include "tienda.h"
+#include "usuario.h"
 
 // funciones generales
 sqlite3* abrirDB();
@@ -69,4 +70,17 @@ int anadirCargo(Cargo c);
 int eliminarCargo(char nombre[20]);
 int modificarNombreCargo(int id_cargo, char nuevoNombre[20]);
 int existeCargo(char cargo[20], Cargo* c);
+
+// usuario
+int anadirUsuario(Usuario u);
+int existeUsuario(char dni[10], Usuario* u);
+int eliminarUsuario(char dni[10]);
+int modificarDniUsuario(char dni[10], char dniNuevo[10]);
+int modificarNombreUsuario(char dni[10], char nombreNuevo[51]);
+int modificarApellidoUsuario(char dni[10], char apellidoNuevo[51]);
+int modificarFechaUsuario(char dni[10], char fechaNueva[11]);
+int modificarTelefonoUsuario(char dni[10], char telefonoNuevo[10]);
+int modificarDireccionUsuario(char dni[10], char direccionNueva[51]);
+int modificarContrasenaUsuario(char dni[10], char contrasenaNueva[51]);
+int modificarCiudadUsuario(char dni[10], int id_ciudad);
 #endif /* SQLMANAGER_H_ */
