@@ -68,4 +68,5 @@ int guardarCiudades(Ciudad ciudades[], int id_provincia);
 int anadirCargo(Cargo c);
 int eliminarCargo(char nombre[20]);
 int modificarNombreCargo(int id_cargo, char nuevoNombre[20]);
+int existeCargo(char cargo[20], Cargo* c);
 #endif /* SQLMANAGER_H_ */
