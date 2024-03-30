@@ -4,20 +4,20 @@
 //coche
 typedef struct{
 	int id;
-	char nombre[15];
+	char nombre[20];
 } Marca;
 
 typedef struct{
 	int id;
-	char nombre[15];
-	char cambio[15];
-	char combustible[15];
-	int id_marca;
+	char nombre[20];
+	char cambio[20];
+	char combustible[20];
+	Marca marca;
 } Modelo;
 
 typedef struct {
 	char matricula[8];
-	char color[10];
+	char color[20];
 	int anyo;
 	float precioBase;
 	Marca marca;
@@ -39,7 +39,7 @@ void opcionMenuGestCoches(int *opcion);
 
 		void opcionMenuModificarCoches(int *opcion, Coche* c);
 		void menuModificarMatricula(char matricula[] );
-		void menuModificarMarcaModelo(Coche* c);
+		void menuModificarMarcaModeloCoche(Coche* c);
 		void menuModificarColor(Coche* c);
 		void menuModificarAnyo(Coche* c);
 		void menuModificarPrecio(Coche* c);

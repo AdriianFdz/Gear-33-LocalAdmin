@@ -26,7 +26,7 @@ int modificarMatricula(char matricula[], char matriculaNueva[]);
 int modificarColor(char matricula[], char color[]);
 int modificarPrecio(char matricula[], float precio);
 int modificarAnyo(char matricula[], int anyo);
-int modificarMarcaModelo(char matricula[], int id_modelo);
+int modificarMarcaModeloCoche(char matricula[], int id_modelo);
 int guardarMarcas(Marca marcas[]);
 int guardarModelos(Modelo modelos[], int id_marca);
 int obtenerNumeroMarcas(int* numero);
@@ -89,4 +89,13 @@ int anadirMarca(Marca m);
 int existeMarca(char marca[20], Marca* m);
 int eliminarMarca(char nombre[20]);
 int modificarNombreMarca(int id_marca, char nuevoNombre[20]);
+
+// modelo
+int anadirModelo(Modelo m);
+int existeModelo(char nombre[20], int id_marca, char combustible[20], char cambio[20], Modelo* m);
+int eliminarModelo(Modelo m);
+int modificarNombreModelo(int id_modelo, char nuevoNombre[20]);
+int modificarCambioModelo(int id_modelo, char nuevoCambio[20]);
+int modificarCombustibleModelo(int id_modelo, char nuevoCombustible[20]);
+int modificarMarcaModelo(int id_modelo, int id_marca);
 #endif /* SQLMANAGER_H_ */

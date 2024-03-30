@@ -107,7 +107,7 @@ void opcionMenuModificarCoches(int *opcion, Coche* c) {
 					menuModificarMatricula(c->matricula);
 					break;
 				case 2:
-					menuModificarMarcaModelo(c);
+					menuModificarMarcaModeloCoche(c);
 					break;
 				case 3:
 					menuModificarColor(c);
@@ -152,7 +152,7 @@ void menuModificarMatricula(char matricula[]) {
 	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches();
 }
-void menuModificarMarcaModelo(Coche* c) {
+void menuModificarMarcaModeloCoche(Coche* c) {
 	int marcaSelec = 0;
 	int modeloSelec = 0;
 
@@ -178,7 +178,7 @@ void menuModificarMarcaModelo(Coche* c) {
 	guardarModelos(listaModelos, listaMarcas[marcaSelec-1].id);
 	pedirModelos(listaModelos, numeroModelos, &modeloSelec, c);
 
-	modificarMarcaModelo(c->matricula, listaModelos[modeloSelec-1].id);
+	modificarMarcaModeloCoche(c->matricula, listaModelos[modeloSelec-1].id);
 	menuGestCoches();
 }
 void menuModificarColor(Coche* c) {
@@ -248,11 +248,10 @@ void menuEliminarCoche() {
 
 	if (result == 1) {
 		printf("COCHE ELIMINADO CON EXITO\n");
-		menuGestCoches();
 	} else {
 		printf("MATRICULA INVALIDA\n");
-		menuGestCoches();
 	}
+	menuGestCoches();
 
 }
 
@@ -348,7 +347,7 @@ void imprimirMarcasLista(Marca listaMarcas[], int numeroMarcas){
 }
 void imprimirModelosLista(Modelo listaModelos[], int numeroModelos){
 	for (int i = 0; i < numeroModelos; i++) {
-		printf("%d. %s\n", i+1, listaModelos[i].nombre);
+		printf("%d. %s, %s, %s\n", i+1, listaModelos[i].nombre, listaModelos[i].cambio, listaModelos[i].combustible);
 	}
 }
 
