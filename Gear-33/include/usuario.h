@@ -2,7 +2,7 @@
 
 #ifndef USUARIO_H_
 #define USUARIO_H_
-
+#include "tienda.h"
 
 //Usuario
 // +1 para el /0
@@ -14,37 +14,40 @@ typedef struct {
 	char telefono[10];
 	char direccion[51];
 	char contrasena[51];
-
+	Ciudad ciudad;
+	Provincia provincia;
 
 }Usuario;
 
-//lista de usuarios
-typedef struct {
-	Usuario *lUsuarios;
-	int tam;
-	int numUsuarios;
 
-}ListaUsuarios;
-
-void aniadirUsuario(ListaUsuarios *lu, Usuario u);
 Usuario pedirUsuario();
 
 
 //menus de usuario
 void menuGestUsuario();
-	void opcionMenuGestUsuario(int *opcion);
-		void menuAnadirUsuario(int* opcion);
-		void menuModificarUsuario(int* opcion);
-			void opcionMenuModificarUsuarios(int *opcion);
-				void menuModificarNombre(int *opcion);
-				void menuModificarApellido(int *opcion);
-				void menuModificarDni(int *opcion);
-				void menuModificarFecha(int *opcion);
-				void menuModificarTelefono(int *opcion);
-				void menuModificarDireccion(int *opcion);
-				void menuModificarContrasena(int *opcion);
-		void menuEliminarUsuario(int* opcion);
+	void opcionMenuGestUsuario();
+		void menuAnadirUsuario();
+		void menuModificarUsuario();
 
+			void opcionMenuModificarUsuarios(int *opcion, Usuario* usu);
+							void menuModificarNombre(Usuario* usu);
+							void menuModificarApellido(Usuario* usu);
+							void menuModificarDni(char dni[10]);
+							void menuModificarFecha(Usuario* usu);
+							void menuModificarTelefono(Usuario* usu);
+							void menuModificarDireccion(Usuario* usu);
+							void menuModificarContrasena(Usuario* usu);
+							void menuModificarCiudadUsuario(Usuario* usu);
+		void menuEliminarUsuario();
+
+		// NUEVO
+
+		void imprimirProvinciasListaUsuario(Provincia listaProvincias[], int numeroProvincias);
+
+		void pedirProvinciasUsuario(Provincia listaProvincias[], int numeroProvincias, int* provinciaSelec, Usuario* u);
+		void pedirCiudadesUsuario(Ciudad listaCiudades[], int numeroCiudades, int* ciudadSelec, Usuario* u);
+
+		void imprimirCiudadesListaUsuario(Ciudad listaCiudades[], int numeroCiudades);
 
 #endif /* USUARIO_H_ */
 
