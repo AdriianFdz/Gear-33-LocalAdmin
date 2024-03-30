@@ -2126,7 +2126,173 @@ int modificarNombreCargo(int id_cargo, char nuevoNombre[20]){
 	    sqlite3_close(db);
 	    return 0;
 }
+/////////////////////////////////////////////////////// PROVINCIA /////////////////////////////////////////////////////////
 
+
+int existeProvincia(char provincia[20], Provincia* p){
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT * FROM Provincia WHERE nombre = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, provincia, strlen(provincia), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+    	if (strcmp(p->nombre, "NULL") != 0){
+			p->id_provincia= sqlite3_column_int(stmt, 0);
+			strcpy(p->nombre, (char*)sqlite3_column_text(stmt, 1));
+    	}
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 1;
+    }
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
+}
+int anadirProvincia(Provincia p){
+	sqlite3 *db = abrirDB();
+	sqlite3_stmt *stmt;
+
+	Provincia pNull;
+	strcpy(pNull.nombre, "NULL");
+	int resultado = existeProvincia(p.nombre, &pNull);
+
+	if (resultado != 0) {
+		system("cls");
+		printf("La provincia ya existe\n");
+		return 0;
+	} else {
+		char sql2[] = "INSERT INTO Provincia VALUES (NULL, ?)";
+		int result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt, 1, p.nombre, strlen(p.nombre), SQLITE_STATIC);
+
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_step(stmt);
+		if (result != SQLITE_DONE) {
+			printf("Error inserting new data into Provincia\n");
+        	sqlite3_finalize(stmt);
+        	sqlite3_close(db);
+			return result;
+		}
+		system("cls");
+		printf("Provincia anadida correctamente\n");
+		return 0;
+	}
+}
+int eliminarProvincia(char nombre[20]) {
+    sqlite3 *db = abrirDB();
+    Provincia p;
+    int result = existeProvincia(nombre, &p);
+
+    if (result == 1) {
+		sqlite3_stmt *stmt;
+		char sql[] = "DELETE FROM Provincia WHERE nombre = ?";
+
+		result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+		   printf("Error binding parameters\n");
+		   printf("%s\n", sqlite3_errmsg(db));
+		   sqlite3_finalize(stmt);
+		   sqlite3_close(db);
+		   return result;
+		}
+		result = sqlite3_step(stmt);
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+
+		return 1;
+	}
+
+	sqlite3_close(db);
+	return 0;
+
+}
+int modificarNombreProvincia(int id_provincia, char nuevoNombre[20]){
+	 sqlite3 *db = abrirDB();
+
+	    sqlite3_stmt *stmt;
+
+	    char sql[] = "UPDATE Provincia SET nombre = ? WHERE id = ?";
+
+	    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	    if (result != SQLITE_OK) {
+	        printf("Error preparing statement\n");
+	        printf("%s\n", sqlite3_errmsg(db));
+	        sqlite3_close(db);
+	        return result;
+	    }
+
+	    result = sqlite3_bind_text(stmt, 1, nuevoNombre, strlen(nuevoNombre), SQLITE_STATIC);
+	    if (result != SQLITE_OK) {
+	    	printf("Error binding parameters\n");
+	    	printf("%s\n", sqlite3_errmsg(db));
+	    	sqlite3_finalize(stmt);
+	    	sqlite3_close(db);
+	    	return result;
+	    }
+
+	    result = sqlite3_bind_int(stmt, 2, id_provincia);
+	    if (result != SQLITE_OK) {
+	    	printf("Error binding parameters\n");
+	    	printf("%s\n", sqlite3_errmsg(db));
+	    	sqlite3_finalize(stmt);
+	    	sqlite3_close(db);
+	    	return result;
+	    }
+
+	    sqlite3_step(stmt);
+
+	    result = sqlite3_finalize(stmt);
+	    if (result != SQLITE_OK) {
+			printf("Error finalizing statement (UPDATE)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+	    sqlite3_close(db);
+	    return 0;
+}
 
 
 
@@ -2377,7 +2543,7 @@ int modificarDniUsuario(char dni[10], char dniNuevo[10]){
 	}
     sqlite3_stmt *stmt2;
 
- /*   char sql2[] = "UPDATE Adquisicion SET dni_empleado = ? WHERE dni_empleado = ?";
+    char sql2[] = "UPDATE Adquisicion SET dni_usuario = ? WHERE dni_usuario = ?";
 
         result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
         if (result != SQLITE_OK) {
@@ -2386,7 +2552,7 @@ int modificarDniUsuario(char dni[10], char dniNuevo[10]){
             sqlite3_close(db);
             return result;
         }
-*/
+
         result = sqlite3_bind_text(stmt2, 1, dniNuevo, strlen(dniNuevo), SQLITE_STATIC);
         if (result != SQLITE_OK) {
         	printf("Error binding parameters\n");

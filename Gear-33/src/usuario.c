@@ -10,6 +10,7 @@
 Usuario pedirUsuario(){
 	Usuario u;
 	Usuario uNull;
+	strcmp(uNull.dni, "NULL");
 	int provinciaSelec = 0;
 		int ciudadSelec = 0;
 
@@ -60,7 +61,7 @@ Usuario pedirUsuario(){
 			obtenerNumeroCiudades(&numeroCiudades, u.provincia.id_provincia);
 			Ciudad listaCiudades[numeroCiudades];
 			guardarCiudades(listaCiudades, u.provincia.id_provincia);
-			pedirCiudades(listaCiudades, numeroCiudades, &ciudadSelec, &uNull);
+			pedirCiudadesUsuario(listaCiudades, numeroCiudades, &ciudadSelec, &uNull);
 			u.ciudad.id_ciudad= listaCiudades[ciudadSelec-1].id_ciudad;
 
 			return u;
