@@ -162,26 +162,23 @@ void menuModificarUsuario() {
 }
 void menuEliminarUsuario() {
 
-		char dni[10]= "";
-		dibujoPersona();
-		printf(
-		"---------------------------\n\n"
-		"       Eliminar usuario\n\n"
-		"---------------------------\n\n");
-		printf("Introduzca el dni:  ");
-		fflush(stdout);
-		fflush(stdin);
-		gets(dni);
-		int result = eliminarUsuario(dni);
-
-			if (result == 1) {
-				printf("USUARIO ELIMINADO CON EXITO\n");
-				menuGestUsuario();
-			} else {
-				printf("DNI DEL USUARIO INVALIDO\n");
-				menuGestUsuario();
-			}
-
+	char dni[10]= "";
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"       Eliminar usuario\n\n"
+	"---------------------------\n\n");
+	printf("Introduzca el dni:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(dni);
+	int result = eliminarUsuario(dni);
+		if (result == 1) {
+			printf("USUARIO ELIMINADO CON EXITO\n");
+		} else {
+			printf("DNI DEL USUARIO INVALIDO\n");
+		}
+	menuGestUsuario();
 	}
 void opcionMenuModificarUsuarios(int* opcion, Usuario* usu) {
 	system("cls");

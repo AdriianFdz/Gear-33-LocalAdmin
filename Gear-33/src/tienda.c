@@ -242,11 +242,10 @@ void menuEliminarTienda() {
 
 	if (result == 1) {
 		printf("TIENDA ELIMINADA CON EXITO\n");
-		menuGestTienda();
 	} else {
 		printf("TIENDA INVALIDA\n");
-		menuGestTienda();
 	}
+	menuGestTienda();
 
 }
 // funciones comunes

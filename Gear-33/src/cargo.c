@@ -78,11 +78,10 @@ void menuEliminarCargo(){
 		system("cls");
 		if (result == 1) {
 			printf("CARGO ELIMINADO CON EXITO\n");
-			menuGestCargo();
 		} else {
 			printf("CARGO INVALIDO\n");
-			menuGestCargo();
 		}
+		menuGestCargo();
 
 }
 

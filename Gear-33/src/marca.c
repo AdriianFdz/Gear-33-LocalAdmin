@@ -85,18 +85,17 @@ void menuEliminarMarca(){
 	imprimirMarcasLista(listaMarcas, numeroMarcas);
 
 	printf("Introduzca el id de la marca: ");
-		fflush(stdout);
-		fflush(stdin);
-		scanf("%d", &marcaSelec);
-		int result = eliminarMarca(listaMarcas[marcaSelec-1].nombre);
-		system("cls");
-		if (result == 1) {
-			printf("MARCA ELIMINADA CON EXITO\n");
-			menuGestMarca();
-		} else {
-			printf("MARCA INVALIDA\n");
-			menuGestMarca();
-		}
+	fflush(stdout);
+	fflush(stdin);
+	scanf("%d", &marcaSelec);
+	int result = eliminarMarca(listaMarcas[marcaSelec-1].nombre);
+	system("cls");
+	if (result == 1) {
+		printf("MARCA ELIMINADA CON EXITO\n");
+	} else {
+		printf("MARCA INVALIDA\n");
+	}
+	menuGestMarca();
 
 }
 
