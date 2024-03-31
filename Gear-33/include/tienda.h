@@ -11,6 +11,7 @@
 typedef struct{
 	int id_ciudad;
 	char nombre[51];
+	int id_provincia;
 } Ciudad;
 
 typedef struct{
