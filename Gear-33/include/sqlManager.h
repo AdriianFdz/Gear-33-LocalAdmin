@@ -71,6 +71,12 @@ int eliminarCargo(char nombre[20]);
 int modificarNombreCargo(int id_cargo, char nuevoNombre[20]);
 int existeCargo(char cargo[20], Cargo* c);
 
+// provincia
+int anadirProvincia(Provincia p);
+int eliminarProvincia(char nombre[20]);
+int modificarNombreProvincia(int id_provincia, char nuevoNombre[20]);
+int existeProvincia(char provincia[20], Provincia* p);
+
 // usuario
 int anadirUsuario(Usuario u);
 int existeUsuario(char dni[10], Usuario* u);

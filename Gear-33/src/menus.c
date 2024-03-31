@@ -8,6 +8,7 @@
 #include "../include/empleado.h"
 #include "../include/cargo.h"
 #include "../include/marca.h"
+#include "../include/provincia.h"
 #include "../include/modelo.h"
 
 void menuLogin()
@@ -56,6 +57,7 @@ void menuPrincipal()
 	printf("5. Gestionar cargos\n");
 	printf("6. Gestionar marcas\n");
 	printf("7. Gestionar modelos\n");
+	printf("8. Gestionar provincias\n");
 	printf("0. Salir\n\n");
 	printf("Introduce una opcion: ");
 	fflush(stdout);
@@ -89,6 +91,9 @@ void opcionMenuPrincipal(int opcion){
 				break;
 			case 7:
 				menuGestModelo();
+				break;
+			case 8:
+				menuGestProvincia();
 				break;
 			case 0:
 				printf("SALIENDO...\n");
