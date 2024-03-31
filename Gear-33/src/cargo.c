@@ -35,24 +35,24 @@ void menuGestCargo(){
 
 void opcionMenuGestCargos(int* opcion){
 	system("cls");
-		switch (*opcion) {
-			case 1:
-				menuAnadirCargo();
-				break;
-			case 2:
-				menuModificarCargo();
-				break;
-			case 3:
-				menuEliminarCargo();
-				break;
-			case 0:
-				menuPrincipal();
-				break;
-			default:
-				printf("El digito introducido no corresponde a ninguno de los anteriores\n");
-				menuGestCoches();
-				break;
-		}
+	switch (*opcion) {
+		case 1:
+			menuAnadirCargo();
+			break;
+		case 2:
+			menuModificarCargo();
+			break;
+		case 3:
+			menuEliminarCargo();
+			break;
+		case 0:
+			menuPrincipal();
+			break;
+		default:
+			printf("El digito introducido no corresponde a ninguno de los anteriores\n");
+			menuGestCoches();
+			break;
+	}
 }
 
 void menuEliminarCargo(){

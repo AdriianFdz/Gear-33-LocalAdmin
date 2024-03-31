@@ -89,4 +89,10 @@ int modificarTelefonoUsuario(char dni[10], char telefonoNuevo[10]);
 int modificarDireccionUsuario(char dni[10], char direccionNueva[51]);
 int modificarContrasenaUsuario(char dni[10], char contrasenaNueva[51]);
 int modificarCiudadUsuario(char dni[10], int id_ciudad);
+
+// marca
+int anadirMarca(Marca m);
+int existeMarca(char marca[20], Marca* m);
+int eliminarMarca(char nombre[20]);
+int modificarNombreMarca(int id_marca, char nuevoNombre[20]);
 #endif /* SQLMANAGER_H_ */
