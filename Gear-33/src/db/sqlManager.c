@@ -2340,6 +2340,50 @@ int modificarNombreProvincia(int id_provincia, char nuevoNombre[20]){
 	    return 0;
 }
 
+// ciudad
+int existeCiudad(char ciudad[20], int id_prov, Ciudad* c){
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT * FROM Ciudad WHERE nombre = ? AND id_provincia = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, ciudad, strlen(ciudad), SQLITE_STATIC);
+    result = sqlite3_bind_int(stmt, 2, c->id_provincia);
+    if (result != SQLITE_OK) {
+    	printf("Error binding parameters\n");
+    	printf("%s\n", sqlite3_errmsg(db));
+    	sqlite3_finalize(stmt);
+    	sqlite3_close(db);
+    	return result;
+    }
+
+
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+    	if (strcmp(c->nombre, "NULL") != 0){
+			c->id_ciudad= sqlite3_column_int(stmt, 0);
+			strcpy(c->nombre, (char*)sqlite3_column_text(stmt, 1));
+			c->id_provincia= sqlite3_column_int(stmt, 2);
+    	}
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 1;
+    }
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
+}
 
 
 // usuario
