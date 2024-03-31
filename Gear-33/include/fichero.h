@@ -10,7 +10,9 @@
 
 typedef struct{
 	char database[100];
+	char tienda[100];
 } CONFIG;
 
 void leerConfig (CONFIG* configuracion);
+void leerTienda();
 #endif /* CONFIG_H_ */
