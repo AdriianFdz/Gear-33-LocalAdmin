@@ -10,7 +10,7 @@
 #include "../../include/sqlite3.h"
 #include "../../include/coche.h"
 #include "../../include/sqlManager.h"
-#include "../../include/config.h"
+#include "../../include/fichero.h"
 #include "../../include/empleado.h"
 #include "../../include/tienda.h"
 #include "../../include/cargo.h"
@@ -18,13 +18,14 @@
 
 // funciones generales
 sqlite3* abrirDB() {
-	CONFIG *datosConfig = malloc(sizeof(CONFIG));
-	leerConfig(datosConfig);
+	//CONFIG *datosConfig = malloc(sizeof(CONFIG));
+	CONFIG datosConfig;
+	leerConfig(&datosConfig);
 
 	sqlite3 *db;
 
-	int result = sqlite3_open(datosConfig->database, &db);
-	free(datosConfig);
+	int result = sqlite3_open(datosConfig.database, &db);
+	//free(datosConfig);
 	if (result != SQLITE_OK) {
 		printf("Error opening database\n");
 	}
