@@ -7,6 +7,8 @@
 #include "../include/sqlManager.h"
 #include "../include/empleado.h"
 #include "../include/cargo.h"
+#include "../include/marca.h"
+#include "../include/provincia.h"
 
 void menuLogin()
 {
@@ -82,6 +84,9 @@ void opcionMenuPrincipal(int opcion){
 				break;
 			case 5:
 				menuGestCargo();
+				break;
+			case 6:
+				menuGestMarca();
 				break;
 			case 8:
 				menuGestProvincia();

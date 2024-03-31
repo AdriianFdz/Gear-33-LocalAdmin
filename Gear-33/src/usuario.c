@@ -10,61 +10,61 @@
 Usuario pedirUsuario(){
 	Usuario u;
 	Usuario uNull;
-	strcmp(uNull.dni, "NULL");
+	strcpy(uNull.dni, "NULL");
 	int provinciaSelec = 0;
-		int ciudadSelec = 0;
+	int ciudadSelec = 0;
 
-		int numeroProvincias = 0;
-		int numeroCiudades = 0;
-		obtenerNumeroProvincias(&numeroProvincias);
-			Provincia listaProvincias[numeroProvincias];
+	int numeroProvincias = 0;
+	int numeroCiudades = 0;
+	obtenerNumeroProvincias(&numeroProvincias);
+	Provincia listaProvincias[numeroProvincias];
 
 	printf("Introduce el nombre: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.nombre);
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.nombre);
 
-			printf("Introduce el apellido: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.apellido);
+	printf("Introduce el apellido: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.apellido);
 
-			printf("Introduce el dni: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.dni);
+	printf("Introduce el dni: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.dni);
 
-			printf("Introduce la fecha de nacimiento DD/MM/AAAA: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.fecha);
+	printf("Introduce la fecha de nacimiento DD/MM/AAAA: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.fecha);
 
-			printf("Introduce el teléfono: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.telefono);
+	printf("Introduce el teléfono: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.telefono);
 
-			printf("Introduce la dirección: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.direccion);
+	printf("Introduce la dirección: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.direccion);
 
-			printf("Introduce la contraseña: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(u.contrasena);
+	printf("Introduce la contraseña: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.contrasena);
 
-			guardarProvincias(listaProvincias);
-			pedirProvinciasUsuario(listaProvincias, numeroProvincias, &provinciaSelec, &uNull);
-			u.provincia.id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
+	guardarProvincias(listaProvincias);
+	pedirProvinciasUsuario(listaProvincias, numeroProvincias, &provinciaSelec, &uNull);
+	u.provincia.id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
 
-			obtenerNumeroCiudades(&numeroCiudades, u.provincia.id_provincia);
-			Ciudad listaCiudades[numeroCiudades];
-			guardarCiudades(listaCiudades, u.provincia.id_provincia);
-			pedirCiudadesUsuario(listaCiudades, numeroCiudades, &ciudadSelec, &uNull);
-			u.ciudad.id_ciudad= listaCiudades[ciudadSelec-1].id_ciudad;
+	obtenerNumeroCiudades(&numeroCiudades, u.provincia.id_provincia);
+	Ciudad listaCiudades[numeroCiudades];
+	guardarCiudades(listaCiudades, u.provincia.id_provincia);
+	pedirCiudadesUsuario(listaCiudades, numeroCiudades, &ciudadSelec, &uNull);
+	u.ciudad.id_ciudad= listaCiudades[ciudadSelec-1].id_ciudad;
 
-			return u;
+	return u;
 }
 
 

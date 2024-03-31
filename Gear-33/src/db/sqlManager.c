@@ -1555,9 +1555,6 @@ int guardarTiendas(Tienda tiendas[]) {
     return 0;
 
 }
-
-
-
 int obtenerNumeroProvincias(int* numero){
 	sqlite3 *db = abrirDB();
 		sqlite3_stmt *stmt;
@@ -1633,7 +1630,6 @@ int obtenerNumeroTiendas(int* numero){
 		sqlite3_close(db);
 		return 0;
 }
-
 int anadirTienda(Tienda t) {
     Tienda tNull;
     strcpy(tNull.direccion, "NULL");
@@ -1704,7 +1700,6 @@ int anadirTienda(Tienda t) {
 	sqlite3_close(db);
 	return 0;
 }
-
 int modificarDirecTienda(int id, char direccionNueva[51]){
     sqlite3 *db = abrirDB();
 
@@ -1855,9 +1850,6 @@ int modificarCiudadTienda(int id, int id_ciudad){
     sqlite3_close(db);
     return 0;
 }
-
-
-
 int eliminarTienda(char direccion[], int id_ciudad) {
     sqlite3 *db = abrirDB();
     Tienda t;
@@ -1904,9 +1896,6 @@ int eliminarTienda(char direccion[], int id_ciudad) {
 	return 0;
 
 }
-
-
-
 int existeTienda(char direccion[51], int id_ciudad, Tienda* t){
     sqlite3 *db = abrirDB();
 
@@ -1961,7 +1950,7 @@ int existeTienda(char direccion[51], int id_ciudad, Tienda* t){
 	return 0;
 }
 
-
+// cargo
 int existeCargo(char cargo[20], Cargo* c){
     sqlite3 *db = abrirDB();
 
@@ -2126,8 +2115,7 @@ int modificarNombreCargo(int id_cargo, char nuevoNombre[20]){
 	    sqlite3_close(db);
 	    return 0;
 }
-/////////////////////////////////////////////////////// PROVINCIA /////////////////////////////////////////////////////////
-
+// provincia
 
 int existeProvincia(char provincia[20], Provincia* p){
     sqlite3 *db = abrirDB();
@@ -2296,8 +2284,8 @@ int modificarNombreProvincia(int id_provincia, char nuevoNombre[20]){
 
 
 
-/////////////////////////////////////////////////////// USUARIO ////////////////////////////////////////////////////////////////////////////////////////////////////////
-	int anadirUsuario(Usuario u){
+// usuario
+int anadirUsuario(Usuario u){
 	sqlite3 *db = abrirDB();
 	sqlite3_stmt *stmt;
 	char sql[] = "SELECT * FROM Usuario WHERE dni = ?";
@@ -2916,3 +2904,168 @@ int modificarCiudadUsuario(char dni[10], int id_ciudad){
     return 0;
 }
 
+// marca
+int anadirMarca(Marca m){
+	sqlite3 *db = abrirDB();
+	sqlite3_stmt *stmt;
+
+	Marca mNull;
+	strcpy(mNull.nombre, "NULL");
+	int resultado = existeMarca(m.nombre, &mNull);
+
+	if (resultado != 0) {
+		system("cls");
+		printf("La marca ya existe\n");
+		return 0;
+	} else {
+		char sql2[] = "INSERT INTO Marca VALUES (NULL, ?)";
+		int result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt, 1, m.nombre, strlen(m.nombre), SQLITE_STATIC);
+
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt);
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_step(stmt);
+		if (result != SQLITE_DONE) {
+			printf("Error inserting new data into Marca\n");
+        	sqlite3_finalize(stmt);
+        	sqlite3_close(db);
+			return result;
+		}
+		system("cls");
+		printf("Marca anadido correctamente\n");
+		return 0;
+	}
+}
+int existeMarca(char marca[20], Marca* m){
+    sqlite3 *db = abrirDB();
+
+    sqlite3_stmt *stmt;
+
+    char sql[] = "SELECT * FROM Marca WHERE nombre = ?";
+
+    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+    if (result != SQLITE_OK) {
+        printf("Error preparing statement\n");
+        printf("%s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        return result;
+    }
+
+    result = sqlite3_bind_text(stmt, 1, marca, strlen(marca), SQLITE_STATIC);
+           if (result != SQLITE_OK) {
+               printf("Error binding parameters\n");
+               printf("%s\n", sqlite3_errmsg(db));
+               sqlite3_finalize(stmt);
+               sqlite3_close(db);
+               return result;
+           }
+    result = sqlite3_step(stmt);
+
+    if (result == SQLITE_ROW) {
+    	if (strcmp(m->nombre, "NULL") != 0){
+			m->id= sqlite3_column_int(stmt, 0);
+			strcpy(m->nombre, (char*)sqlite3_column_text(stmt, 1));
+    	}
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+		return 1;
+    }
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+	return 0;
+}
+int eliminarMarca(char nombre[20]) {
+    sqlite3 *db = abrirDB();
+    Marca m;
+    int result = existeMarca(nombre, &m);
+
+    if (result == 1) {
+		sqlite3_stmt *stmt;
+		char sql[] = "DELETE FROM Marca WHERE nombre = ?";
+
+		result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+		   printf("Error binding parameters\n");
+		   printf("%s\n", sqlite3_errmsg(db));
+		   sqlite3_finalize(stmt);
+		   sqlite3_close(db);
+		   return result;
+		}
+		result = sqlite3_step(stmt);
+
+		sqlite3_finalize(stmt);
+		sqlite3_close(db);
+
+		return 1;
+	}
+
+	sqlite3_close(db);
+	return 0;
+
+}
+int modificarNombreMarca(int id_marca, char nuevoNombre[20]){
+	 sqlite3 *db = abrirDB();
+
+	    sqlite3_stmt *stmt;
+
+	    char sql[] = "UPDATE Marca SET nombre = ? WHERE id = ?";
+
+	    int result = sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL);
+	    if (result != SQLITE_OK) {
+	        printf("Error preparing statement\n");
+	        printf("%s\n", sqlite3_errmsg(db));
+	        sqlite3_close(db);
+	        return result;
+	    }
+
+	    result = sqlite3_bind_text(stmt, 1, nuevoNombre, strlen(nuevoNombre), SQLITE_STATIC);
+	    if (result != SQLITE_OK) {
+	    	printf("Error binding parameters\n");
+	    	printf("%s\n", sqlite3_errmsg(db));
+	    	sqlite3_finalize(stmt);
+	    	sqlite3_close(db);
+	    	return result;
+	    }
+
+	    result = sqlite3_bind_int(stmt, 2, id_marca);
+	    if (result != SQLITE_OK) {
+	    	printf("Error binding parameters\n");
+	    	printf("%s\n", sqlite3_errmsg(db));
+	    	sqlite3_finalize(stmt);
+	    	sqlite3_close(db);
+	    	return result;
+	    }
+
+	    sqlite3_step(stmt);
+
+	    result = sqlite3_finalize(stmt);
+	    if (result != SQLITE_OK) {
+			printf("Error finalizing statement (UPDATE)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+	    sqlite3_close(db);
+	    return 0;
+}
