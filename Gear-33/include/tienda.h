@@ -8,17 +8,17 @@
 #ifndef INCLUDE_TIENDA_H_
 #define INCLUDE_TIENDA_H_
 
-typedef struct{
-	int id_ciudad;
-	char nombre[51];
-	int id_provincia;
-} Ciudad;
+
 
 typedef struct{
 	int id_provincia;
 	char nombre[51];
 } Provincia;
-
+typedef struct{
+	int id_ciudad;
+	char nombre[51];
+	Provincia provincia;
+} Ciudad;
 typedef struct{
 	int id_tienda;
 	char direccion[51];
