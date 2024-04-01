@@ -72,6 +72,8 @@ void menuAnadirMarca(){
 void menuEliminarMarca(){
 	int numeroMarcas = 0;
 	int marcaSelec = 0;
+	Coche cNull;
+	strcpy(cNull.matricula, "NULL");
 
 	dibujoCoche();
 	printf(
@@ -81,13 +83,8 @@ void menuEliminarMarca(){
 	obtenerNumeroMarcas(&numeroMarcas);
 	Marca listaMarcas[numeroMarcas];
 	guardarMarcas(listaMarcas);
-	printf("Marcas:\n");
-	imprimirMarcasLista(listaMarcas, numeroMarcas);
+	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
 
-	printf("Introduzca el id de la marca: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &marcaSelec);
 	int result = eliminarMarca(listaMarcas[marcaSelec-1].nombre);
 	system("cls");
 	if (result == 1) {
@@ -105,6 +102,9 @@ void menuModificarMarca(){
 	char nuevoNombre[20];
 	Marca mNull;
 	strcpy(mNull.nombre, "NULL");
+	Coche cNull;
+	strcpy(cNull.matricula, "NULL");
+
 
 	dibujoCoche();
 	printf(
@@ -114,16 +114,14 @@ void menuModificarMarca(){
 	obtenerNumeroMarcas(&numeroMarcas);
 	Marca listaMarcas[numeroMarcas];
 	guardarMarcas(listaMarcas);
-	printf("Marcas:\n");
-	imprimirMarcasLista(listaMarcas, numeroMarcas);
-
-	printf("Introduzca el id del cargo: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &marcaSelec);
+	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
 
 	system("cls");
-	dibujoPersona();
+	dibujoCoche();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar marca\n\n"
+	"---------------------------\n\n");
 	printf("Antiguo nombre de la marca: %s\n", listaMarcas[marcaSelec-1].nombre);
 	do {
 		printf("Nuevo nombre de la marca: ");
