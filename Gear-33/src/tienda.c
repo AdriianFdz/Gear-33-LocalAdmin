@@ -74,6 +74,9 @@ void menuModificarTienda(){
 	int tiendaSelec = 0;
 	Tienda t;
 
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
@@ -84,12 +87,8 @@ void menuModificarTienda(){
 	Tienda listaTiendas[numeroTiendas];
 	guardarTiendas(listaTiendas);
 
-	imprimirTiendasLista(listaTiendas, numeroTiendas);
+	pedirTiendas(listaTiendas, numeroTiendas, &tiendaSelec, &eNull);
 
-	printf("\nIntroduzca el id de la tienda: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &tiendaSelec);
 	int existe = existeTienda(listaTiendas[tiendaSelec-1].direccion, listaTiendas[tiendaSelec-1].ciudad.id_ciudad, &t);
 	if (existe == 0) {
 		system("cls");
@@ -221,6 +220,9 @@ void menuModificarCiudadTienda(Tienda* t){
 void menuEliminarTienda() {
 	int tiendaSelec = 0;
 
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
@@ -232,11 +234,8 @@ void menuEliminarTienda() {
 	guardarTiendas(listaTiendas);
 
 	imprimirTiendasLista(listaTiendas, numeroTiendas);
+	pedirTiendas(listaTiendas, numeroTiendas, &tiendaSelec, &eNull);
 
-	printf("Introduzca el id de la tienda: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &tiendaSelec);
 	int result = eliminarTienda(listaTiendas[tiendaSelec-1].direccion, listaTiendas[tiendaSelec-1].ciudad.id_ciudad);
 	system("cls");
 

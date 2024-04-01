@@ -368,7 +368,7 @@ void pedirTiendas(Tienda listaTiendas[], int numeroTiendas, int* tiendaSelec, Em
 		fflush(stdin);
 		scanf("%d", tiendaSelec);
 		if ((*tiendaSelec > numeroTiendas) || (*tiendaSelec < 1)) {
-			printf("La marca seleccionada no existe\n");
+			printf("La tienda seleccionada no existe\n");
 		}
 	} while(*tiendaSelec> numeroTiendas|| *tiendaSelec < 1);
 }
@@ -385,7 +385,7 @@ void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Emplead
 		fflush(stdin);
 		scanf("%d", cargoSelec);
 		if ((*cargoSelec > numeroCargos) || (*cargoSelec < 1)) {
-			printf("La marca seleccionada no existe\n");
+			printf("El cargo seleccionada no existe\n");
 		}
 	} while(*cargoSelec> numeroCargos|| *cargoSelec < 1);
 }
