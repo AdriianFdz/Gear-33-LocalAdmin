@@ -59,6 +59,9 @@ void menuEliminarCargo(){
 	int numeroCargos = 0;
 	int cargoSelec = 0;
 
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
@@ -67,21 +70,16 @@ void menuEliminarCargo(){
 	obtenerNumeroCargos(&numeroCargos);
 	Cargo listaCargos[numeroCargos];
 	guardarCargos(listaCargos);
-	printf("Cargos:\n");
-	imprimirCargosLista(listaCargos, numeroCargos);
+	pedirCargos(listaCargos, numeroCargos, &cargoSelec, &eNull);
 
-	printf("Introduzca el id del cargo: ");
-		fflush(stdout);
-		fflush(stdin);
-		scanf("%d", &cargoSelec);
-		int result = eliminarCargo(listaCargos[cargoSelec-1].nombre_cargo);
-		system("cls");
-		if (result == 1) {
-			printf("CARGO ELIMINADO CON EXITO\n");
-		} else {
-			printf("CARGO INVALIDO\n");
-		}
-		menuGestCargo();
+	int result = eliminarCargo(listaCargos[cargoSelec-1].nombre_cargo);
+	system("cls");
+	if (result == 1) {
+		printf("CARGO ELIMINADO CON EXITO\n");
+	} else {
+		printf("CARGO INVALIDO\n");
+	}
+	menuGestCargo();
 
 }
 
@@ -107,6 +105,9 @@ void menuModificarCargo(){
 	Cargo cNull;
 	strcpy(cNull.nombre_cargo, "NULL");
 
+	Empleado eNull;
+	strcpy(eNull.dni, "NULL");
+
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
@@ -115,16 +116,14 @@ void menuModificarCargo(){
 	obtenerNumeroCargos(&numeroCargos);
 	Cargo listaCargos[numeroCargos];
 	guardarCargos(listaCargos);
-	printf("Cargos:\n");
-	imprimirCargosLista(listaCargos, numeroCargos);
-
-	printf("Introduzca el id del cargo: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &cargoSelec);
+	pedirCargos(listaCargos, numeroCargos, &cargoSelec, &eNull);
 
 	system("cls");
 	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar cargo\n\n"
+	"---------------------------\n\n");
 	printf("Antiguo nombre del cargo: %s\n", listaCargos[cargoSelec-1].nombre_cargo);
 	do {
 		printf("Nuevo nombre del cargo: ");
