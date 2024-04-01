@@ -1556,6 +1556,7 @@ int guardarCiudades(Ciudad ciudades[], int id_provincia) {
 			ciudades[contador].id_ciudad = sqlite3_column_int(stmt, 0);
 			strcpy(ciudades[contador].nombre,
 					(char*) sqlite3_column_text(stmt, 1));
+			ciudades[contador].provincia.id_provincia = sqlite3_column_int(stmt, 2);
 			contador++;
 		}
 	} while (result == SQLITE_ROW);
@@ -2539,7 +2540,7 @@ int existeCiudad(char ciudad[20], int id_prov, Ciudad* c){
     }
 
     result = sqlite3_bind_text(stmt, 1, ciudad, strlen(ciudad), SQLITE_STATIC);
-    result = sqlite3_bind_int(stmt, 2, c->provincia.id_provincia);
+    result = sqlite3_bind_int(stmt, 2, id_prov);
     if (result != SQLITE_OK) {
     	printf("Error binding parameters\n");
     	printf("%s\n", sqlite3_errmsg(db));

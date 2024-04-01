@@ -85,6 +85,9 @@ void menuAnadirCiudad(){
 void menuEliminarCiudad(){
 	Provincia provincia;
 
+	Tienda tNull;
+	strcpy(tNull.direccion, "NULL");
+
 	int numeroProvincias = 0;
 	int provinciaSelec = 0;
 
@@ -99,24 +102,15 @@ void menuEliminarCiudad(){
 	obtenerNumeroProvincias(&numeroProvincias);
 	Provincia listaProvincias[numeroProvincias];
 	guardarProvincias(listaProvincias);
-	printf("Provincias:\n");
-	imprimirProvinciasLista(listaProvincias, numeroProvincias);
-
-	printf("Introduzca el id de la provincia: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &provinciaSelec);
+	pedirProvincias(listaProvincias, numeroProvincias, &provinciaSelec, &tNull);
 	provincia.id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
 
 	obtenerNumeroCiudades(&numeroCiudades, provincia.id_provincia);
 	Ciudad listaCiudades[numeroCiudades];
 	guardarCiudades(listaCiudades, provincia.id_provincia);
-	printf("Ciudades:\n");
-	imprimirCiudadesLista(listaCiudades, numeroCiudades);
-	printf("Introduzca el id de la ciudad: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &ciudadSelec);
+	pedirCiudades(listaCiudades, numeroCiudades, &ciudadSelec, &tNull);
+
+
 	int result = eliminarCiudad(listaCiudades[ciudadSelec-1]);
 
 	system("cls");
@@ -160,38 +154,7 @@ void menuModificarCiudad() {
 	c.provincia.id_provincia = listaCiudades[ciudadSelec-1].provincia.id_provincia;
 
 	system("cls");
-	dibujoPersona();
-	printf(
-	"---------------------------\n\n"
-	"     Modificar ciudad\n\n"
-	"---------------------------\n\n");
-	printf("\n1.Modificar nombre\n"
-	       "2.Modificar provincia\n"
-	       "0.Volver\n\n"
-		   "Introduce una opcion: ");
-
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &opcion);
-	opcionMenuModificarCiudad(&opcion, &c);
-
-}
-
-void opcionMenuModificarCiudad(int* opcion, Ciudad* c){
-	switch (*opcion) {
-		case 1:
-			menuModificarNombreCiudad(c);
-			break;
-		case 2:
-			menuModificarProvinciaCiudad(c);
-			break;
-
-		case 0:
-			menuGestCiudad();
-			break;
-		default:
-			break;
-	}
+	menuModificarNombreCiudad(&c);
 }
 
 void menuModificarNombreCiudad(Ciudad* c) {
