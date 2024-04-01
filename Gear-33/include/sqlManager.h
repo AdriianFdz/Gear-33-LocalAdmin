@@ -79,7 +79,10 @@ int existeProvincia(char provincia[20], Provincia* p);
 
 // ciudad
 int existeCiudad(char ciudad[20], int id_prov, Ciudad* c);
-
+int anadirCiudad(Ciudad c);
+int eliminarCiudad(Ciudad c);
+int modificarNombreCiudad(int id_ciudad, char nuevoNombre[20]);
+int modificarProvinciaCiudad(int id_ciudad, int id_provincia);
 // usuario
 int anadirUsuario(Usuario u);
 int existeUsuario(char dni[10], Usuario* u);

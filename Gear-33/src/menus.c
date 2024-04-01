@@ -10,7 +10,7 @@
 #include "../include/marca.h"
 #include "../include/provincia.h"
 #include "../include/modelo.h"
-
+#include "../include/ciudad.h"
 void menuLogin()
 {
 	int comprobar;
@@ -58,6 +58,7 @@ void menuPrincipal()
 	printf("6. Gestionar marcas\n");
 	printf("7. Gestionar modelos\n");
 	printf("8. Gestionar provincias\n");
+	printf("9. Gestionar ciudades\n");
 	printf("0. Salir\n\n");
 	printf("Introduce una opcion: ");
 	fflush(stdout);
@@ -94,6 +95,9 @@ void opcionMenuPrincipal(int opcion){
 				break;
 			case 8:
 				menuGestProvincia();
+				break;
+			case 9:
+				menuGestCiudad();
 				break;
 			case 0:
 				printf("SALIENDO...\n");
