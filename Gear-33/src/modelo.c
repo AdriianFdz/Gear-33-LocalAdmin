@@ -94,6 +94,8 @@ void menuAnadirModelo(){
 }
 void menuEliminarModelo(){
 	Marca marca;
+	Coche cNull;
+	strcpy(cNull.matricula, "NULL");
 
 	int numeroMarcas = 0;
 	int marcaSelec = 0;
@@ -109,23 +111,14 @@ void menuEliminarModelo(){
 	obtenerNumeroMarcas(&numeroMarcas);
 	Marca listaMarcas[numeroMarcas];
 	guardarMarcas(listaMarcas);
-	printf("Marcas:\n");
-	imprimirMarcasLista(listaMarcas, numeroMarcas);
-
-	printf("Introduzca el id de la marca: ");
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &marcaSelec);
+	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
 	marca.id = listaMarcas[marcaSelec-1].id;
 
 	obtenerNumeroModelos(&numeroModelos, marca.id);
 	Modelo listaModelos[numeroModelos];
 	guardarModelos(listaModelos, marca.id);
-	printf("Modelos:\n");
-	imprimirModelosLista(listaModelos, numeroModelos);
-	fflush(stdout);
-	fflush(stdin);
-	scanf("%d", &modeloSelec);
+	pedirModelos(listaModelos, numeroModelos, &modeloSelec, &cNull);
+
 	int result = eliminarModelo(listaModelos[modeloSelec-1]);
 
 	system("cls");
