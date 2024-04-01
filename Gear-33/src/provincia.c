@@ -126,6 +126,10 @@ void menuModificarProvincia(){
 
 	system("cls");
 	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"      Modificar provincia\n\n"
+	"---------------------------\n\n");
 	printf("Antiguo nombre de la provincia: %s\n", listaProvincias[provinciaSelec-1].nombre);
 	do {
 		printf("Nuevo nombre de la provincia: ");

@@ -123,7 +123,6 @@ void menuEliminarCiudad(){
 
 }
 void menuModificarCiudad() {
-	int opcion = 0;
 	Tienda tNull;
 	strcpy(tNull.direccion, "NULL");
 
