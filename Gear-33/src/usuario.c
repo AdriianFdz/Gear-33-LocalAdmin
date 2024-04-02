@@ -128,7 +128,7 @@ void menuModificarUsuario() {
 			"---------------------------\n\n"
 			"      Modificar datos\n\n"
 			"---------------------------\n\n");
-	printf("Introduzca el dni:  ");
+	printf("Introduzca el dni: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(dni);
@@ -225,7 +225,7 @@ void menuModificarNombre(Usuario* u) {
 			"    Modificar nombre\n\n"
 			"---------------------------\n\n");
 	printf("Antiguo nombre: %s\n", u->nombre);
-	printf("Introduzca el nuevo nombre:  ");
+	printf("Introduzca el nuevo nombre: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(nombreNuevo);
@@ -241,7 +241,7 @@ void menuModificarApellido(Usuario* u) {
 	"    Modificar apellido\n\n"
 	"---------------------------\n\n");
 	printf("Antiguo apellido: %s\n", u->apellido);
-	printf("Introduzca el nuevo apellido:  ");
+	printf("Introduzca el nuevo apellido: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(apellidoNuevo);
@@ -257,7 +257,7 @@ void menuModificarDni(char dni[10]) {
 		"    Modificar dni\n\n"
 		"---------------------------\n\n");
 		printf("Antiguo DNI: %s\n", dni);
-		printf("Introduzca el nuevo dni:  ");
+		printf("Introduzca el nuevo dni: ");
 		fflush(stdout);
 		fflush(stdin);
 		gets(dniNuevo);
@@ -273,7 +273,7 @@ void menuModificarFecha(Usuario* u) {
 			"    Modificar la fecha de nacimiento\n\n"
 			"---------------------------\n\n");
 			printf("Antigua fecha de nacimiento: %s\n", u->fecha);
-			printf("Introduzca la nueva fecha de nacimiento:  ");
+			printf("Introduzca la nueva fecha de nacimiento: ");
 			fflush(stdout);
 			fflush(stdin);
 			gets(fechaNacNueva);
@@ -304,7 +304,7 @@ void menuModificarDireccion(Usuario* u) {
 	"    Modificar la dirección\n\n"
 	"---------------------------\n\n");
 	printf("Antigua direccion: %s\n", u->direccion);
-	printf("Introduzca la nueva dirección:  ");
+	printf("Introduzca la nueva dirección: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(direccionNueva);
@@ -320,7 +320,7 @@ void menuModificarContrasena(Usuario* u) {
 			"    Modificar la contraseña\n\n"
 			"---------------------------\n\n");
 			printf("Antigua contrasena: %s\n", u->contrasena);
-			printf("Introduzca la nueva contraseña:  ");
+			printf("Introduzca la nueva contraseña: ");
 			fflush(stdout);
 			fflush(stdin);
 			gets(contrasenaNueva);

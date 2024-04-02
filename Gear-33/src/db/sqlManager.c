@@ -2825,7 +2825,16 @@ int modificarDniUsuario(char dni[10], char dniNuevo[10]) {
 
     char sql2[] = "UPDATE Adquisicion SET dni_usuario = ? WHERE dni_usuario = ?";
 
-	result = sqlite3_bind_text(stmt2, 2, dni, strlen(dni), SQLITE_STATIC);
+    result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+    	if (result != SQLITE_OK) {
+    		printf("Error preparing statement\n");
+    		printf("%s\n", sqlite3_errmsg(db));
+    		sqlite3_close(db);
+    		return result;
+    	}
+
+	result = sqlite3_bind_text(stmt2, 1, dniNuevo, strlen(dniNuevo), SQLITE_STATIC);
+	result += sqlite3_bind_text(stmt2, 2, dni, strlen(dni), SQLITE_STATIC);
 	if (result != SQLITE_OK) {
 		printf("Error binding parameters\n");
 		printf("%s\n", sqlite3_errmsg(db));

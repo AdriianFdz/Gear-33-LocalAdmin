@@ -12,9 +12,12 @@
 #include "../include/dibujos.h"
 #include "../include/coche.h"
 #include "../include/menus.h"
+#include "../include/fichero.h"
 
 int main(void) {
+	//leerTienda();
 	menuLogin();
+
 
 	return 0;
 }

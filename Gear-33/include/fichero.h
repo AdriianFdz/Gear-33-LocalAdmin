@@ -11,8 +11,10 @@
 typedef struct{
 	char database[100];
 	char tienda[100];
+	char coche[100];
 } CONFIG;
 
 void leerConfig (CONFIG* configuracion);
 void leerTienda();
+void leerCoche();
 #endif /* CONFIG_H_ */
