@@ -1,9 +1,3 @@
-/*
- * marca.c
- *
- *  Created on: 30 mar 2024
- *      Author: seven
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -18,7 +12,7 @@ void menuGestMarca(){
 	    dibujoCoche();
 		printf(
 	        "---------------------------\n\n"
-	        "    Gestion de marcas\n\n"
+	        "     Gestion de marcas\n\n"
 	        "---------------------------\n\n"
 	        "1. Anadir marca\n"
 	        "2. Modificar marca\n"
@@ -59,12 +53,13 @@ void menuAnadirMarca(){
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
-	"      Anadir marca\n\n"
+	"       Anadir marca\n\n"
 	"---------------------------\n\n");
 	printf("Introduce el nombre de la marca: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(marca.nombre);
+	system("cls");
 	anadirMarca(marca);
 	menuGestMarca();
 }

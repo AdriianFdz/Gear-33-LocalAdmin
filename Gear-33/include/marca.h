@@ -1,10 +1,3 @@
-/*
- * marca.h
- *
- *  Created on: 30 mar 2024
- *      Author: seven
- */
-
 #ifndef INCLUDE_MARCA_H_
 #define INCLUDE_MARCA_H_
 

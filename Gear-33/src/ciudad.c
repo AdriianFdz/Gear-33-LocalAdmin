@@ -1,10 +1,3 @@
-/*
- * ciudad.c
- *
- *  Created on: 1 abr 2024
- *      Author: Unai
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -68,7 +61,7 @@ void menuAnadirCiudad(){
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"      Anadir ciudad\n\n"
+	"       Anadir ciudad\n\n"
 	"---------------------------\n\n");
 	guardarProvincias(listaProvincias);
 	pedirProvincias(listaProvincias, numeroProvincias, &provinciaSelec, &tNull);
@@ -79,6 +72,7 @@ void menuAnadirCiudad(){
 	fflush(stdin);
 	gets(c.nombre);
 
+	system("cls");
 	anadirCiudad(c);
 	menuGestCiudad();
 }
@@ -162,9 +156,9 @@ void menuModificarNombreCiudad(Ciudad* c) {
 	strcpy(cNull.nombre, "NULL");
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"-----------------------------\n\n"
 	"Modificar nombre de la ciudad\n\n"
-	"---------------------------\n\n");
+	"-----------------------------\n\n");
 
 	printf("Antiguo nombre de la ciudad: %s\n", c->nombre);
 	do {
@@ -177,6 +171,7 @@ void menuModificarNombreCiudad(Ciudad* c) {
 		}
 	} while (existeCiudad(nombreNuevo, c->provincia.id_provincia, &cNull) == 1);
 
+	system("cls");
 	modificarNombreCiudad(c->id_ciudad, nombreNuevo);
 	menuGestCiudad();
 }
@@ -190,9 +185,9 @@ void menuModificarProvinciaCiudad(Ciudad* c) {
 
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"--------------------------------\n\n"
 	"Modificar provincia de la ciudad\n\n"
-	"---------------------------\n\n");
+	"--------------------------------\n\n");
 
 	int numeroProvincias = 0;
 	int provinciaSelec = 0;
@@ -202,12 +197,12 @@ void menuModificarProvinciaCiudad(Ciudad* c) {
 	pedirProvincias(listaProvincias, numeroProvincias, &provinciaSelec, &tNull);
 	id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
 
+	system("cls");
 	if(existeCiudad(c->nombre, id_provincia, &cNull) == 1){
 		printf("La ciudad introducida ya existe\n");
 	} else {
 		modificarProvinciaCiudad(c->id_ciudad, id_provincia);
 	}
-
 	menuGestCiudad();
 }
 

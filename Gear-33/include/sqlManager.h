@@ -1,10 +1,3 @@
-/*
- * sqlManager.h
- *
- *  Created on: 21 mar 2024
- *      Author: seven
- */
-
 #ifndef SQLMANAGER_H_
 #define SQLMANAGER_H_
 

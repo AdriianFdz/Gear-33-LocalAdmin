@@ -32,6 +32,7 @@ void menuLogin()
 	printf("\n");
 	comprobar = inicioSesion(dni, contrasena);
 	if (comprobar == 1) {
+		system("cls");
 		menuPrincipal();
 	}else {
 		system("cls");
@@ -100,6 +101,7 @@ void opcionMenuPrincipal(int opcion){
 				menuGestCiudad();
 				break;
 			case 0:
+				dibujoDespedida();
 				printf("SALIENDO...\n");
 				break;
 			default:

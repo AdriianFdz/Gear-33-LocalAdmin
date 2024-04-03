@@ -1,10 +1,3 @@
-/*
- * cargo.c
- *
- *  Created on: 29 mar 2024
- *      Author: seven
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,7 +12,7 @@ void menuGestCargo(){
     dibujoPersona();
 	printf(
         "---------------------------\n\n"
-        "    Gestion de cargos\n\n"
+        "     Gestion de cargos\n\n"
         "---------------------------\n\n"
         "1. Anadir cargo\n"
         "2. Modificar cargo\n"
@@ -67,6 +60,7 @@ void menuEliminarCargo(){
 	"---------------------------\n\n"
 	"      Eliminar cargo\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar el cargo se eliminaran los empleados con ese cargo (0 para cancelar)\n\n");
 	obtenerNumeroCargos(&numeroCargos);
 	Cargo listaCargos[numeroCargos];
 	guardarCargos(listaCargos);
@@ -94,6 +88,7 @@ void menuAnadirCargo(){
 	fflush(stdout);
 	fflush(stdin);
 	gets(cargo.nombre_cargo);
+	system("cls");
 	anadirCargo(cargo);
 	menuGestCargo();
 }

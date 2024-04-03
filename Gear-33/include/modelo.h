@@ -1,10 +1,3 @@
-/*
- * modelo.h
- *
- *  Created on: 30 mar 2024
- *      Author: seven
- */
-
 #ifndef INCLUDE_MODELO_H_
 #define INCLUDE_MODELO_H_
 #include "coche.h"

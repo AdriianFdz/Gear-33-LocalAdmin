@@ -1,9 +1,3 @@
-/*
- * provincia.c
- *
- *  Created on: 30 mar 2024
- *      Author: Unai
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -62,7 +56,7 @@ void menuEliminarProvincia(){
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"      Eliminar provincia\n\n"
+	"     Eliminar provincia\n\n"
 	"---------------------------\n\n");
 	obtenerNumeroProvincias(&numeroProvincias);
 	Provincia listaProvincias[numeroProvincias];
@@ -91,12 +85,13 @@ void menuAnadirProvincia(){
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"      Anadir provincia\n\n"
+	"     Anadir provincia\n\n"
 	"---------------------------\n\n");
 	printf("Introduce el nombre de la provincia: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(provincia.nombre);
+	system("cls");
 	anadirProvincia(provincia);
 	menuGestProvincia();
 }
@@ -111,7 +106,7 @@ void menuModificarProvincia(){
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"      Modificar provincia\n\n"
+	"    Modificar provincia\n\n"
 	"---------------------------\n\n");
 	obtenerNumeroProvincias(&numeroProvincias);
 	Provincia listaProvincias[numeroProvincias];
@@ -128,7 +123,7 @@ void menuModificarProvincia(){
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"      Modificar provincia\n\n"
+	"    Modificar provincia\n\n"
 	"---------------------------\n\n");
 	printf("Antiguo nombre de la provincia: %s\n", listaProvincias[provinciaSelec-1].nombre);
 	do {

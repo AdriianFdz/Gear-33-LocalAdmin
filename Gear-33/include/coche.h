@@ -32,6 +32,9 @@ void opcionMenuGestCoches(int *opcion);
 	// menu anadir
 	void menuAnadirCoche();
 
+	//menu importar
+	void menuImportarCoche();
+
 	// menu modificar
 	void menuModificarCoche();
 

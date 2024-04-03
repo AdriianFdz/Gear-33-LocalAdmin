@@ -1,15 +1,9 @@
-/*
- * tienda.c
- *
- *  Created on: 29 mar 2024
- *      Author: seven
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../include/tienda.h"
+#include "../include/fichero.h"
 #include "../include/dibujos.h"
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
@@ -22,8 +16,9 @@ void menuGestTienda(){
         "    Gestion de tiendas\n\n"
         "---------------------------\n\n"
         "1. Anadir tienda\n"
-        "2. Modificar tienda\n"
-        "3. Eliminar tienda\n"
+		"2. Importar tiendas desde fichero\n"
+        "3. Modificar tienda\n"
+        "4. Eliminar tienda\n"
         "0. Volver\n\n"
 		"Introduce una opcion: ");
 
@@ -42,9 +37,12 @@ void opcionMenuGestTiendas(int* opcion){
 				menuAnadirTienda();
 				break;
 			case 2:
-				menuModificarTienda();
+				menuImportarTienda();
 				break;
 			case 3:
+				menuModificarTienda();
+				break;
+			case 4:
 				menuEliminarTienda();
 				break;
 			case 0:
@@ -62,10 +60,18 @@ void menuAnadirTienda() {
 	dibujoTienda();
 	printf(
 	"---------------------------\n\n"
-	"      Anadir tienda\n\n"
+	"       Anadir tienda\n\n"
 	"---------------------------\n\n");
 	Tienda t = pedirTienda();
+	system("cls");
 	anadirTienda(t);
+	menuGestTienda();
+}
+
+	// menu importar
+void menuImportarTienda() {
+	system("cls");
+	leerTienda();
 	menuGestTienda();
 }
 
@@ -151,6 +157,7 @@ void menuModificarDireccionTienda(Tienda* t){
 		}
 	} while (existeTienda(direccion, t->ciudad.id_ciudad, &tNull) == 1);
 
+	system("cls");
 	modificarDirecTienda(t->id_tienda, direccion);
 	menuGestTienda();
 }
@@ -170,6 +177,7 @@ void menuModificarTelefonoTienda(Tienda* t){
 	fflush(stdin);
 	gets(telefono);
 
+	system("cls");
 	modificarTelefTienda(t->id_tienda, telefono);
 	menuGestTienda();
 }
@@ -212,6 +220,8 @@ void menuModificarCiudadTienda(Tienda* t){
 	} while (existeTienda(t->direccion, ciudad.id_ciudad, &tNull) == 1);
 
 	ciudad.id_ciudad = listaCiudades[ciudadSelec-1].id_ciudad;
+
+	system("cls");
 	modificarCiudadTienda(t->id_tienda, ciudad.id_ciudad);
 	menuGestTienda();
 }
@@ -228,6 +238,7 @@ void menuEliminarTienda() {
 	"---------------------------\n\n"
 	"      Eliminar tienda\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar una tienda se eliminaran los empleados de dicha tienda (0 para cancelar)");
 	int numeroTiendas = 0;
 	obtenerNumeroTiendas(&numeroTiendas);
 	Tienda listaTiendas[numeroTiendas];

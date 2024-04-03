@@ -1,9 +1,9 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../include/coche.h"
+#include "../include/fichero.h"
 #include "../include/dibujos.h"
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
@@ -14,11 +14,12 @@ void menuGestCoches(){
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
-	"   Gestion de coches\n\n"
+	"     Gestion de coches\n\n"
 	"---------------------------\n\n"
 	"1. Anadir coche\n"
-	"2. Modificar coche\n"
-	"3. Eliminar coche\n"
+	"2. Importar coches desde fichero\n"
+	"3. Modificar coche\n"
+	"4. Eliminar coche\n"
 	"0. Volver\n\n"
 	"Introduce una opcion: ");
 
@@ -35,9 +36,12 @@ void opcionMenuGestCoches(int *opcion) {
 				menuAnadirCoche();
 				break;
 			case 2:
-				menuModificarCoche();
+				menuImportarCoche();
 				break;
 			case 3:
+				menuModificarCoche();
+				break;
+			case 4:
 				menuEliminarCoche();
 				break;
 			case 0:
@@ -58,7 +62,15 @@ void menuAnadirCoche() {
 	"       Anadir coche\n\n"
 	"---------------------------\n\n");
 	Coche c = pedirCoche();
+	system("cls");
 	anadirCoche(c);
+	menuGestCoches();
+}
+
+	//menu importar
+void menuImportarCoche() {
+	system("cls");
+	leerCoche();
 	menuGestCoches();
 }
 
@@ -89,7 +101,7 @@ void menuModificarCoche() {
 	printf("\n1.Modificar matricula\n"
 	       "2.Modificar marca/modelo\n"
 	       "3.Modificar color\n"
-	       "4.Modificar año\n"
+	       "4.Modificar anio\n"
 	       "5.Modificar precio\n"
 	       "0.Volver\n\n"
 		   "Introduce una opcion: ");
@@ -149,6 +161,7 @@ void menuModificarMatricula(char matricula[]) {
 			printf("La nueva matricula introducida ya existe\n");
 		}
 	} while (existeMatricula(matriculaNueva, &c) == 1);
+	system("cls");
 	modificarMatricula(matricula, matriculaNueva);
 	menuGestCoches();
 }
@@ -178,6 +191,7 @@ void menuModificarMarcaModeloCoche(Coche* c) {
 	guardarModelos(listaModelos, listaMarcas[marcaSelec-1].id);
 	pedirModelos(listaModelos, numeroModelos, &modeloSelec, c);
 
+	system("cls");
 	modificarMarcaModeloCoche(c->matricula, listaModelos[modeloSelec-1].id);
 	menuGestCoches();
 }
@@ -194,6 +208,7 @@ void menuModificarColor(Coche* c) {
 	fflush(stdout);
 	fflush(stdin);
 	gets(color);
+	system("cls");
 	modificarColor(c->matricula, color);
 	menuGestCoches();
 }
@@ -203,13 +218,14 @@ void menuModificarAnyo(Coche* c) {
 	dibujoCoche();
 	printf(
 	"---------------------------\n\n"
-	"       Modificar año\n\n"
+	"       Modificar anio\n\n"
 	"---------------------------\n\n");
-	printf("Antiguo año: %d\n", c->anyo);
-	printf("Introduzca el nuevo año: ");
+	printf("Antiguo anio: %d\n", c->anyo);
+	printf("Introduzca el nuevo anio: ");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &anyo);
+	system("cls");
 	modificarAnyo(c->matricula, anyo);
 	menuGestCoches();
 }
@@ -226,6 +242,7 @@ void menuModificarPrecio(Coche* c) {
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%f", &precio);
+	system("cls");
 	modificarPrecio(c->matricula, precio);
 	menuGestCoches();
 }
@@ -243,8 +260,9 @@ void menuEliminarCoche() {
 	fflush(stdout);
 	fflush(stdin);
 	gets(matricula);
-	int result = eliminarCoche(matricula);
 	system("cls");
+	int result = eliminarCoche(matricula);
+
 
 	if (result == 1) {
 		printf("COCHE ELIMINADO CON EXITO\n");
@@ -268,9 +286,14 @@ void pedirMarcas(Marca listaMarcas[], int numeroMarcas, int* marcaSelec, Coche* 
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", marcaSelec);
-		if ((*marcaSelec > numeroMarcas) || (*marcaSelec < 1)) {
+		if ((*marcaSelec > numeroMarcas) || (*marcaSelec < 0)) {
 			printf("La marca seleccionada no existe\n");
 		}
+		if (*marcaSelec == 0) {
+			system("cls");
+			menuGestCoches();
+		}
+
 	} while(*marcaSelec > numeroMarcas || *marcaSelec < 1);
 }
 void pedirModelos(Modelo listaModelos[], int numeroModelos, int* modeloSelec, Coche* c){
@@ -285,8 +308,12 @@ void pedirModelos(Modelo listaModelos[], int numeroModelos, int* modeloSelec, Co
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", modeloSelec);
-		if ((*modeloSelec > numeroModelos) || (*modeloSelec< 1)) {
+		if ((*modeloSelec > numeroModelos) || (*modeloSelec < 0)) {
 			printf("El modelo seleccionado no existe\n");
+		}
+		if (*modeloSelec == 0) {
+			system("cls");
+			menuGestCoches();
 		}
 	} while(*modeloSelec > numeroModelos || *modeloSelec < 1);
 }
@@ -315,7 +342,7 @@ Coche pedirCoche()
 	fflush(stdin);
 	gets(c.color);
 
-	printf("Introduce el año: ");
+	printf("Introduce el anio: ");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d", &c.anyo);

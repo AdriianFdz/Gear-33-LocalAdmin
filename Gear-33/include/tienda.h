@@ -1,14 +1,5 @@
-/*
- * tienda.h
- *
- *  Created on: 29 mar 2024
- *      Author: seven
- */
-
 #ifndef INCLUDE_TIENDA_H_
 #define INCLUDE_TIENDA_H_
-
-
 
 typedef struct{
 	int id_provincia;
@@ -37,6 +28,9 @@ void opcionMenuGestTiendas(int* opcion);
 
 	// menu anadir
 	void menuAnadirTienda();
+
+	//menu importar
+	void menuImportarTienda();
 
 	// menu modificar
 	void menuModificarTienda();

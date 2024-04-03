@@ -1,10 +1,3 @@
-/*
- * modelo.c
- *
- *  Created on: 30 mar 2024
- *      Author: seven
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -20,7 +13,7 @@ void menuGestModelo(){
 	    dibujoCoche();
 		printf(
 	        "---------------------------\n\n"
-	        "    Gestion de modelos\n\n"
+	        "     Gestion de modelos\n\n"
 	        "---------------------------\n\n"
 	        "1. Anadir modelo\n"
 	        "2. Modificar modelo\n"
@@ -89,6 +82,7 @@ void menuAnadirModelo(){
 	fflush(stdin);
 	gets(m.combustible);
 
+	system("cls");
 	anadirModelo(m);
 	menuGestModelo();
 }
@@ -108,6 +102,7 @@ void menuEliminarModelo(){
 	"---------------------------\n\n"
 	"      Eliminar modelo\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar el modelo se eliminaran los coches que sean de dicho modelo (0 para cancelar)\n\n");
 	obtenerNumeroMarcas(&numeroMarcas);
 	Marca listaMarcas[numeroMarcas];
 	guardarMarcas(listaMarcas);
@@ -225,6 +220,7 @@ void menuModificarNombreModelo(Modelo* m) {
 		}
 	} while (existeModelo(nombreNuevo, m->marca.id, m->combustible, m->cambio, &mNull) == 1);
 
+	system("cls");
 	modificarNombreModelo(m->id, nombreNuevo);
 	menuGestModelo();
 }
@@ -249,6 +245,7 @@ void menuModificarCambioModelo(Modelo* m) {
 		}
 	} while (existeModelo(m->nombre, m->marca.id, m->combustible, cambioNuevo, &mNull) == 1);
 
+	system("cls");
 	modificarCambioModelo(m->id, cambioNuevo);
 	menuGestModelo();
 }
@@ -258,9 +255,9 @@ void menuModificarCombustibleModelo(Modelo* m) {
 	strcpy(mNull.nombre, "NULL");
 	dibujoCoche();
 	printf(
-	"---------------------------\n\n"
+	"--------------------------------\n\n"
 	"Modificar combustible del modelo\n\n"
-	"---------------------------\n\n");
+	"--------------------------------\n\n");
 
 	printf("Antiguo combustible del modelo: %s\n", m->combustible);
 	do {
@@ -273,6 +270,7 @@ void menuModificarCombustibleModelo(Modelo* m) {
 		}
 	} while (existeModelo(m->nombre, m->marca.id, combustibleNuevo, m->cambio, &mNull) == 1);
 
+	system("cls");
 	modificarCombustibleModelo(m->id, combustibleNuevo);
 	menuGestModelo();
 }
@@ -285,9 +283,9 @@ void menuModificarMarcaModelo(Modelo* m) {
 
 	dibujoCoche();
 	printf(
-	"---------------------------\n\n"
+	"--------------------------\n\n"
 	"Modificar marca del modelo\n\n"
-	"---------------------------\n\n");
+	"--------------------------\n\n");
 
 	int numeroMarcas = 0;
 	int marcaSelec = 0;
@@ -297,6 +295,7 @@ void menuModificarMarcaModelo(Modelo* m) {
 	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
 	id_marca = listaMarcas[marcaSelec-1].id;
 
+	system("cls");
 	if(existeModelo(m->nombre, id_marca, m->combustible, m->cambio, &mNull) == 1){
 		printf("El modelo introducido ya existe\n");
 	} else {

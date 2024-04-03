@@ -9,4 +9,6 @@ void dibujoTienda();
 
 void dibujoCoche();
 
+void dibujoDespedida();
+
 #endif /* DIBUJOS_H_ */

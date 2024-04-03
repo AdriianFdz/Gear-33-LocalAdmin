@@ -1,14 +1,9 @@
-/*
- * empleado.c
- *
- *  Created on: 24 mar 2024
- *      Author: seven
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include "../include/empleado.h"
+#include "../include/cargo.h"
 #include "../include/dibujos.h"
 #include "../include/sqlManager.h"
 #include "../include/menus.h"
@@ -62,6 +57,7 @@ void menuAnadirEmpleado(){
 		"      Anadir empleado\n\n"
 		"---------------------------\n\n");
 	Empleado e = pedirEmpleado();
+	system("cls");
 	anadirEmpleado(e);
 	menuGestEmpleado();
 }
@@ -173,6 +169,7 @@ void menuModificarDniEmp(char dni[10]){
 			printf("El DNI introducido ya existe\n");
 		}
 	} while (existeEmpleado(dniNuevo, &e) == 1);
+	system("cls");
 	modificarDniEmp(dni, dniNuevo);
 	menuGestEmpleado();
 }
@@ -189,6 +186,7 @@ void menuModificarNombreEmp(Empleado* emp){
 	fflush(stdout);
 	fflush(stdin);
 	gets(nombreNuevo);
+	system("cls");
 	modificarNombreEmp(emp->dni, nombreNuevo);
 	menuGestEmpleado();
 }
@@ -205,6 +203,7 @@ void menuModificarApellidoEmp(Empleado* emp){
 	fflush(stdout);
 	fflush(stdin);
 	gets(apellidoNuevo);
+	system("cls");
 	modificarApellidoEmp(emp->dni, apellidoNuevo);
 	menuGestEmpleado();
 }
@@ -221,6 +220,7 @@ void menuModificarTelefonoEmp(Empleado* emp){
 	fflush(stdout);
 	fflush(stdin);
 	gets(telefonoNuevo);
+	system("cls");
 	modificarTelefonoEmp(emp->dni, telefonoNuevo);
 	menuGestEmpleado();
 }
@@ -229,14 +229,15 @@ void menuModificarFechaNacEmp(Empleado* emp){
 
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"-----------------------------\n\n"
 	"Modificar fecha de nacimiento\n\n"
-	"---------------------------\n\n");
+	"-----------------------------\n\n");
 	printf("Antigua fecha de nacimiento: %s\n", emp->fecha_nacimiento);
 	printf("Introduzca la nueva fecha de nacimiento: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(fechaNacNueva);
+	system("cls");
 	modificarFechaNacEmp(emp->dni, fechaNacNueva);
 	menuGestEmpleado();
 }
@@ -245,14 +246,15 @@ void menuModificarFechaInicContEmp(Empleado* emp){
 
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"----------------------------------\n\n"
 	"Modificar fecha inicio de contrato\n\n"
-	"---------------------------\n\n");
+	"----------------------------------\n\n");
 	printf("Antigua fecha de inicio de contrato: %s\n", emp->fecha_ini_contrato);
 	printf("Introduzca la nueva fecha de inicio de contrato: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(fechaInicContNueva);
+	system("cls");
 	modificarFechaInicContEmp(emp->dni, fechaInicContNueva);
 	menuGestEmpleado();
 }
@@ -261,14 +263,15 @@ void menuModificarFechaFinContEmp(Empleado* emp){
 
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"-------------------------------\n\n"
 	"Modificar fecha fin de contrato\n\n"
-	"---------------------------\n\n");
+	"-------------------------------\n\n");
 	printf("Antigua fecha de fin de contrato: %s\n", emp->fecha_fin_contrato);
 	printf("Introduzca la nueva fecha de fin de contrato: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(fechaFinContNueva);
+	system("cls");
 	modificarFechaFinContEmp(emp->dni, fechaFinContNueva);
 	menuGestEmpleado();
 }
@@ -284,11 +287,11 @@ void menuModificarTiendaEmp(Empleado* emp){
 
 	dibujoPersona();
 	printf(
-	"---------------------------\n\n"
+	"----------------------------\n\n"
 	"Modificar tienda de empleado\n\n"
-	"---------------------------\n\n");
+	"----------------------------\n\n");
 	pedirTiendas(listaTiendas, numeroTiendas, &tiendaSelec, emp);
-
+	system("cls");
 	modificarIdTiendaEmp(emp->dni, listaTiendas[tiendaSelec-1].id_tienda);
 	menuGestEmpleado();
 }
@@ -307,7 +310,7 @@ void menuModificarCargoEmp(Empleado* emp){
 	"Modificar cargo de empleado\n\n"
 	"---------------------------\n\n");
 	pedirCargos(listaCargos, numeroCargos, &cargoSelec, emp);
-
+	system("cls");
 	modificarIdCargoEmp(emp->dni, listaCargos[cargoSelec-1].id_cargo);
 	menuGestEmpleado();
 }
@@ -324,6 +327,7 @@ void menuModificarContrasenaEmp(Empleado* emp){
 	fflush(stdout);
 	fflush(stdin);
 	gets(contrasenaNueva);
+	system("cls");
 	modificarContrasenaEmp(emp->dni, contrasenaNueva);
 	menuGestEmpleado();
 }
@@ -342,7 +346,7 @@ void menuEliminarEmpleado(){
 	gets(dni);
 
 	int result = eliminarEmpleado(dni);
-
+	system("cls");
 	if (result == 1) {
 		printf("EMPLEADO ELIMINADO CON EXITO\n");
 		menuGestEmpleado();
@@ -367,8 +371,12 @@ void pedirTiendas(Tienda listaTiendas[], int numeroTiendas, int* tiendaSelec, Em
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", tiendaSelec);
-		if ((*tiendaSelec > numeroTiendas) || (*tiendaSelec < 1)) {
+		if ((*tiendaSelec > numeroTiendas) || (*tiendaSelec < 0)) {
 			printf("La tienda seleccionada no existe\n");
+		}
+		if (*tiendaSelec == 0) {
+			system("cls");
+			menuGestTienda();
 		}
 	} while(*tiendaSelec> numeroTiendas|| *tiendaSelec < 1);
 }
@@ -384,8 +392,12 @@ void pedirCargos(Cargo listaCargos[], int numeroCargos, int* cargoSelec, Emplead
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", cargoSelec);
-		if ((*cargoSelec > numeroCargos) || (*cargoSelec < 1)) {
+		if ((*cargoSelec > numeroCargos) || (*cargoSelec < 0)) {
 			printf("El cargo seleccionada no existe\n");
+		}
+		if (*cargoSelec == 0) {
+			system("cls");
+			menuGestCargo();
 		}
 	} while(*cargoSelec> numeroCargos|| *cargoSelec < 1);
 }

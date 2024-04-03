@@ -1,9 +1,3 @@
-/*
- * sqlManager.c
- *
- *  Created on: 21 mar 2024
- *      Author: seven
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -1906,8 +1900,71 @@ int eliminarTienda(char direccion[], int id_ciudad) {
 	sqlite3 *db = abrirDB();
 	Tienda t;
 	int result = existeTienda(direccion, id_ciudad, &t);
+	int id_tienda;
 
 	if (result == 1) {
+		sqlite3_stmt *stmt2;
+		char sql2[] = "SELECT id FROM Tienda WHERE direccion = ? AND id_ciudad = ?";
+
+		result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt2, 1, direccion, strlen(direccion), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_bind_int(stmt2, 2, id_ciudad);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_step(stmt2);
+
+		if (result == SQLITE_ROW) {
+			id_tienda = sqlite3_column_int(stmt2, 0);
+			sqlite3_finalize(stmt2);
+
+			sqlite3_stmt *stmt3;
+			char sql3[] = "DELETE FROM Empleado WHERE id_tienda = ?";
+
+			result = sqlite3_prepare_v2(db, sql3, strlen(sql3) + 1, &stmt3, NULL);
+			if (result != SQLITE_OK) {
+				printf("Error preparing statement\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				sqlite3_close(db);
+				return result;
+			}
+
+			result = sqlite3_bind_int(stmt3, 1, id_tienda);
+			if (result != SQLITE_OK) {
+				printf("Error binding parameters\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				sqlite3_finalize(stmt3);
+				sqlite3_close(db);
+				return result;
+			}
+
+			result = sqlite3_step(stmt3);
+
+			sqlite3_finalize(stmt3);
+
+		}
+
+		sqlite3_finalize(stmt2);
+
 		sqlite3_stmt *stmt;
 		char sql[] = "DELETE FROM Tienda WHERE direccion = ? AND id_ciudad = ?";
 
@@ -1919,8 +1976,7 @@ int eliminarTienda(char direccion[], int id_ciudad) {
 			return result;
 		}
 
-		result = sqlite3_bind_text(stmt, 1, direccion, strlen(direccion),
-				SQLITE_STATIC);
+		result = sqlite3_bind_text(stmt, 1, direccion, strlen(direccion), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
 			printf("Error binding parameters\n");
 			printf("%s\n", sqlite3_errmsg(db));
@@ -2097,6 +2153,58 @@ int eliminarCargo(char nombre[20]) {
 	int result = existeCargo(nombre, &c);
 
 	if (result == 1) {
+		int id_cargo;
+
+		sqlite3_stmt *stmt2;
+		char sql2[] = "SELECT id FROM Cargo WHERE nombre = ?";
+
+		result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_text(stmt2, 1, nombre, strlen(nombre), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_step(stmt2);
+
+		if (result == SQLITE_ROW) {
+			id_cargo = sqlite3_column_int(stmt2, 0);
+			sqlite3_finalize(stmt2);
+
+			sqlite3_stmt *stmt3;
+			char sql3[] = "DELETE FROM Empleado WHERE id_cargo = ?";
+
+			result = sqlite3_prepare_v2(db, sql3, strlen(sql3) + 1, &stmt3, NULL);
+			if (result != SQLITE_OK) {
+				printf("Error preparing statement\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				sqlite3_close(db);
+				return result;
+			}
+
+			result = sqlite3_bind_int(stmt3, 1, id_cargo);
+			if (result != SQLITE_OK) {
+				printf("Error binding parameters\n");
+				printf("%s\n", sqlite3_errmsg(db));
+				sqlite3_finalize(stmt3);
+				sqlite3_close(db);
+				return result;
+			}
+			result = sqlite3_step(stmt3);
+
+			sqlite3_finalize(stmt3);
+
+
+		}
 		sqlite3_stmt *stmt;
 		char sql[] = "DELETE FROM Cargo WHERE nombre = ?";
 
@@ -2120,6 +2228,10 @@ int eliminarCargo(char nombre[20]) {
 		result = sqlite3_step(stmt);
 
 		sqlite3_finalize(stmt);
+
+
+
+		sqlite3_finalize(stmt2);
 		sqlite3_close(db);
 
 		return 1;
@@ -3470,6 +3582,29 @@ int eliminarModelo(Modelo m) {
 	int result = existeModelo(m.nombre, m.marca.id, m.combustible, m.cambio, &mNull);
 
 	if (result == 1) {
+		sqlite3_stmt *stmt2;
+		char sql2[] = "DELETE FROM Coche WHERE id_modelo = ?";
+
+		result = sqlite3_prepare_v2(db, sql2, strlen(sql2) + 1, &stmt2, NULL);
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return result;
+		}
+
+		result = sqlite3_bind_int(stmt2, 1, m.id);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			sqlite3_finalize(stmt2);
+			sqlite3_close(db);
+			return result;
+		}
+		result = sqlite3_step(stmt2);
+
+		sqlite3_finalize(stmt2);
+
 		sqlite3_stmt *stmt;
 		char sql[] = "DELETE FROM Modelo WHERE id = ?";
 

@@ -1,5 +1,3 @@
-
-
 #ifndef USUARIO_H_
 #define USUARIO_H_
 #include "tienda.h"

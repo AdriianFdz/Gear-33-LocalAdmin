@@ -1,10 +1,3 @@
-/*
- * ciudad.h
- *
- *  Created on: 1 abr 2024
- *      Author: Unai
- */
-
 #ifndef INCLUDE_CIUDAD_H_
 #define INCLUDE_CIUDAD_H_
 #include "tienda.h"

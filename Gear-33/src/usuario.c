@@ -74,7 +74,7 @@ void menuGestUsuario(){
 	dibujoPersona();
 	printf(
 			"---------------------------\n\n"
-			"    Gestionar usuario\n\n"
+			"     Gestionar usuario\n\n"
 			"---------------------------\n\n"
 			"1. Anadir usuario\n"
 			"2. Modificar usuario\n"
@@ -87,6 +87,7 @@ void menuGestUsuario(){
 	scanf("%d",&opcion);
 	opcionMenuGestUsuario(&opcion);
 }
+
 void opcionMenuGestUsuario(int *opcion) {
 	system("cls");
 	switch (*opcion) {
@@ -108,16 +109,19 @@ void opcionMenuGestUsuario(int *opcion) {
 				break;
 		}
 }
+
 void menuAnadirUsuario() {
 	dibujoPersona();
 	printf(
 			"---------------------------\n\n"
-			"       Registro de usuario\n\n"
+			"    Registro de usuario\n\n"
 			"---------------------------\n\n");
 	Usuario u = pedirUsuario();
+	system("cls");
 	anadirUsuario(u);
 	menuGestUsuario();
 }
+
 void menuModificarUsuario() {
 
 	char dni[10] = "";
@@ -166,12 +170,14 @@ void menuEliminarUsuario() {
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"       Eliminar usuario\n\n"
+	"     Eliminar usuario\n\n"
 	"---------------------------\n\n");
 	printf("Introduzca el dni:  ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(dni);
+
+	system("cls");
 	int result = eliminarUsuario(dni);
 		if (result == 1) {
 			printf("USUARIO ELIMINADO CON EXITO\n");
@@ -180,6 +186,8 @@ void menuEliminarUsuario() {
 		}
 	menuGestUsuario();
 	}
+
+
 void opcionMenuModificarUsuarios(int* opcion, Usuario* usu) {
 	system("cls");
 		switch (*opcion) {
@@ -222,15 +230,16 @@ void menuModificarNombre(Usuario* u) {
 	dibujoPersona();
 	printf(
 			"---------------------------\n\n"
-			"    Modificar nombre\n\n"
+			"      Modificar nombre\n\n"
 			"---------------------------\n\n");
 	printf("Antiguo nombre: %s\n", u->nombre);
 	printf("Introduzca el nuevo nombre: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(nombreNuevo);
+	system("cls");
 	modificarNombreUsuario(u->dni, nombreNuevo);
-		menuGestUsuario();
+	menuGestUsuario();
 }
 void menuModificarApellido(Usuario* u) {
 	char apellidoNuevo[10];
@@ -238,123 +247,133 @@ void menuModificarApellido(Usuario* u) {
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"    Modificar apellido\n\n"
+	"     Modificar apellido\n\n"
 	"---------------------------\n\n");
 	printf("Antiguo apellido: %s\n", u->apellido);
 	printf("Introduzca el nuevo apellido: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(apellidoNuevo);
+	system("cls");
 	modificarApellidoUsuario(u->dni, apellidoNuevo);
 	menuGestUsuario();
 }
+
 void menuModificarDni(char dni[10]) {
-		char dniNuevo[10];
+	char dniNuevo[10];
 
-		dibujoPersona();
-		printf(
-		"---------------------------\n\n"
-		"    Modificar dni\n\n"
-		"---------------------------\n\n");
-		printf("Antiguo DNI: %s\n", dni);
-		printf("Introduzca el nuevo dni: ");
-		fflush(stdout);
-		fflush(stdin);
-		gets(dniNuevo);
-		modificarDniUsuario(dni, dniNuevo);
-		menuGestUsuario();
-	}
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"       Modificar dni\n\n"
+	"---------------------------\n\n");
+	printf("Antiguo DNI: %s\n", dni);
+	printf("Introduzca el nuevo dni: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(dniNuevo);
+	system("cls");
+	modificarDniUsuario(dni, dniNuevo);
+	menuGestUsuario();
+}
+
 void menuModificarFecha(Usuario* u) {
-			char fechaNacNueva[11];
+	char fechaNacNueva[11];
 
-			dibujoPersona();
-			printf(
-			"---------------------------\n\n"
-			"    Modificar la fecha de nacimiento\n\n"
-			"---------------------------\n\n");
-			printf("Antigua fecha de nacimiento: %s\n", u->fecha);
-			printf("Introduzca la nueva fecha de nacimiento: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(fechaNacNueva);
-			modificarFechaUsuario(u->dni, fechaNacNueva);
-			menuGestUsuario();
-		}
+	dibujoPersona();
+	printf(
+	"--------------------------------\n\n"
+	"Modificar la fecha de nacimiento\n\n"
+	"--------------------------------\n\n");
+	printf("Antigua fecha de nacimiento: %s\n", u->fecha);
+	printf("Introduzca la nueva fecha de nacimiento: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(fechaNacNueva);
+	system("cls");
+	modificarFechaUsuario(u->dni, fechaNacNueva);
+	menuGestUsuario();
+}
+
 void menuModificarTelefono(Usuario* u) {
-			char telefonoNuevo[10];
-			dibujoPersona();
-			printf(
-			"---------------------------\n\n"
-			"    Modificar el teléfono\n\n"
-			"---------------------------\n\n");
-			printf("Antiguo telefono: %s\n", u->telefono);
-			printf("Introduzca el nuevo teléfono:  ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(telefonoNuevo);
-			modificarTelefonoUsuario(u->dni, telefonoNuevo);
-			menuGestUsuario();
-			}
+	char telefonoNuevo[10];
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"   Modificar el teléfono\n\n"
+	"---------------------------\n\n");
+	printf("Antiguo telefono: %s\n", u->telefono);
+	printf("Introduzca el nuevo teléfono:  ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(telefonoNuevo);
+	system("cls");
+	modificarTelefonoUsuario(u->dni, telefonoNuevo);
+	menuGestUsuario();
+}
+
 void menuModificarDireccion(Usuario* u) {
 	char direccionNueva[51];
 
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"    Modificar la dirección\n\n"
+	"   Modificar la dirección\n\n"
 	"---------------------------\n\n");
 	printf("Antigua direccion: %s\n", u->direccion);
 	printf("Introduzca la nueva dirección: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(direccionNueva);
+	system("cls");
 	modificarDireccionUsuario(u->dni, direccionNueva);
 	menuGestUsuario();
 }
 void menuModificarContrasena(Usuario* u) {
-			char contrasenaNueva[51];
+	char contrasenaNueva[51];
 
-			dibujoPersona();
-			printf(
-			"---------------------------\n\n"
-			"    Modificar la contraseña\n\n"
-			"---------------------------\n\n");
-			printf("Antigua contrasena: %s\n", u->contrasena);
-			printf("Introduzca la nueva contraseña: ");
-			fflush(stdout);
-			fflush(stdin);
-			gets(contrasenaNueva);
-			modificarContrasenaUsuario(u->dni, contrasenaNueva);
-			menuGestUsuario();
-		}
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"  Modificar la contraseña\n\n"
+	"---------------------------\n\n");
+	printf("Antigua contrasena: %s\n", u->contrasena);
+	printf("Introduzca la nueva contraseña: ");
+	fflush(stdout);
+	fflush(stdin);
+	gets(contrasenaNueva);
+	system("cls");
+	modificarContrasenaUsuario(u->dni, contrasenaNueva);
+	menuGestUsuario();
+}
 
 void menuModificarCiudadUsuario(Usuario* u){
 
 	Provincia provincia;
-		Ciudad ciudad;
-		ciudad.id_ciudad = 0;
+	Ciudad ciudad;
+	ciudad.id_ciudad = 0;
 
-		int provinciaSelec = 0;
-		int ciudadSelec = 0;
+	int provinciaSelec = 0;
+	int ciudadSelec = 0;
 
-		int numeroProvincias = 0;
-		int numeroCiudades = 0;
+	int numeroProvincias = 0;
+	int numeroCiudades = 0;
 
-		dibujoPersona();
-		printf(
-		"---------------------------\n\n"
-		"Modificar ciudad de usuario\n\n"
-		"---------------------------\n\n");
+	dibujoPersona();
+	printf(
+	"---------------------------\n\n"
+	"Modificar ciudad de usuario\n\n"
+	"---------------------------\n\n");
 
-		obtenerNumeroProvincias(&numeroProvincias);
-		Provincia listaProvincias[numeroProvincias];
-		guardarProvincias(listaProvincias);
-		pedirProvinciasUsuario(listaProvincias, numeroProvincias, &provinciaSelec, u);
-		provincia.id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
+	obtenerNumeroProvincias(&numeroProvincias);
+	Provincia listaProvincias[numeroProvincias];
+	guardarProvincias(listaProvincias);
+	pedirProvinciasUsuario(listaProvincias, numeroProvincias, &provinciaSelec, u);
+	provincia.id_provincia = listaProvincias[provinciaSelec-1].id_provincia;
 
-		obtenerNumeroCiudades(&numeroCiudades, provincia.id_provincia);
-		Ciudad listaCiudades[numeroCiudades];
-		guardarCiudades(listaCiudades, provincia.id_provincia);
+	obtenerNumeroCiudades(&numeroCiudades, provincia.id_provincia);
+	Ciudad listaCiudades[numeroCiudades];
+	guardarCiudades(listaCiudades, provincia.id_provincia);
 
 
 	printf("\nAntigua ciudad: %s\n", u->ciudad.nombre);
@@ -363,6 +382,7 @@ void menuModificarCiudadUsuario(Usuario* u){
 		printf("El usuario introducido ya existe\n");
 	}
 	ciudad.id_ciudad = listaCiudades[ciudadSelec-1].id_ciudad;
+	system("cls");
 	modificarCiudadUsuario(u->dni, ciudad.id_ciudad);
 	menuGestUsuario();
 }

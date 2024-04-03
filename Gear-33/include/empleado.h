@@ -1,10 +1,3 @@
-/*
- * empleado.h
- *
- *  Created on: 24 mar 2024
- *      Author: seven
- */
-
 #ifndef INCLUDE_EMPLEADO_H_
 #define INCLUDE_EMPLEADO_H_
 #include "tienda.h"

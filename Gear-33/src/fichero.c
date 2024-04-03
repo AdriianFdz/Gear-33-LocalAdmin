@@ -1,10 +1,3 @@
-/*
- * config.c
- *
- *  Created on: 22 mar 2024
- *      Author: seven
- */
-
 #include "../include/fichero.h"
 #include "../include/tienda.h"
 #include "../include/coche.h"
@@ -15,7 +8,7 @@
 
 void leerConfig (CONFIG* configuracion){
 
-	char linea[100];
+	char linea[10000];
 	char* clave;
 	char* valor;
 
@@ -45,7 +38,7 @@ void leerConfig (CONFIG* configuracion){
 }
 
 void leerTienda(){
-	char linea[100];
+	char linea[10000];
 	CONFIG datosConfig;
 	leerConfig(&datosConfig);
 
@@ -58,6 +51,12 @@ void leerTienda(){
 	Tienda t;
 
 	FILE* f = fopen(datosConfig.tienda, "r");
+
+	if (f == NULL) {
+		printf("Error al abrir el fichero, recuerda configurar la ruta correcta en el propperties.cfg\n");
+		fclose(f);
+		return;
+	}
 
 	while(fgets(linea, sizeof(linea), f)){
 		// Eliminar saltos de linea
@@ -92,6 +91,9 @@ void leerTienda(){
         anadirTienda(t);
 
 		}
+
+	fclose(f);
+
 	}
 
 void leerCoche(){
@@ -113,6 +115,12 @@ void leerCoche(){
 	Coche c;
 
 	FILE* f = fopen(datosConfig.coche, "r");
+
+	if (f == NULL) {
+		printf("Error al abrir el fichero, recuerda configurar la ruta correcta en el propperties.cfg\n");
+		fclose(f);
+		return;
+	}
 
 	while(fgets(linea, sizeof(linea), f)){
 		// Eliminar saltos de linea
@@ -153,5 +161,10 @@ void leerCoche(){
         anadirCoche(c);
 
 		}
+
+		printf("Fichero importado con exito\n");
+
+	fclose(f);
+
 	}
 
