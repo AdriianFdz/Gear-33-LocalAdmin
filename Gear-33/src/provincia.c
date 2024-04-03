@@ -58,6 +58,7 @@ void menuEliminarProvincia(){
 	"---------------------------\n\n"
 	"     Eliminar provincia\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar una provincia se eliminaran sus ciudades y sus usuarios, tiendas y empleados (0 para cancelar)\n\n");
 	obtenerNumeroProvincias(&numeroProvincias);
 	Provincia listaProvincias[numeroProvincias];
 	guardarProvincias(listaProvincias);
@@ -68,7 +69,11 @@ void menuEliminarProvincia(){
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", &provinciaSelec);
-		int result = eliminarProvincia(listaProvincias[provinciaSelec-1].nombre);
+		if (provinciaSelec == 0) {
+			system("cls");
+			menuGestProvincia();
+		}
+		int result = eliminarProvincia(listaProvincias[provinciaSelec-1].nombre, listaProvincias[provinciaSelec-1].id_provincia);
 		system("cls");
 		if (result == 1) {
 			printf("PROVINCIA ELIMINADA CON EXITO\n");

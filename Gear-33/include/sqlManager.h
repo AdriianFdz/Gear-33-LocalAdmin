@@ -66,7 +66,7 @@ int existeCargo(char cargo[20], Cargo* c);
 
 // provincia
 int anadirProvincia(Provincia p);
-int eliminarProvincia(char nombre[20]);
+int eliminarProvincia(char nombre[20], int id_provincia);
 int modificarNombreProvincia(int id_provincia, char nuevoNombre[20]);
 int existeProvincia(char provincia[20], Provincia* p);
 
@@ -92,7 +92,7 @@ int modificarCiudadUsuario(char dni[10], int id_ciudad);
 // marca
 int anadirMarca(Marca m);
 int existeMarca(char marca[20], Marca* m);
-int eliminarMarca(char nombre[20]);
+int eliminarMarca(char nombre[20], int id);
 int modificarNombreMarca(int id_marca, char nuevoNombre[20]);
 
 // modelo

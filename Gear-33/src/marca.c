@@ -75,12 +75,13 @@ void menuEliminarMarca(){
 	"---------------------------\n\n"
 	"      Eliminar marca\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar una marca se eliminaran todos sus modelo y coches correspondientes (0 para cancelar)\n\n");
 	obtenerNumeroMarcas(&numeroMarcas);
 	Marca listaMarcas[numeroMarcas];
 	guardarMarcas(listaMarcas);
 	pedirMarcas(listaMarcas, numeroMarcas, &marcaSelec, &cNull);
 
-	int result = eliminarMarca(listaMarcas[marcaSelec-1].nombre);
+	int result = eliminarMarca(listaMarcas[marcaSelec-1].nombre, listaMarcas[marcaSelec-1].id);
 	system("cls");
 	if (result == 1) {
 		printf("MARCA ELIMINADA CON EXITO\n");

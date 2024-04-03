@@ -93,6 +93,7 @@ void menuEliminarCiudad(){
 	"---------------------------\n\n"
 	"      Eliminar ciudad\n\n"
 	"---------------------------\n\n");
+	printf("Al eliminar ciudad se eliminaran las tiendas, empleados y usuario de esas ciudades (0 para cancelar)");
 	obtenerNumeroProvincias(&numeroProvincias);
 	Provincia listaProvincias[numeroProvincias];
 	guardarProvincias(listaProvincias);

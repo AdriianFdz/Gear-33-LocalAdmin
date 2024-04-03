@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../include/tienda.h"
+#include "../include/ciudad.h"
 #include "../include/fichero.h"
 #include "../include/dibujos.h"
 #include "../include/sqlManager.h"
@@ -274,6 +275,10 @@ void pedirProvincias(Provincia listaProvincias[], int numeroProvincias, int* pro
 		if ((*provinciaSelec > numeroProvincias) || (*provinciaSelec < 1)) {
 			printf("La provincia seleccionada no existe\n");
 		}
+		if (*provinciaSelec == 0) {
+			system("cls");
+			menuGestCiudad();
+		}
 	} while(*provinciaSelec > numeroProvincias || *provinciaSelec < 1);
 }
 void pedirCiudades(Ciudad listaCiudades[], int numeroCiudades, int* ciudadSelec, Tienda* t){
@@ -288,8 +293,12 @@ void pedirCiudades(Ciudad listaCiudades[], int numeroCiudades, int* ciudadSelec,
 		fflush(stdout);
 		fflush(stdin);
 		scanf("%d", ciudadSelec);
-		if ((*ciudadSelec > numeroCiudades) || (*ciudadSelec < 1)) {
+		if ((*ciudadSelec > numeroCiudades) || (*ciudadSelec < 0)) {
 			printf("La ciudad seleccionada no existe\n");
+		}
+		if (*ciudadSelec == 0) {
+			system("cls");
+			menuGestCiudad();
 		}
 	} while(*ciudadSelec > numeroCiudades || *ciudadSelec < 1);
 }
