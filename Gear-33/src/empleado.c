@@ -98,7 +98,7 @@ void menuModificarEmpleado(){
 	       "9.Modificar cargo\n"
 	       "10.Modificar contrasena\n"
 	       "0.Volver\n\n"
-		   "Introduce una opción: ");
+		   "Introduce una opcion: ");
 
 	fflush(stdout);
 	fflush(stdin);

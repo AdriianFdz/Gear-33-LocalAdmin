@@ -101,8 +101,8 @@ void opcionMenuPrincipal(int opcion){
 				menuGestCiudad();
 				break;
 			case 0:
-				dibujoDespedida();
 				printf("SALIENDO...\n");
+				dibujoDespedida();
 				break;
 			default:
 				printf("El digito introducido no corresponde a ninguno de los anteriores\n");

@@ -39,17 +39,17 @@ Usuario pedirUsuario(){
 	fflush(stdin);
 	gets(u.fecha);
 
-	printf("Introduce el teléfono: ");
+	printf("Introduce el telefono: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.telefono);
 
-	printf("Introduce la dirección: ");
+	printf("Introduce la direccon: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.direccion);
 
-	printf("Introduce la contraseña: ");
+	printf("Introduce la contrasena: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.contrasena);
@@ -151,12 +151,12 @@ void menuModificarUsuario() {
 			"2.Modificar apellido\n"
 			"3.Modificar DNI\n"
 			"4.Modificar fecha de nacimiento\n"
-			"5.Modificar teléfono\n"
-			"6.Modificar dirección\n"
-			"7.Modificar contraseña\n"
+			"5.Modificar telefono\n"
+			"6.Modificar direccion\n"
+			"7.Modificar contrasena\n"
 			"8.Modificar ciudad\n"
 			"0.Volver\n\n"
-			"Introduce una opción: ");
+			"Introduce una opcion: ");
 
 	fflush(stdout);
 	fflush(stdin);
@@ -300,7 +300,7 @@ void menuModificarTelefono(Usuario* u) {
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"   Modificar el teléfono\n\n"
+	"   Modificar el telefono\n\n"
 	"---------------------------\n\n");
 	printf("Antiguo telefono: %s\n", u->telefono);
 	printf("Introduzca el nuevo teléfono:  ");
@@ -318,7 +318,7 @@ void menuModificarDireccion(Usuario* u) {
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"   Modificar la dirección\n\n"
+	"   Modificar la direccion\n\n"
 	"---------------------------\n\n");
 	printf("Antigua direccion: %s\n", u->direccion);
 	printf("Introduzca la nueva dirección: ");
@@ -335,10 +335,10 @@ void menuModificarContrasena(Usuario* u) {
 	dibujoPersona();
 	printf(
 	"---------------------------\n\n"
-	"  Modificar la contraseña\n\n"
+	"  Modificar la contrasena\n\n"
 	"---------------------------\n\n");
 	printf("Antigua contrasena: %s\n", u->contrasena);
-	printf("Introduzca la nueva contraseña: ");
+	printf("Introduzca la nueva contrasena: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(contrasenaNueva);
@@ -409,7 +409,7 @@ void pedirCiudadesUsuario(Ciudad listaCiudades[], int numeroCiudades, int* ciuda
 	printf("Ciudades:\n");
 	imprimirCiudadesListaUsuario(listaCiudades, numeroCiudades);
 	if(strcmp(u->dni, "NULL") != 0){
-		printf("Antigua ciuadad: %s\n", u->ciudad.nombre);
+		printf("Antigua ciudad: %s\n", u->ciudad.nombre);
 	}
 
 	do {
