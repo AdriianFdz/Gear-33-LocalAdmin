@@ -92,6 +92,8 @@ void leerTienda(){
 
 		}
 
+	printf("Fichero importado con exito\n");
+
 	fclose(f);
 
 	}

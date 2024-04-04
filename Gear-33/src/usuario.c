@@ -44,7 +44,7 @@ Usuario pedirUsuario(){
 	fflush(stdin);
 	gets(u.telefono);
 
-	printf("Introduce la direccon: ");
+	printf("Introduce la direccion: ");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.direccion);
