@@ -84,7 +84,7 @@ void menuModificarTienda(){
 	Empleado eNull;
 	strcpy(eNull.dni, "NULL");
 
-	dibujoCoche();
+	dibujoTienda();
 	printf(
 	"---------------------------\n\n"
 	"      Modificar tienda\n\n"
@@ -108,7 +108,7 @@ void menuModificarTienda(){
 	       "2.Modificar telefono\n"
 	       "3.Modificar ciudad\n"
 	       "0.Volver\n\n"
-		   "Introduce una opción: ");
+		   "Introduce una opcion: ");
 
 	fflush(stdout);
 	fflush(stdin);
